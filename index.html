@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Khách Hàng - Sales Consultant CRM</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white shadow-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/20">
+          <i class="fa-solid fa-car-side text-xl text-white"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight">SALES CRM • QUẢN LÝ KHÁCH HÀNG</h1>
+          <p class="text-xs text-blue-200">Sổ tay chăm sóc khách hàng cá nhân</p>
+        </div>
+      </div>
+      <button onclick="openModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition shadow flex items-center gap-2">
+        <i class="fa-solid fa-user-plus"></i> Thêm Khách Hàng
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 py-6">
+
+    <!-- KPI & Thống kê Phễu Bán Hàng -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200">
+        <p class="text-[11px] text-slate-500 font-semibold uppercase">Tổng Khách Hàng</p>
+        <p id="stat-total" class="text-2xl font-bold text-slate-800 mt-1">0</p>
+      </div>
+      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500">
+        <p class="text-[11px] text-amber-600 font-semibold uppercase">Đang Tư Vấn</p>
+        <p id="stat-consulting" class="text-2xl font-bold text-amber-600 mt-1">0</p>
+      </div>
+      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-purple-500">
+        <p class="text-[11px] text-purple-600 font-semibold uppercase">Đã Lái Thử / Quan Tâm</p>
+        <p id="stat-testdrive" class="text-2xl font-bold text-purple-600 mt-1">0</p>
+      </div>
+      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+        <p class="text-[11px] text-blue-600 font-semibold uppercase">Chờ Cọc / Hợp Đồng</p>
+        <p id="stat-deposit" class="text-2xl font-bold text-blue-600 mt-1">0</p>
+      </div>
+      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-500">
+        <p class="text-[11px] text-emerald-600 font-semibold uppercase">Đã Nhận Xe</p>
+        <p id="stat-delivered" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
+      </div>
+    </div>
+
+    <!-- Bộ lọc, Tìm kiếm & Xuất dữ liệu -->
+    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row gap-3 justify-between items-center">
+      <div class="w-full md:w-1/3 relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400"></i>
+        <input type="text" id="searchInput" oninput="renderCustomers()" placeholder="Tìm tên, SĐT, dòng xe, tỉnh thành..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="w-full md:w-auto flex flex-wrap gap-2">
+        <select id="stageFilter" onchange="renderCustomers()" class="px-3 py-2 border rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="ALL">Tất cả giai đoạn</option>
+          <option value="Khách mới">Khách mới</option>
+          <option value="Đang tư vấn">Đang tư vấn</option>
+          <option value="Đã lái thử">Đã lái thử</option>
+          <option value="Chờ cọc">Chờ cọc</option>
+          <option value="Đã ký HĐ">Đã ký HĐ</option>
+          <option value="Đã nhận xe">Đã nhận xe</option>
+          <option value="Tạm ngưng / Hủy">Tạm ngưng / Hủy</option>
+        </select>
+        <select id="carFilter" onchange="renderCustomers()" class="px-3 py-2 border rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="ALL">Tất cả dòng xe</option>
+          <option value="VF 3">VF 3</option>
+          <option value="VF 5">VF 5</option>
+          <option value="VF 6">VF 6</option>
+          <option value="VF 7">VF 7</option>
+          <option value="VF 8">VF 8</option>
+          <option value="VF 9">VF 9</option>
+          <option value="Dòng khác">Dòng khác</option>
+        </select>
+        <button onclick="exportCSV()" class="px-3.5 py-2 bg-slate-700 hover:bg-slate-800 text-white text-sm rounded-lg transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-file-excel"></i> Xuất Excel
+        </button>
+      </div>
+    </div>
+
+    <!-- Bảng danh sách khách hàng -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-slate-600">
+          <thead class="bg-slate-50 border-b text-[11px] uppercase font-bold text-slate-600 tracking-wider">
+            <tr>
+              <th class="py-3 px-4">Khách Hàng</th>
+              <th class="py-3 px-4">Xe Quan Tâm</th>
+              <th class="py-3 px-4">Hình Thức Mua</th>
+              <th class="py-3 px-4">Trạng Thái / Phễu</th>
+              <th class="py-3 px-4">Nguồn Khách</th>
+              <th class="py-3 px-4">Lịch Hẹn / Ghi Chú</th>
+              <th class="py-3 px-4 text-center">Liên Hệ Nhanh</th>
+              <th class="py-3 px-4 text-center">Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody id="customerTableBody" class="divide-y divide-slate-100">
+            <!-- Render danh sách khách hàng ở đây -->
+          </tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="hidden p-10 text-center text-slate-400">
+        <i class="fa-solid fa-address-book text-4xl mb-2 text-slate-300"></i>
+        <p class="text-sm">Chưa có thông tin khách hàng phù hợp.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Thêm / Chỉnh sửa Khách hàng -->
+  <div id="customerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative my-8">
+      <div class="flex justify-between items-center pb-3 border-b mb-4">
+        <h2 id="modalTitle" class="text-lg font-bold text-slate-800">Thêm Khách Hàng Mới</h2>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-4">
+        <input type="hidden" id="editIndex">
+        
+        <!-- Khối 1: Thông tin cơ bản -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Tên khách hàng <span class="text-red-500">*</span></label>
+            <input type="text" id="custName" required placeholder="VD: Anh Nam, Chị Linh..." class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Số điện thoại <span class="text-red-500">*</span></label>
+            <input type="tel" id="custPhone" required placeholder="09xxxxxxx" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Khu vực / Tỉnh thành</label>
+            <input type="text" id="custArea" placeholder="VD: Quận 7, TP.HCM, Bình Dương..." class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Nguồn khách</label>
+            <select id="custSource" class="w-full p-2.5 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500">
+              <option value="Facebook / TikTok Ads">Facebook / TikTok Ads</option>
+              <option value="Khách Showroom (Walk-in)">Khách Showroom (Walk-in)</option>
+              <option value="Người quen / Khách cũ giới thiệu">Người quen / Khách cũ giới thiệu</option>
+              <option value="Zalo / Hotline">Zalo / Hotline</option>
+              <option value="Sự kiện lái thử">Sự kiện lái thử</option>
+              <option value="Nguồn khác">Nguồn khác</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Khối 2: Thông tin xe & Tài chính -->
+        <div class="border-t pt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Dòng xe quan tâm</label>
+            <select id="custCar" class="w-full p-2.5 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500">
+              <option value="VF 3">VF 3</option>
+              <option value="VF 5">VF 5</option>
+              <option value="VF 6">VF 6</option>
+              <option value="VF 7">VF 7</option>
+              <option value="VF 8">VF 8</option>
+              <option value="VF 9">VF 9</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Màu sắc / Phiên bản</label>
+            <input type="text" id="custColor" placeholder="VD: Trắng nóc đen / Plus" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Hình thức thanh toán</label>
+            <select id="custPayment" class="w-full p-2.5 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500">
+              <option value="Trả thẳng">Trả thẳng (100%)</option>
+              <option value="Vay ngân hàng (Trả góp)">Vay ngân hàng (Trả góp)</option>
+              <option value="Chưa quyết định">Chưa quyết định</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Khối 3: Giai đoạn & Lịch hẹn -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Giai đoạn chăm sóc</label>
+            <select id="custStage" class="w-full p-2.5 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500">
+              <option value="Khách mới">Khách mới</option>
+              <option value="Đang tư vấn">Đang tư vấn</option>
+              <option value="Đã lái thử">Đã lái thử</option>
+              <option value="Chờ cọc">Chờ cọc</option>
+              <option value="Đã ký HĐ">Đã ký HĐ</option>
+              <option value="Đã nhận xe">Đã nhận xe</option>
+              <option value="Tạm ngưng / Hủy">Tạm ngưng / Hủy</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Ngày hẹn tiếp theo / Giao xe</label>
+            <input type="date" id="custNextDate" class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Ghi chú nhu cầu khách hàng</label>
+          <textarea id="custNote" rows="2" placeholder="VD: Khách mua xe chạy dịch vụ, cần hồ sơ vay gấp 80%, thích lấy xe trong tháng..." class="w-full p-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-4 border-t">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm">Đóng</button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow">Lưu Thông Tin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Xử lý Logic -->
+  <script>
+    let customers = JSON.parse(localStorage.getItem('my_sales_customers')) || [
+      { id: 'KH-001', name: 'Anh Hoàng Nam', phone: '0908123456', area: 'Quận 7, TP.HCM', source: 'Facebook / TikTok Ads', car: 'VF 3', color: 'Vàng nóc trắng', payment: 'Trả thẳng', stage: 'Đang tư vấn', nextDate: '2026-08-25', note: 'Quan tâm gói pin thuê, hẹn gọi lại sau 17h' },
+      { id: 'KH-002', name: 'Chị Mai Lan', phone: '0919888999', area: 'Thủ Đức', source: 'Khách Showroom (Walk-in)', car: 'VF 7', color: 'Xanh dương / Plus', payment: 'Vay ngân hàng (Trả góp)', stage: 'Đã lái thử', nextDate: '2026-08-28', note: 'Đã gửi bảng tính góp qua Zalo, duyệt vay 80%' },
+      { id: 'KH-003', name: 'Anh Tuấn', phone: '0933555777', area: 'Bình Dương', source: 'Người quen / Khách cũ giới thiệu', car: 'VF 5', color: 'Trắng', payment: 'Trả thẳng', stage: 'Đã nhận xe', nextDate: '', note: 'Đã bàn giao xe và hướng dẫn app' }
+    ];
+
+    function saveToStorage() {
+      localStorage.setItem('my_sales_customers', JSON.stringify(customers));
+      renderCustomers();
+    }
+
+    function renderCustomers() {
+      const tbody = document.getElementById('customerTableBody');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const stageFilter = document.getElementById('stageFilter').value;
+      const carFilter = document.getElementById('carFilter').value;
+      tbody.innerHTML = '';
+
+      let filtered = customers.filter(c => {
+        const matchSearch = c.name.toLowerCase().includes(search) || 
+                            c.phone.includes(search) || 
+                            c.car.toLowerCase().includes(search) ||
+                            (c.area && c.area.toLowerCase().includes(search));
+        const matchStage = stageFilter === 'ALL' || c.stage === stageFilter;
+        const matchCar = carFilter === 'ALL' || c.car === carFilter;
+        return matchSearch && matchStage && matchCar;
+      });
+
+      // Thống kê phễu
+      document.getElementById('stat-total').innerText = customers.length;
+      document.getElementById('stat-consulting').innerText = customers.filter(c => c.stage === 'Đang tư vấn').length;
+      document.getElementById('stat-testdrive').innerText = customers.filter(c => c.stage === 'Đã lái thử').length;
+      document.getElementById('stat-deposit').innerText = customers.filter(c => c.stage === 'Chờ cọc' || c.stage === 'Đã ký HĐ').length;
+      document.getElementById('stat-delivered').innerText = customers.filter(c => c.stage === 'Đã nhận xe').length;
+
+      if (filtered.length === 0) {
+        document.getElementById('emptyState').classList.remove('hidden');
+      } else {
+        document.getElementById('emptyState').classList.add('hidden');
+      }
+
+      filtered.forEach((cust, index) => {
+        // Tag trạng thái
+        let stageBadge = '';
+        if (cust.stage === 'Khách mới') stageBadge = '<span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full text-xs font-semibold">Khách mới</span>';
+        else if (cust.stage === 'Đang tư vấn') stageBadge = '<span class="bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-semibold">Đang tư vấn</span>';
+        else if (cust.stage === 'Đã lái thử') stageBadge = '<span class="bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-xs font-semibold">Đã lái thử</span>';
+        else if (cust.stage === 'Chờ cọc' || cust.stage === 'Đã ký HĐ') stageBadge = '<span class="bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full text-xs font-semibold">Chờ cọc / Ký HĐ</span>';
+        else if (cust.stage === 'Đã nhận xe') stageBadge = '<span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">Đã nhận xe</span>';
+        else stageBadge = '<span class="bg-rose-100 text-rose-700 px-2.5 py-1 rounded-full text-xs font-semibold">Tạm ngưng / Hủy</span>';
+
+        // Xử lý link SĐT và Zalo
+        const cleanPhone = cust.phone.replace(/[^0-9]/g, '');
+        const zaloPhone = cleanPhone.startsWith('0') ? '84' + cleanPhone.slice(1) : cleanPhone;
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition border-b';
+        tr.innerHTML = `
+          <td class="py-3 px-4">
+            <div class="font-bold text-slate-800">${cust.name}</div>
+            <div class="text-xs text-slate-500 font-mono">${cust.phone}</div>
+            ${cust.area ? `<div class="text-[11px] text-slate-400 mt-0.5"><i class="fa-solid fa-location-dot"></i> ${cust.area}</div>` : ''}
+          </td>
+          <td class="py-3 px-4">
+            <div class="font-bold text-blue-700">${cust.car}</div>
+            <div class="text-xs text-slate-500">${cust.color || 'Chưa chọn màu'}</div>
+          </td>
+          <td class="py-3 px-4">
+            <span class="text-xs font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-700">${cust.payment}</span>
+          </td>
+          <td class="py-3 px-4">${stageBadge}</td>
+          <td class="py-3 px-4 text-xs text-slate-500">${cust.source}</td>
+          <td class="py-3 px-4 max-w-xs">
+            ${cust.nextDate ? `<div class="text-xs font-semibold text-rose-600 mb-0.5"><i class="fa-regular fa-calendar-check"></i> Hẹn: ${cust.nextDate}</div>` : ''}
+            <div class="text-xs text-slate-600 line-clamp-2">${cust.note || '---'}</div>
+          </td>
+          <td class="py-3 px-4 text-center">
+            <div class="flex justify-center space-x-1.5">
+              <a href="tel:${cust.phone}" title="Gọi điện" class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 hover:bg-emerald-200 flex items-center justify-center transition">
+                <i class="fa-solid fa-phone text-xs"></i>
+              </a>
+              <a href="https://zalo.me/${zaloPhone}" target="_blank" title="Mở Zalo" class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 flex items-center justify-center transition font-bold text-xs">
+                Z
+              </a>
+            </div>
+          </td>
+          <td class="py-3 px-4 text-center space-x-2">
+            <button onclick="editCustomer(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Chỉnh sửa"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button onclick="deleteCustomer(${index})" class="text-rose-500 hover:text-rose-700 p-1" title="Xóa"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openModal(editIdx = null) {
+      document.getElementById('customerModal').classList.remove('hidden');
+      if (editIdx !== null) {
+        const c = customers[editIdx];
+        document.getElementById('modalTitle').innerText = 'Cập Nhật Khách Hàng';
+        document.getElementById('editIndex').value = editIdx;
+        document.getElementById('custName').value = c.name;
+        document.getElementById('custPhone').value = c.phone;
+        document.getElementById('custArea').value = c.area || '';
+        document.getElementById('custSource').value = c.source || 'Facebook / TikTok Ads';
+        document.getElementById('custCar').value = c.car || 'VF 5';
+        document.getElementById('custColor').value = c.color || '';
+        document.getElementById('custPayment').value = c.payment || 'Trả thẳng';
+        document.getElementById('custStage').value = c.stage || 'Khách mới';
+        document.getElementById('custNextDate').value = c.nextDate || '';
+        document.getElementById('custNote').value = c.note || '';
+      } else {
+        document.getElementById('modalTitle').innerText = 'Thêm Khách Hàng Mới';
+        document.getElementById('customerForm').reset();
+        document.getElementById('editIndex').value = '';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('customerModal').classList.add('hidden');
+    }
+
+    function handleSaveCustomer(e) {
+      e.preventDefault();
+      const editIdx = document.getElementById('editIndex').value;
+      const customerData = {
+        id: editIdx !== '' ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
+        name: document.getElementById('custName').value,
+        phone: document.getElementById('custPhone').value,
+        area: document.getElementById('custArea').value,
+        source: document.getElementById('custSource').value,
+        car: document.getElementById('custCar').value,
+        color: document.getElementById('custColor').value,
+        payment: document.getElementById('custPayment').value,
+        stage: document.getElementById('custStage').value,
+        nextDate: document.getElementById('custNextDate').value,
+        note: document.getElementById('custNote').value
+      };
+
+      if (editIdx !== '') {
+        customers[editIdx] = customerData;
+      } else {
+        customers.unshift(customerData);
+      }
+      saveToStorage();
+      closeModal();
+    }
+
+    function deleteCustomer(index) {
+      if (confirm('Bạn có chắc muốn xóa khách hàng này?')) {
+        customers.splice(index, 1);
+        saveToStorage();
+      }
+    }
+
+    function exportCSV() {
+      let csv = 'Mã KH,Tên Khách,SĐT,Khu Vực,Dòng Xe,Màu Sắc,Hình Thức Thanh Toán,Giai Đoạn,Nguồn Khách,Lịch Hẹn,Ghi Chú\n';
+      customers.forEach(c => {
+        csv += `"${c.id}","${c.name}","${c.phone}","${c.area || ''}","${c.car}","${c.color || ''}","${c.payment}","${c.stage}","${c.source}","${c.nextDate || ''}","${(c.note || '').replace(/"/g, '""')}"\n`;
+      });
+      const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Danh_Sach_Khach_Hang_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+    }
+
+    // Khởi chạy khi load trang
+    renderCustomers();
+  </script>
+</body>
+</html>
