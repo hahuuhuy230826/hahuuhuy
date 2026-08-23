@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinFast Sales Portal • Báo Giá & KPI CRM</title>
+  <title>VinFast Sales Portal • Phễu Chuyển Đổi % & KPI 100 Khách</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -28,7 +28,7 @@
         </div>
         <div>
           <h1 class="text-base font-extrabold tracking-tight text-slate-800">VINFAST SALES PORTAL</h1>
-          <p class="text-[11px] text-slate-500 font-medium">Báo Giá • Quản Lý Khách Hàng • Quy Trình 10 Bước Bán Xe</p>
+          <p class="text-[11px] text-slate-500 font-medium">Báo Giá • Phễu Chuyển Đổi (100 Khách → 8 Xe) • Quy Trình 10 Bước</p>
         </div>
       </div>
       
@@ -62,7 +62,6 @@
         <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
 
-      <!-- Chọn màu ngoại thất -->
       <div class="py-3 px-4 bg-slate-50 rounded-xl my-3 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-2">
           <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Màu sắc:</span>
@@ -71,7 +70,6 @@
         <p id="q_colorName" class="text-xs text-blue-700 font-bold bg-white px-3 py-1 rounded-lg border border-slate-200">Màu ngoại thất: Trắng</p>
       </div>
 
-      <!-- Thông số kỹ thuật -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
           <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CÔNG SUẤT TỐI ĐA</p>
@@ -87,7 +85,6 @@
         </div>
       </div>
 
-      <!-- Chương trình ưu đãi & Bảng Dự Toán -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-3 border-t border-slate-200">
         <div class="lg:col-span-7 space-y-2.5 no-print">
           <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
@@ -215,7 +212,7 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG, KPI CỘNG DỒN & CHIA THEO 30 NGÀY -->
+  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG & PHỄU CHUYỂN ĐỔI % (100 KHÁCH → 8 XE) -->
   <!-- ========================================================================= -->
   <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
     
@@ -244,7 +241,6 @@
         <div class="w-full bg-slate-800 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-700">
           <div id="kpi-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
-        <!-- Thông số chi tiết chia theo 30 ngày -->
         <div class="flex justify-between items-center text-[10px] text-slate-300 mt-1.5">
           <span id="kpi-daily-target"><i class="fa-regular fa-calendar"></i> Chỉ tiêu đến hôm nay: <strong>0 xe</strong></span>
           <span id="kpi-status-text" class="font-bold">Đang cập nhật...</span>
@@ -261,39 +257,68 @@
       </div>
     </div>
 
-    <!-- KHỐI THEO DÕI NHIỆM VỤ CHĂM SÓC TRONG NGÀY -->
-    <div class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-      <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></span>
-        <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Tiến độ chăm sóc khách hàng hôm nay:</span>
-        <span id="care-progress-text" class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">0 / 0 khách</span>
+    <!-- KHỐI PHỄU CHUYỂN ĐỔI TỶ LỆ % (100 KHÁCH KIẾM ĐƯỢC → PHÂN BỔ % HOT, COOL, LẠNH, CHỐT) -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 mb-4">
+      <!-- 1. Tổng Khách Kiếm Được (Mục tiêu 100 khách) -->
+      <div class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 flex flex-col justify-between">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-slate-500 font-bold uppercase">TỔNG KHÁCH KIẾM</p>
+          <span id="funnel-total-percent" class="text-[11px] font-black text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">0%</span>
+        </div>
+        <p id="stat-total" class="text-xl font-extrabold text-slate-900 mt-1">0 / 100 khách</p>
+        <p class="text-[10px] text-slate-400 mt-0.5">Mục tiêu: 100 khách/tháng</p>
       </div>
-      <div class="text-[11px] text-slate-500">
-        <i class="fa-solid fa-circle-info text-blue-500 mr-1"></i> Bấm vào nút <strong>"Chưa chăm sóc"</strong> để đánh dấu hoàn thành.
+
+      <!-- 2. Khách HOT (Xanh lá) -->
+      <div class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500 flex flex-col justify-between">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-emerald-700 font-bold uppercase">🔥 KHÁCH HOT</p>
+          <span id="funnel-hot-percent" class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">0%</span>
+        </div>
+        <p id="stat-hot" class="text-xl font-extrabold text-emerald-600 mt-1">0 khách</p>
+        <p class="text-[10px] text-slate-400 mt-0.5">Tỷ lệ trên tổng khách kiếm</p>
+      </div>
+
+      <!-- 3. Khách COOL (Vàng) -->
+      <div class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500 flex flex-col justify-between">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-amber-700 font-bold uppercase">⚡ KHÁCH COOL</p>
+          <span id="funnel-cool-percent" class="text-[11px] font-black text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded">0%</span>
+        </div>
+        <p id="stat-cool" class="text-xl font-extrabold text-amber-600 mt-1">0 khách</p>
+        <p class="text-[10px] text-slate-400 mt-0.5">Đang tư vấn / Cần chăm sóc</p>
+      </div>
+
+      <!-- 4. Khách LẠNH (Đỏ - Rớt deal / Không chốt) -->
+      <div class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-rose-500 flex flex-col justify-between">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-rose-700 font-bold uppercase">❄️ KHÁCH LẠNH (RỚT DEAL)</p>
+          <span id="funnel-cold-percent" class="text-[11px] font-black text-rose-800 bg-rose-50 px-1.5 py-0.5 rounded">0%</span>
+        </div>
+        <p id="stat-cold" class="text-xl font-extrabold text-rose-600 mt-1">0 khách</p>
+        <p class="text-[10px] text-slate-400 mt-0.5">Nợ xấu / Giá chưa tốt...</p>
+      </div>
+
+      <!-- 5. Đã Chốt HĐ / Giao Xe (Tỷ lệ chuyển đổi bán hàng) -->
+      <div class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-600 flex flex-col justify-between">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CHỐT HĐ / XE</p>
+          <span id="funnel-conversion-rate" class="text-[11px] font-black text-blue-800 bg-blue-50 px-1.5 py-0.5 rounded">0% CR</span>
+        </div>
+        <p id="stat-delivered" class="text-xl font-extrabold text-blue-700 mt-1">0 xe</p>
+        <p class="text-[10px] text-slate-400 mt-0.5">Tỷ lệ chốt đơn / Tổng khách</p>
       </div>
     </div>
 
-    <!-- Thống kê phễu khách hàng -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 mb-4">
-      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200">
-        <p class="text-[10px] text-slate-500 font-semibold uppercase">Tổng Khách Hàng</p>
-        <p id="stat-total" class="text-xl font-bold text-slate-800 mt-0.5">0</p>
+    <!-- KHỐI THEO DÕI NHIỆM VỤ CHĂM SÓC TRONG NGÀY -->
+    <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></span>
+        <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Tiến độ chăm sóc hôm nay:</span>
+        <span id="care-progress-text" class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">0 / 0 khách</span>
       </div>
-      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500">
-        <p class="text-[10px] text-emerald-600 font-semibold uppercase">🔥 Khách HOT (Xanh lá)</p>
-        <p id="stat-hot" class="text-xl font-bold text-emerald-600 mt-0.5">0</p>
-      </div>
-      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500">
-        <p class="text-[10px] text-amber-600 font-semibold uppercase">⚡ Khách COOL (Vàng)</p>
-        <p id="stat-cool" class="text-xl font-bold text-amber-600 mt-0.5">0</p>
-      </div>
-      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-rose-500">
-        <p class="text-[10px] text-rose-600 font-semibold uppercase">❄️ Khách LẠNH (Đỏ)</p>
-        <p id="stat-cold" class="text-xl font-bold text-rose-600 mt-0.5">0</p>
-      </div>
-      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-500">
-        <p class="text-[10px] text-blue-600 font-semibold uppercase">Đã Ký HĐ / Giao Xe</p>
-        <p id="stat-delivered" class="text-xl font-bold text-blue-600 mt-0.5">0</p>
+      <div class="text-[11px] text-slate-500">
+        <i class="fa-solid fa-circle-info text-blue-500 mr-1"></i> Bấm nút <strong>"Chưa chăm sóc"</strong> để đánh dấu hoàn thành chăm sóc trong ngày.
       </div>
     </div>
 
@@ -301,19 +326,21 @@
     <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col md:flex-row gap-2.5 justify-between items-center">
       <div class="w-full md:w-1/3 relative">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-        <input type="text" id="searchInput" oninput="renderCustomers()" placeholder="Tìm tên, SĐT, độ nóng (Hot, Cool, Lạnh)..." class="w-full pl-8 pr-3 py-1.5 border rounded-lg text-xs focus:ring-2 focus:ring-blue-500">
+        <input type="text" id="searchInput" oninput="renderCustomers()" placeholder="Tìm tên, SĐT, lý do rớt deal, nợ xấu, giá..." class="w-full pl-8 pr-3 py-1.5 border rounded-lg text-xs focus:ring-2 focus:ring-blue-500">
       </div>
       <div class="w-full md:w-auto flex flex-wrap gap-2">
         <select id="tempFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs font-bold text-slate-700">
           <option value="ALL">Tất cả nhiệt độ khách</option>
           <option value="HOT">🔥 Khách HOT (Xanh lá)</option>
           <option value="COOL">⚡ Khách COOL (Vàng)</option>
-          <option value="LẠNH">❄️ Khách LẠNH (Đỏ)</option>
+          <option value="LẠNH">❄️ Khách LẠNH (Đỏ - Rớt deal)</option>
         </select>
-        <select id="careFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs font-semibold text-slate-700">
-          <option value="ALL">Tất cả trạng thái chăm sóc</option>
-          <option value="PENDING">⏳ Chưa chăm sóc hôm nay</option>
-          <option value="DONE">✅ Đã hoàn thành chăm sóc</option>
+        <select id="coldReasonFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs text-slate-700">
+          <option value="ALL">Tất cả lý do rớt deal</option>
+          <option value="Nợ xấu ngân hàng (CIC)">Nợ xấu ngân hàng (CIC)</option>
+          <option value="Giá chưa tốt / So sánh giá">Giá chưa tốt / So sánh giá</option>
+          <option value="Tài chính chưa đủ">Tài chính chưa đủ</option>
+          <option value="Đổi kế hoạch / Mua hãng khác">Đổi kế hoạch / Mua hãng khác</option>
         </select>
         <button onclick="openModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs">
           <i class="fa-solid fa-user-plus"></i> Thêm Khách Mới
@@ -334,7 +361,7 @@
               <th class="py-3 px-3 text-center">Độ Nóng</th>
               <th class="py-3 px-3">Xe Quan Tâm</th>
               <th class="py-3 px-3">Giai Đoạn</th>
-              <th class="py-3 px-3">Lịch Hẹn / Ghi Chú</th>
+              <th class="py-3 px-3">Lý Do Rớt Deal / Ghi Chú</th>
               <th class="py-3 px-3 text-center">Nhiệm Vụ Chăm Sóc</th>
               <th class="py-3 px-3 text-center">Quy Trình 10 Bước</th>
               <th class="py-3 px-3 text-center">Liên Hệ</th>
@@ -414,6 +441,14 @@
       </div>
 
       <div class="space-y-4 pt-3 text-xs">
+        <!-- Khối lý do rớt deal nếu là khách lạnh -->
+        <div id="dt_box_cold_reason" class="p-3 bg-rose-50 rounded-xl border border-rose-200 hidden">
+          <h3 class="text-[11px] font-bold text-rose-800 uppercase mb-1 flex items-center gap-1.5">
+            <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> Lý Do Khách Lạnh (Chưa Chốt Được)
+          </h3>
+          <p id="dt_cold_reason" class="font-bold text-rose-900 text-xs">---</p>
+        </div>
+
         <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
           <h3 class="text-[11px] font-bold text-blue-800 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"><i class="fa-solid fa-id-card text-blue-600"></i> 1. Thông Tin Cá Nhân & CCCD</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
@@ -470,7 +505,7 @@
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Ghi Chú Tiến Trình</label>
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Ghi Chú Chi Tiết & Kế Hoạch Chăm Sóc Lại Sau Này</label>
           <div id="dt_note" class="p-2.5 bg-slate-50 border rounded-xl text-slate-700 text-xs whitespace-pre-wrap min-h-[50px]">Chưa có ghi chú.</div>
         </div>
       </div>
@@ -482,7 +517,7 @@
     </div>
   </div>
 
-  <!-- MODAL: FORM THÊM & SỬA HỒ SƠ KHÁCH HÀNG -->
+  <!-- MODAL: FORM THÊM & SỬA HỒ SƠ KHÁCH HÀNG (CÓ PHÂN LOẠI LÝ DO KHÁCH LẠNH) -->
   <div id="customerModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-4xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-3 border-b mb-3">
@@ -493,21 +528,34 @@
       <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-3 text-xs">
         <input type="hidden" id="editIndex">
 
+        <!-- Trạng Thái Độ Nóng Khách Hàng -->
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 mb-2">
           <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1.5">Trạng Thái Độ Nóng / Tiềm Năng Khách Hàng <span class="text-red-500">*</span></label>
           <div class="grid grid-cols-3 gap-3">
             <label class="flex items-center gap-2 p-2 border rounded-lg bg-emerald-50 border-emerald-300 cursor-pointer">
-              <input type="radio" name="in_temperature" value="HOT" checked class="text-emerald-600">
+              <input type="radio" name="in_temperature" value="HOT" checked onchange="toggleColdReasonBox()" class="text-emerald-600">
               <span class="font-bold text-emerald-800">🔥 HOT (Xanh lá)</span>
             </label>
             <label class="flex items-center gap-2 p-2 border rounded-lg bg-amber-50 border-amber-300 cursor-pointer">
-              <input type="radio" name="in_temperature" value="COOL" class="text-amber-600">
+              <input type="radio" name="in_temperature" value="COOL" onchange="toggleColdReasonBox()" class="text-amber-600">
               <span class="font-bold text-amber-800">⚡ COOL (Màu vàng)</span>
             </label>
             <label class="flex items-center gap-2 p-2 border rounded-lg bg-rose-50 border-rose-300 cursor-pointer">
-              <input type="radio" name="in_temperature" value="LẠNH" class="text-rose-600">
-              <span class="font-bold text-rose-800">❄️ LẠNH (Màu đỏ)</span>
+              <input type="radio" name="in_temperature" value="LẠNH" onchange="toggleColdReasonBox()" class="text-rose-600">
+              <span class="font-bold text-rose-800">❄️ LẠNH (Rớt deal - Màu đỏ)</span>
             </label>
+          </div>
+
+          <!-- Ô Phân Loại Lý Do Dành Cho Khách Lạnh (Chưa Chốt Được) -->
+          <div id="form_cold_reason_box" class="mt-3 pt-3 border-t border-rose-200 hidden">
+            <label class="block font-bold text-rose-800 uppercase mb-1">Lý Do Khách Lạnh / Không Chốt Được <span class="text-red-500">*</span></label>
+            <select id="in_cold_reason" class="w-full p-2 border border-rose-300 rounded-lg bg-rose-50/50 font-bold text-rose-900">
+              <option value="Nợ xấu ngân hàng (CIC)">🚫 Nợ xấu ngân hàng (Dính CIC nhóm 2 trở lên không vay được)</option>
+              <option value="Giá chưa tốt / So sánh giá">💰 Giá chưa tốt / Khách so sánh giá showroom khác</option>
+              <option value="Tài chính chưa đủ">💵 Tài chính chưa đủ (Thiếu tiền đối ứng trả trước)</option>
+              <option value="Đổi kế hoạch / Mua hãng khác">⏳ Đổi kế hoạch sang năm sau / Mua xe hãng khác</option>
+              <option value="Lý do khác">❓ Lý do khác (Ghi rõ vào phần ghi chú)</option>
+            </select>
           </div>
         </div>
 
@@ -609,10 +657,13 @@
               <option value="Chưa quyết định">Chưa quyết định</option>
             </select>
           </div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Lịch hẹn chăm sóc / Giao xe</label><input type="date" id="in_next_date" class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Lịch hẹn chăm sóc lại</label><input type="date" id="in_next_date" class="w-full p-2 border rounded-lg"></div>
         </div>
 
-        <div><label class="block font-semibold text-slate-600 mb-1">Ghi chú thêm</label><textarea id="in_note" rows="2" placeholder="Ghi chú chi tiết..." class="w-full p-2 border rounded-lg"></textarea></div>
+        <div>
+          <label class="block font-semibold text-slate-600 mb-1">Ghi chú chi tiết & Kế hoạch chăm sóc lại sau này</label>
+          <textarea id="in_note" rows="2" placeholder="Ghi chú chi tiết lý do rớt deal, ngày nợ xấu hết hạn, khi nào có khuyến mại mới thì gọi lại..." class="w-full p-2 border rounded-lg"></textarea>
+        </div>
 
         <div class="flex justify-end space-x-2 pt-2.5 border-t">
           <button type="button" onclick="closeModal()" class="px-4 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">Hủy</button>
@@ -826,7 +877,6 @@
         invoiceDiscount += c.promoDirect;
       }
 
-      // 1. VinClub Nhân 3
       const vinclubChecked = document.getElementById('promo_vinclub').checked;
       const vinclubBox = document.getElementById('box_vinclub_tier');
       if (vinclubChecked) {
@@ -840,7 +890,6 @@
         document.getElementById('val_promo_vinclub').innerText = '- 0 đ';
       }
 
-      // 2. KH CÓ XE XĂNG CŨ VINFAST CHUYỂN ĐỔI XANH
       const vinOldCarChecked = document.getElementById('promo_vin_old_car').checked;
       const vinOldCarBox = document.getElementById('box_vin_old_car');
       if (vinOldCarChecked) {
@@ -853,7 +902,6 @@
         document.getElementById('val_promo_vin_old_car').innerText = '- 0 đ';
       }
 
-      // 3. Công an / Quân đội (5%) hoặc VNPost (3%)
       const govChecked = document.getElementById('promo_gov').checked;
       const govBox = document.getElementById('box_gov_tier');
       if (govChecked) {
@@ -867,7 +915,6 @@
         document.getElementById('val_promo_gov').innerText = '- 0 đ';
       }
 
-      // 4. Chiết khấu Đại lý / TVBH
       let dealerVal = Number(document.getElementById('promo_dealer').value) || 0;
       actualDiscount += dealerVal;
 
@@ -903,10 +950,10 @@
     }
 
     // =========================================================================
-    // CRM CODE QUẢN LÝ KHÁCH HÀNG, KPI 30 NGÀY & CỘNG DỒN NỢ CŨ
+    // CRM CODE QUẢN LÝ KHÁCH HÀNG, PHỄU CHUYỂN ĐỔI % (100 KHÁCH → 8 XE)
     // =========================================================================
     const TODAY_DATE = new Date();
-    const TODAY_DAY_NUM = Math.min(30, Math.max(1, TODAY_DATE.getDate())); // Tính từ ngày 1 đến ngày 30
+    const TODAY_DAY_NUM = Math.min(30, Math.max(1, TODAY_DATE.getDate()));
     const TODAY_STR = TODAY_DATE.toISOString().split('T')[0];
 
     function getNowFormatted() {
@@ -915,42 +962,45 @@
       return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} - ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
     }
 
-    let customers = JSON.parse(localStorage.getItem('my_sales_customers_v7')) || [
+    let customers = JSON.parse(localStorage.getItem('my_sales_customers_v8')) || [
       {
-        id: 'KH-101', name: 'Nguyễn Văn An', temperature: 'HOT', dob: '1990-05-15', gender: 'Nam', phone: '0908123456', email: 'an.nguyen@gmail.com',
+        id: 'KH-101', name: 'Nguyễn Văn An', temperature: 'HOT', cold_reason: '', dob: '1990-05-15', gender: 'Nam', phone: '0908123456', email: 'an.nguyen@gmail.com',
         cccd: '079090001234', cccd_date: '2021-06-10', cccd_exp: '2030-05-15', cccd_place: 'Cục CS QLHC về TTXH',
         address_perm: '123 Nguyễn Thị Thập, P. Tân Quy, Quận 7, TP.HCM', address_temp: 'Sunrise City, Q.7',
         bank_acc: '1012345678', bank_name: 'Vietcombank', bank_owner: 'NGUYEN VAN AN',
         hdmb: 'HDMB-VF-2026-089', vso: 'VSO-88992', vin: 'VF88992026VIN01', engine: 'ENG-20268899',
         car_model: 'VF 6 Plus', car_color: 'Trắng', car_year: '2026', plate: '51K-999.88',
         source: 'Live TikTok', payment: 'Vay ngân hàng (Trả góp)', stage: 'Đã có VSO / Xe', next_date: TODAY_STR,
-        last_cared_date: '', note: 'Đã cọc 10tr, đang chuẩn bị rút COC.',
+        last_cared_date: '', note: 'Đã cọc 10tr, chuẩn bị xuất hóa đơn.',
         workflow: {
           1: { done: true, time: '09:15:20 - 20/08/2026' },
           2: { done: true, time: '14:30:10 - 21/08/2026' },
           3: { done: true, time: '10:05:45 - 22/08/2026' },
-          4: { done: false, time: '' },
-          5: { done: false, time: '' },
-          6: { done: false, time: '' },
-          7: { done: false, time: '' },
-          8: { done: false, time: '' },
-          9: { done: false, time: '' },
-          10: { done: false, time: '' }
+          4: { done: false, time: '' }
         }
       },
       {
-        id: 'KH-102', name: 'Trần Thị Mai', temperature: 'COOL', dob: '1995-10-20', gender: 'Nữ', phone: '0919888999', email: 'mai.tran@gmail.com',
+        id: 'KH-102', name: 'Trần Thị Mai', temperature: 'COOL', cold_reason: '', dob: '1995-10-20', gender: 'Nữ', phone: '0919888999', email: 'mai.tran@gmail.com',
         cccd: '079195009876', cccd_date: '', cccd_exp: '', cccd_place: '', address_perm: 'Thủ Đức', address_temp: '',
         bank_acc: '', bank_name: '', bank_owner: '', hdmb: '', vso: '', vin: '', engine: '',
         car_model: 'VF 3 Plus', car_color: 'Vàng', car_year: '2026', plate: '',
         source: 'Quảng cáo Facebook', payment: 'Vay ngân hàng (Trả góp)', stage: 'Đang tư vấn', next_date: TODAY_STR,
-        last_cared_date: '', note: 'Đang gửi CCCD check CIC ngân hàng.',
+        last_cared_date: '', note: 'Đang gửi CCCD check CIC ngân hàng xem vay được 80% không.',
+        workflow: {}
+      },
+      {
+        id: 'KH-103', name: 'Lê Hoàng Minh', temperature: 'LẠNH', cold_reason: 'Nợ xấu ngân hàng (CIC)', dob: '1988-02-12', gender: 'Nam', phone: '0933555777', email: '',
+        cccd: '', cccd_date: '', cccd_exp: '', cccd_place: '', address_perm: 'Bình Dương', address_temp: '',
+        bank_acc: '', bank_name: '', bank_owner: '', hdmb: '', vso: '', vin: '', engine: '',
+        car_model: 'VF 5 Plus', car_color: 'Xám', car_year: '2026', plate: '',
+        source: 'Spam Zalo / Nhóm Zalo', payment: 'Vay ngân hàng (Trả góp)', stage: 'Tạm ngưng / Hủy', next_date: '2026-11-30',
+        last_cared_date: '', note: 'Khách dính nợ xấu nhóm 3 thẻ tín dụng, đến tháng 11/2026 xóa nợ xấu sẽ liên hệ lại hỗ trợ hồ sơ.',
         workflow: {}
       }
     ];
 
     function saveToStorage() {
-      localStorage.setItem('my_sales_customers_v7', JSON.stringify(customers));
+      localStorage.setItem('my_sales_customers_v8', JSON.stringify(customers));
       renderCustomers();
     }
 
@@ -958,27 +1008,25 @@
       const tbody = document.getElementById('customerTableBody');
       const search = (document.getElementById('searchInput').value || '').toLowerCase();
       const tempFilter = document.getElementById('tempFilter').value;
-      const careFilter = document.getElementById('careFilter').value;
+      const coldReasonFilter = document.getElementById('coldReasonFilter').value;
       tbody.innerHTML = '';
 
       let filtered = customers.filter(c => {
         const temp = c.temperature || 'COOL';
-        const isCaredToday = (c.last_cared_date === TODAY_STR);
+        const reason = c.cold_reason || '';
         
         const matchSearch = (c.name && c.name.toLowerCase().includes(search)) || 
                             (c.phone && c.phone.includes(search)) || 
                             (temp.toLowerCase().includes(search)) ||
+                            (reason.toLowerCase().includes(search)) ||
                             (c.car_model && c.car_model.toLowerCase().includes(search));
         const matchTemp = tempFilter === 'ALL' || temp === tempFilter;
-        
-        let matchCare = true;
-        if (careFilter === 'PENDING') matchCare = !isCaredToday;
-        if (careFilter === 'DONE') matchCare = isCaredToday;
+        const matchReason = coldReasonFilter === 'ALL' || reason === coldReasonFilter;
 
-        return matchSearch && matchTemp && matchCare;
+        return matchSearch && matchTemp && matchReason;
       });
 
-      // TÍNH TOÁN KPI CHIA THEO 30 NGÀY & CỘNG DỒN NỢ THÁNG TRƯỚC
+      // 1. TÍNH TOÁN KPI CƠ BẢN & CỘNG DỒN NỢ CŨ
       const BASE_MONTHLY_KPI = 8;
       const rolloverDebt = Number(localStorage.getItem('kpi_rollover_debt')) || 0;
       const TOTAL_MONTHLY_KPI = BASE_MONTHLY_KPI + rolloverDebt;
@@ -986,7 +1034,6 @@
       const closedDeals = customers.filter(c => c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe').length;
       const kpiPercent = Math.min(100, Math.round((closedDeals / TOTAL_MONTHLY_KPI) * 100));
 
-      // Hiển thị badge nợ cũ
       const badgeRollover = document.getElementById('kpi-rollover-badge');
       if (rolloverDebt > 0) {
         badgeRollover.classList.remove('hidden');
@@ -1000,11 +1047,9 @@
       document.getElementById('kpi-percent').innerText = `${kpiPercent}%`;
       document.getElementById('kpi-bar').style.width = `${kpiPercent}%`;
 
-      // Chia đều cho 30 ngày: Mục tiêu lũy kế đến ngày hôm nay
       const expectedTargetToday = Number(((TOTAL_MONTHLY_KPI / 30) * TODAY_DAY_NUM).toFixed(1));
       document.getElementById('kpi-daily-target').innerHTML = `<i class="fa-regular fa-calendar"></i> Chỉ tiêu đến ngày ${TODAY_DAY_NUM}/30: <strong>${expectedTargetToday} xe</strong>`;
 
-      // So sánh tiến độ thực tế với chỉ tiêu ngày
       const kpiStatusElem = document.getElementById('kpi-status-text');
       const diff = closedDeals - expectedTargetToday;
       if (diff >= 0) {
@@ -1018,17 +1063,40 @@
         ? `Còn thiếu ${remain} xe nữa để cán mốc ${TOTAL_MONTHLY_KPI} xe tháng này (hết tháng không đạt sẽ cộng dồn).` 
         : `🎉 Xuất sắc! Bạn đã hoàn thành vượt chỉ tiêu KPI ${closedDeals}/${TOTAL_MONTHLY_KPI} xe!`;
 
+      // 2. TÍNH TOÁN PHỄU CHUYỂN ĐỔI % (MỤC TIÊU 100 KHÁCH/THÁNG)
+      const TOTAL_LEADS_TARGET = 100;
+      const totalCustCount = customers.length;
+      const totalLeadPercent = Math.min(100, Math.round((totalCustCount / TOTAL_LEADS_TARGET) * 100));
+
+      const hotCount = customers.filter(c => (c.temperature || 'COOL') === 'HOT').length;
+      const coolCount = customers.filter(c => (c.temperature || 'COOL') === 'COOL').length;
+      const coldCount = customers.filter(c => (c.temperature || 'COOL') === 'LẠNH').length;
+
+      // Tính % phân bổ trên tổng khách thực tế đã tìm được
+      const hotPercent = totalCustCount > 0 ? Math.round((hotCount / totalCustCount) * 100) : 0;
+      const coolPercent = totalCustCount > 0 ? Math.round((coolCount / totalCustCount) * 100) : 0;
+      const coldPercent = totalCustCount > 0 ? Math.round((coldCount / totalCustCount) * 100) : 0;
+      const conversionRate = totalCustCount > 0 ? Math.round((closedDeals / totalCustCount) * 100) : 0;
+
+      document.getElementById('stat-total').innerText = `${totalCustCount} / ${TOTAL_LEADS_TARGET} khách`;
+      document.getElementById('funnel-total-percent').innerText = `${totalLeadPercent}% Tiến độ`;
+
+      document.getElementById('stat-hot').innerText = `${hotCount} khách`;
+      document.getElementById('funnel-hot-percent').innerText = `${hotPercent}%`;
+
+      document.getElementById('stat-cool').innerText = `${coolCount} khách`;
+      document.getElementById('funnel-cool-percent').innerText = `${coolPercent}%`;
+
+      document.getElementById('stat-cold').innerText = `${coldCount} khách`;
+      document.getElementById('funnel-cold-percent').innerText = `${coldPercent}%`;
+
+      document.getElementById('stat-delivered').innerText = `${closedDeals} xe`;
+      document.getElementById('funnel-conversion-rate').innerText = `${conversionRate}% Tỷ lệ chốt`;
+
       // TIẾN ĐỘ CHĂM SÓC TRONG NGÀY
       const careList = customers.filter(c => c.stage !== 'Đã giao xe' && c.stage !== 'Tạm ngưng / Hủy');
       const caredCount = careList.filter(c => c.last_cared_date === TODAY_STR).length;
       document.getElementById('care-progress-text').innerText = `${caredCount} / ${careList.length} khách đã hoàn thành`;
-
-      // Cập nhật thống kê
-      document.getElementById('stat-total').innerText = customers.length;
-      document.getElementById('stat-hot').innerText = customers.filter(c => (c.temperature || 'COOL') === 'HOT').length;
-      document.getElementById('stat-cool').innerText = customers.filter(c => (c.temperature || 'COOL') === 'COOL').length;
-      document.getElementById('stat-cold').innerText = customers.filter(c => (c.temperature || 'COOL') === 'LẠNH').length;
-      document.getElementById('stat-delivered').innerText = closedDeals;
 
       if (filtered.length === 0) {
         document.getElementById('emptyState').classList.remove('hidden');
@@ -1078,9 +1146,10 @@
             <div class="text-[11px] text-slate-500">${cust.car_color || 'Chưa chọn'}</div>
           </td>
           <td class="py-2.5 px-3">${stageBadge}</td>
-          <td class="py-2.5 px-3">
-            ${cust.next_date ? `<div class="text-[11px] font-bold text-rose-600"><i class="fa-regular fa-calendar-check mr-1"></i>Hẹn: ${cust.next_date}</div>` : ''}
-            <div class="text-[11px] text-slate-500 truncate max-w-[140px]" title="${cust.note || ''}">${cust.note || '---'}</div>
+          <td class="py-2.5 px-3 max-w-[190px]">
+            ${cust.cold_reason ? `<div class="text-[10px] font-bold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200 inline-block mb-1"><i class="fa-solid fa-triangle-exclamation"></i> ${cust.cold_reason}</div>` : ''}
+            ${cust.next_date ? `<div class="text-[11px] font-bold text-slate-700"><i class="fa-regular fa-calendar-check mr-1 text-rose-600"></i>Hẹn: ${cust.next_date}</div>` : ''}
+            <div class="text-[11px] text-slate-500 truncate" title="${cust.note || ''}">${cust.note || '---'}</div>
           </td>
           <td class="py-2.5 px-3 text-center">
             <div class="flex justify-center">${careButton}</div>
@@ -1103,6 +1172,16 @@
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    function toggleColdReasonBox() {
+      const selectedTemp = document.querySelector("input[name='in_temperature']:checked").value;
+      const box = document.getElementById('form_cold_reason_box');
+      if (selectedTemp === 'LẠNH') {
+        box.classList.remove('hidden');
+      } else {
+        box.classList.add('hidden');
+      }
     }
 
     function configRolloverKpi() {
@@ -1273,6 +1352,7 @@
 
       let content = `BÁO CÁO NHẮC VIỆC CHĂM SÓC KHÁCH HÀNG (9H SÁNG)\n`;
       content += `Tiến độ KPI: ${document.getElementById('kpi-count').innerText} (Đến ngày ${TODAY_DAY_NUM}/30: ${document.getElementById('kpi-status-text').innerText})\n`;
+      content += `Phễu khách hàng: ${document.getElementById('stat-total').innerText} (${document.getElementById('funnel-conversion-rate').innerText})\n`;
       content += `==================================================\n\n`;
 
       content += `🔥 KHÁCH HÀNG TIỀM NĂNG (HOT) CẦN CHỐT (${pendingHot.length} khách):\n`;
@@ -1285,9 +1365,9 @@
         content += `${i + 1}. ${c.name} - ${c.phone} | Xe: ${c.car_model} | Ghi chú: ${c.note || '---'}\n`;
       });
 
-      content += `\n❄️ KHÁCH HÀNG ĐỎ (LẠNH) CẦN HỎI THĂM (${pendingCold.length} khách):\n`;
+      content += `\n❄️ KHÁCH HÀNG ĐỎ (LẠNH) CẦN HỎI THĂM / THEO DÕI NỢ XẤU, GIÁ (${pendingCold.length} khách):\n`;
       pendingCold.forEach((c, i) => {
-        content += `${i + 1}. ${c.name} - ${c.phone} | Xe: ${c.car_model} | Ghi chú: ${c.note || '---'}\n`;
+        content += `${i + 1}. ${c.name} - ${c.phone} | Lý do: ${c.cold_reason || 'Chưa rõ'} | Ghi chú: ${c.note || '---'}\n`;
       });
 
       content += `\n==================================================\n`;
@@ -1326,15 +1406,21 @@
 
       const temp = c.temperature || 'COOL';
       const tempBadge = document.getElementById('dt_temp_badge');
+      const coldReasonBox = document.getElementById('dt_box_cold_reason');
+
       if (temp === 'HOT') {
         tempBadge.innerText = '🔥 HOT (Xanh lá)';
         tempBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300';
+        coldReasonBox.classList.add('hidden');
       } else if (temp === 'COOL') {
         tempBadge.innerText = '⚡ COOL (Vàng)';
         tempBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300';
+        coldReasonBox.classList.add('hidden');
       } else {
         tempBadge.innerText = '❄️ LẠNH (Đỏ)';
         tempBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-300';
+        coldReasonBox.classList.remove('hidden');
+        document.getElementById('dt_cold_reason').innerText = c.cold_reason || 'Chưa chọn lý do';
       }
 
       document.getElementById('dt_car_model').innerText = c.car_model || '---';
@@ -1381,6 +1467,9 @@
           r.checked = (r.value === temp);
         });
 
+        document.getElementById('in_cold_reason').value = c.cold_reason || 'Nợ xấu ngân hàng (CIC)';
+        toggleColdReasonBox();
+
         document.getElementById('in_name').value = c.name || '';
         document.getElementById('in_phone').value = c.phone || '';
         document.getElementById('in_gender').value = c.gender || 'Nam';
@@ -1417,6 +1506,7 @@
         document.getElementById('customerForm').reset();
         document.getElementById('editIndex').value = '';
         document.querySelector("input[name='in_temperature'][value='HOT']").checked = true;
+        toggleColdReasonBox();
         document.getElementById('in_car_year').value = '2026';
       }
     }
@@ -1433,11 +1523,13 @@
       e.preventDefault();
       const editIdx = document.getElementById('editIndex').value;
       const selectedTemp = document.querySelector("input[name='in_temperature']:checked").value;
+      const coldReasonVal = (selectedTemp === 'LẠNH') ? document.getElementById('in_cold_reason').value : '';
 
       const data = {
         id: editIdx !== '' ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
         name: document.getElementById('in_name').value,
         temperature: selectedTemp,
+        cold_reason: coldReasonVal,
         phone: document.getElementById('in_phone').value,
         gender: document.getElementById('in_gender').value,
         dob: document.getElementById('in_dob').value,
@@ -1487,9 +1579,9 @@
     }
 
     function exportCSV() {
-      let csv = 'Mã KH,Độ Nóng,Tên Khách,Ngày sinh,Giới tính,SĐT,Email,Số CCCD,Địa chỉ thường trú,Số TK,Ngân hàng,Chủ TK,Số HĐMB,Số VSO,Số khung,Số máy,Loại xe,Màu xe,Năm SX,Biển số,Giai đoạn,Nguồn,Hình thức mua,Lịch hẹn,Ghi chú\n';
+      let csv = 'Mã KH,Độ Nóng,Lý Do Rớt Deal,Tên Khách,Ngày sinh,Giới tính,SĐT,Email,Số CCCD,Địa chỉ thường trú,Số TK,Ngân hàng,Chủ TK,Số HĐMB,Số VSO,Số khung,Số máy,Loại xe,Màu xe,Năm SX,Biển số,Giai đoạn,Nguồn,Hình thức mua,Lịch hẹn,Ghi chú\n';
       customers.forEach(c => {
-        csv += `"${c.id}","${c.temperature || 'COOL'}","${c.name}","${c.dob || ''}","${c.gender || ''}","${c.phone}","${c.email || ''}","${c.cccd || ''}","${c.address_perm || ''}","${c.bank_acc || ''}","${c.bank_name || ''}","${c.bank_owner || ''}","${c.hdmb || ''}","${c.vso || ''}","${c.vin || ''}","${c.engine || ''}","${c.car_model}","${c.car_color || ''}","${c.car_year || ''}","${c.plate || ''}","${c.stage}","${c.source}","${c.payment}","${c.next_date || ''}","${(c.note || '').replace(/"/g, '""')}"\n`;
+        csv += `"${c.id}","${c.temperature || 'COOL'}","${c.cold_reason || ''}","${c.name}","${c.dob || ''}","${c.gender || ''}","${c.phone}","${c.email || ''}","${c.cccd || ''}","${c.address_perm || ''}","${c.bank_acc || ''}","${c.bank_name || ''}","${c.bank_owner || ''}","${c.hdmb || ''}","${c.vso || ''}","${c.vin || ''}","${c.engine || ''}","${c.car_model}","${c.car_color || ''}","${c.car_year || ''}","${c.plate || ''}","${c.stage}","${c.source}","${c.payment}","${c.next_date || ''}","${(c.note || '').replace(/"/g, '""')}"\n`;
       });
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
@@ -1505,3 +1597,4 @@
   </script>
 </body>
 </html>
+  
