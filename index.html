@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinFast Portal • Báo Giá & KPI CRM</title>
+  <title>VinFast Sales Portal • Báo Giá & KPI CRM</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -45,29 +45,33 @@
   </header>
 
   <!-- ========================================================================= -->
-  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE -->
+  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE (ĐÃ XÓA KHUNG ẢNH) -->
   <!-- ========================================================================= -->
   <section id="tabQuote" class="max-w-7xl mx-auto px-4 py-4">
+    <!-- Nút chọn dòng xe -->
     <div class="bg-white rounded-xl p-1.5 shadow-xs border border-slate-200 mb-4 overflow-x-auto flex space-x-1.5 text-xs font-bold no-print" id="carModelNav"></div>
 
     <div id="printArea" class="bg-white rounded-2xl shadow-xs border border-slate-200 p-5 mb-6">
+      
+      <!-- Hàng 1: Tên xe & Nút chọn phiên bản -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-slate-100 gap-2">
         <div>
           <h2 id="q_carName" class="text-2xl font-black text-slate-900">VF 6</h2>
-          <p class="text-xs text-slate-500">Chọn phiên bản và màu sắc theo sở thích</p>
+          <p class="text-xs text-slate-500">Chọn phiên bản và màu sắc ngoại thất</p>
         </div>
         <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
 
-      <!-- Khung hiển thị hình ảnh xe thực tế -->
-      <div class="py-6 px-4 flex flex-col items-center justify-center bg-slate-50/70 rounded-2xl my-3 border border-slate-100 relative">
-        <div class="w-full max-w-xl flex items-center justify-center min-h-[220px]">
-          <img id="q_carImage" src="vf6.jpg" onerror="this.src='https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80'" alt="VinFast Car" class="max-h-60 max-w-full rounded-2xl object-cover shadow-sm transition-all duration-300">
+      <!-- Hàng 2: Chọn màu ngoại thất trực tiếp (Không có khung ảnh) -->
+      <div class="py-3 px-4 bg-slate-50 rounded-xl my-3 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Màu sắc:</span>
+          <div class="flex items-center gap-2 no-print" id="q_colorDots"></div>
         </div>
-        <div class="mt-4 flex items-center flex-wrap justify-center gap-2.5 no-print" id="q_colorDots"></div>
-        <p id="q_colorName" class="text-xs text-slate-600 mt-2.5 font-semibold">Màu ngoại thất: Trắng</p>
+        <p id="q_colorName" class="text-xs text-blue-700 font-bold bg-white px-3 py-1 rounded-lg border border-slate-200">Màu ngoại thất: Trắng</p>
       </div>
 
+      <!-- Hàng 3: Thông số kỹ thuật nhanh -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
           <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CÔNG SUẤT TỐI ĐA</p>
@@ -83,12 +87,14 @@
         </div>
       </div>
 
+      <!-- Hàng 4: Chương trình ưu đãi & Bảng Dự Toán -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-3 border-t border-slate-200">
         <div class="lg:col-span-7 space-y-2.5 no-print">
           <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <i class="fa-solid fa-tags"></i> Chương Trình Ưu Đãi Áp Dụng
           </h3>
 
+          <!-- Ưu đãi riêng dòng xe (Limo Green / MPV 7) -->
           <div id="box_model_promo" class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between hidden">
             <div class="flex items-center gap-2.5">
               <i class="fa-solid fa-gift text-emerald-600"></i>
@@ -100,6 +106,7 @@
             <span class="text-xs font-bold text-emerald-700" id="val_model_promo">- 0 đ</span>
           </div>
 
+          <!-- VinClub X3 -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
@@ -120,6 +127,7 @@
             </div>
           </div>
 
+          <!-- Mùa hè rực rỡ -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
               <input type="checkbox" id="promo_summer" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
@@ -131,6 +139,7 @@
             <span class="text-xs font-bold text-blue-700" id="val_promo_summer">- 0 đ</span>
           </div>
 
+          <!-- Công an / Quân đội (5%) hoặc VNPost (3%) -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
@@ -150,6 +159,7 @@
             </div>
           </div>
 
+          <!-- Chiết khấu Đại lý / TVBH -->
           <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-200">
             <div class="flex items-center justify-between mb-1.5">
               <label class="font-bold text-xs text-blue-900 flex items-center gap-2">
@@ -168,11 +178,6 @@
             <div class="flex justify-between items-center text-xs sm:text-sm">
               <span class="text-slate-600" id="bill_title_model">VF 6 - Plus</span>
               <span id="bill_listedPrice" class="font-bold text-slate-800">0 đ</span>
-            </div>
-
-            <div class="flex justify-between items-center text-xs sm:text-sm" id="row_color_fee">
-              <span class="text-slate-500">Phí màu sơn:</span>
-              <span id="bill_colorFee" class="font-semibold text-slate-700">0 đ</span>
             </div>
 
             <div class="flex justify-between items-center text-xs sm:text-sm pt-2 border-t border-slate-200">
@@ -559,12 +564,11 @@
           'Plus': { price: 296000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' }
         },
         colors: [
-          { name: 'Trắng', hex: '#ffffff', filter: 'brightness(1.05)' },
-          { name: 'Xám', hex: '#64748b', filter: 'grayscale(0.8) brightness(0.9)' },
-          { name: 'Đỏ', hex: '#dc2626', filter: 'hue-rotate(330deg) saturate(1.8)' },
-          { name: 'Bạc', hex: '#cbd5e1', filter: 'grayscale(1) brightness(1.2)' }
-        ],
-        image: 'vf3.jpg'
+          { name: 'Trắng', hex: '#ffffff' },
+          { name: 'Xám', hex: '#64748b' },
+          { name: 'Đỏ', hex: '#dc2626' },
+          { name: 'Bạc', hex: '#cbd5e1' }
+        ]
       },
       'VF 5': {
         name: 'VF 5',
@@ -573,12 +577,11 @@
           'Plus': { price: 496000000, power: '134 hp / 100 kW', range: '326 km (NEDC)', length: '3.967 mm' }
         },
         colors: [
-          { name: 'Trắng', hex: '#ffffff', filter: 'brightness(1.05)' },
-          { name: 'Xám', hex: '#64748b', filter: 'grayscale(0.8) brightness(0.9)' },
-          { name: 'Đỏ', hex: '#dc2626', filter: 'hue-rotate(330deg) saturate(1.8)' },
-          { name: 'Bạc', hex: '#cbd5e1', filter: 'grayscale(1) brightness(1.2)' }
-        ],
-        image: 'vf5.jpg'
+          { name: 'Trắng', hex: '#ffffff' },
+          { name: 'Xám', hex: '#64748b' },
+          { name: 'Đỏ', hex: '#dc2626' },
+          { name: 'Bạc', hex: '#cbd5e1' }
+        ]
       },
       'VF 6': {
         name: 'VF 6',
@@ -588,13 +591,12 @@
           'Plus': { price: 699000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' }
         },
         colors: [
-          { name: 'Trắng', hex: '#ffffff', filter: 'brightness(1.05)' },
-          { name: 'Xám', hex: '#64748b', filter: 'grayscale(0.8) brightness(0.9)' },
-          { name: 'Đỏ', hex: '#b91c1c', filter: 'hue-rotate(330deg) saturate(1.8)' },
-          { name: 'Bạc', hex: '#cbd5e1', filter: 'grayscale(1) brightness(1.2)' },
-          { name: 'Đen', hex: '#1e293b', filter: 'brightness(0.3) contrast(1.4)' }
-        ],
-        image: 'vf6.jpg'
+          { name: 'Trắng', hex: '#ffffff' },
+          { name: 'Xám', hex: '#64748b' },
+          { name: 'Đỏ', hex: '#b91c1c' },
+          { name: 'Bạc', hex: '#cbd5e1' },
+          { name: 'Đen', hex: '#1e293b' }
+        ]
       },
       'VF MPV 7': {
         name: 'VF MPV 7',
@@ -604,13 +606,12 @@
         },
         promoDirect: 20000000,
         colors: [
-          { name: 'Trắng', hex: '#ffffff', filter: 'brightness(1.05)' },
-          { name: 'Xám', hex: '#64748b', filter: 'grayscale(0.8) brightness(0.9)' },
-          { name: 'Đỏ', hex: '#991b1b', filter: 'hue-rotate(330deg) saturate(1.8)' },
-          { name: 'Bạc', hex: '#cbd5e1', filter: 'grayscale(1) brightness(1.2)' },
-          { name: 'Đen', hex: '#1e293b', filter: 'brightness(0.3) contrast(1.4)' }
-        ],
-        image: 'mpv7.jpg'
+          { name: 'Trắng', hex: '#ffffff' },
+          { name: 'Xám', hex: '#64748b' },
+          { name: 'Đỏ', hex: '#991b1b' },
+          { name: 'Bạc', hex: '#cbd5e1' },
+          { name: 'Đen', hex: '#1e293b' }
+        ]
       },
       'Limo Green': {
         name: 'Limo Green',
@@ -620,13 +621,12 @@
         },
         promoDirect: 35000000,
         colors: [
-          { name: 'Trắng', hex: '#ffffff', filter: 'brightness(1.05)' },
-          { name: 'Xám', hex: '#64748b', filter: 'grayscale(0.8) brightness(0.9)' },
-          { name: 'Đỏ', hex: '#991b1b', filter: 'hue-rotate(330deg) saturate(1.8)' },
-          { name: 'Bạc', hex: '#cbd5e1', filter: 'grayscale(1) brightness(1.2)' },
-          { name: 'Đen', hex: '#1e293b', filter: 'brightness(0.3) contrast(1.4)' }
-        ],
-        image: 'limo.jpg'
+          { name: 'Trắng', hex: '#ffffff' },
+          { name: 'Xám', hex: '#64748b' },
+          { name: 'Đỏ', hex: '#991b1b' },
+          { name: 'Bạc', hex: '#cbd5e1' },
+          { name: 'Đen', hex: '#1e293b' }
+        ]
       }
     };
 
@@ -704,10 +704,6 @@
 
       const curCol = c.colors[curColorIdx];
       document.getElementById('q_colorName').innerText = `Màu ngoại thất: ${curCol.name}`;
-      
-      const imgElem = document.getElementById('q_carImage');
-      imgElem.src = c.image;
-      imgElem.style.filter = curCol.filter || 'none';
 
       const spec = c.versions[curVer];
       document.getElementById('q_specPower').innerText = spec.power;
@@ -786,7 +782,6 @@
 
       document.getElementById('bill_title_model').innerText = `${curModel} - ${curVer}`;
       document.getElementById('bill_listedPrice').innerText = formatVND(basePrice);
-      document.getElementById('bill_colorFee').innerText = '0 đ';
       document.getElementById('bill_invoicePrice').innerText = formatVND(invoicePrice);
       document.getElementById('bill_actualPrice').innerText = formatVND(actualPrice);
       document.getElementById('bill_grandTotal').innerText = formatVND(actualPrice);
