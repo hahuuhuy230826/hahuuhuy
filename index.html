@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinFast Order & Price Management Portal</title>
+  <title>Báo Giá Xe & Quản Lý Hồ Sơ Khách Hàng VinFast</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -14,12 +14,6 @@
       #printArea, #printArea * { visibility: visible; }
       #printArea { position: absolute; left: 0; top: 0; width: 100%; }
       .no-print { display: none !important; }
-    }
-    .car-img-container {
-      min-height: 230px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
   </style>
 </head>
@@ -34,14 +28,14 @@
         </div>
         <div>
           <h1 class="text-base font-extrabold tracking-tight text-slate-800">VINFAST BÁO GIÁ & BÁN HÀNG</h1>
-          <p class="text-[11px] text-slate-500 font-medium">Hệ thống tính dự toán chi tiết & Quản lý khách hàng</p>
+          <p class="text-[11px] text-slate-500 font-medium">Dự toán chi phí & Sổ tay quản lý khách hàng cá nhân</p>
         </div>
       </div>
       
       <!-- Tab điều hướng -->
       <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
         <button id="tabBtnQuote" onclick="switchTab('quote')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5">
-          <i class="fa-solid fa-calculator"></i> Bảng Báo Giá
+          <i class="fa-solid fa-calculator"></i> Bảng Báo Giá Xe
         </button>
         <button id="tabBtnCrm" onclick="switchTab('crm')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5">
           <i class="fa-solid fa-users"></i> Quản Lý Khách Hàng
@@ -51,44 +45,44 @@
   </header>
 
   <!-- ========================================================================= -->
-  <!-- TAB 1: BẢNG BÁO GIÁ Ô TÔ VINFAST CHUẨN MÀU & ẢNH XE THỰC TẾ -->
+  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE YÊU CẦU -->
   <!-- ========================================================================= -->
   <section id="tabQuote" class="max-w-7xl mx-auto px-4 py-4">
 
     <!-- Danh sách chọn dòng xe -->
-    <div class="bg-white rounded-xl p-1.5 shadow-xs border border-slate-200 mb-4 overflow-x-auto flex space-x-1 text-xs font-bold no-print" id="carModelNav"></div>
+    <div class="bg-white rounded-xl p-1.5 shadow-xs border border-slate-200 mb-4 overflow-x-auto flex space-x-1.5 text-xs font-bold no-print" id="carModelNav"></div>
 
     <!-- Khung chính hiển thị xe & Báo giá -->
     <div id="printArea" class="bg-white rounded-2xl shadow-xs border border-slate-200 p-5 mb-6">
       
-      <!-- Hàng 1: Tên xe & Nút chọn phiên bản -->
+      <!-- Tên xe & Nút chọn phiên bản -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-slate-100 gap-2">
         <div>
           <h2 id="q_carName" class="text-2xl font-black text-slate-900">VF 6</h2>
-          <p class="text-xs text-slate-500">Chọn phiên bản và màu sắc theo sở thích</p>
+          <p class="text-xs text-slate-500">Chọn phiên bản và màu sắc ngoại thất</p>
         </div>
         <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
 
-      <!-- Hàng 2: Hình ảnh xe & Chọn màu ngoại thất trực quan -->
-      <div class="py-6 px-4 flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100/70 rounded-2xl my-3 border border-slate-100 relative">
-        <div class="car-img-container w-full max-w-xl">
-          <img id="q_carImage" src="https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-trang_1716365942.webp" alt="Car Exterior" class="h-44 sm:h-56 max-w-full object-contain drop-shadow-xl transition-all duration-300">
+      <!-- Hình ảnh xe thực tế & Chọn màu -->
+      <div class="py-6 px-4 flex flex-col items-center justify-center bg-slate-50/70 rounded-2xl my-3 border border-slate-100 relative">
+        <div class="w-full max-w-lg flex items-center justify-center min-h-[190px]">
+          <img id="q_carImage" src="https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-trang_1716365942.webp" alt="Car Image" class="h-44 sm:h-52 max-w-full object-contain drop-shadow-md transition-all duration-300">
         </div>
         
         <!-- Nút tròn chọn màu -->
         <div class="mt-4 flex items-center flex-wrap justify-center gap-2.5 no-print" id="q_colorDots"></div>
-        <p id="q_colorName" class="text-xs text-slate-600 mt-2.5 font-semibold">Màu ngoại thất: Trắng (Infinity Blanc)</p>
+        <p id="q_colorName" class="text-xs text-slate-600 mt-2 font-semibold">Màu ngoại thất: Trắng (Infinity Blanc)</p>
       </div>
 
-      <!-- Hàng 3: Thông số kỹ thuật nhanh -->
+      <!-- Thông số kỹ thuật -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
           <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CÔNG SUẤT TỐI ĐA</p>
           <p id="q_specPower" class="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">201 hp / 150 kW</p>
         </div>
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
-          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">QUÃNG ĐƯỜNG DI CHUYỂN 1 LẦN SẠC</p>
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">QUÃNG ĐƯỜNG 1 LẦN SẠC</p>
           <p id="q_specRange" class="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">381 km (WLTP)</p>
         </div>
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
@@ -97,7 +91,7 @@
         </div>
       </div>
 
-      <!-- Hàng 4: Chương trình ưu đãi & Bảng Dự Toán -->
+      <!-- Chương trình ưu đãi & Bảng Dự Toán -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-3 border-t border-slate-200">
         
         <!-- Cột trái: Chương Trình Ưu Đãi Áp Dụng (7 Cột) -->
@@ -106,19 +100,19 @@
             <i class="fa-solid fa-tags"></i> Chương Trình Ưu Đãi Áp Dụng
           </h3>
 
-          <!-- Ưu đãi dòng xe riêng theo chính sách -->
+          <!-- Ưu đãi riêng cho Limo Green / VF MPV 7 -->
           <div id="box_model_promo" class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between hidden">
             <div class="flex items-center gap-2.5">
               <i class="fa-solid fa-gift text-emerald-600"></i>
               <div>
                 <p id="txt_model_promo_title" class="font-bold text-xs text-emerald-900">Ưu đãi giảm giá trực tiếp</p>
-                <p id="txt_model_promo_desc" class="text-[11px] text-emerald-700">Chính sách ưu đãi riêng dòng xe</p>
+                <p id="txt_model_promo_desc" class="text-[11px] text-emerald-700">Chính sách thúc đẩy bán hàng</p>
               </div>
             </div>
             <span class="text-xs font-bold text-emerald-700" id="val_model_promo">- 0 đ</span>
           </div>
 
-          <!-- VinClub X3 -->
+          <!-- VinClub Nhân 3 -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
@@ -139,37 +133,16 @@
             </div>
           </div>
 
-          <!-- Mùa hè rực rỡ / Thu xăng đổi điện -->
+          <!-- Mùa hè rực rỡ (Vinfascination) -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
               <input type="checkbox" id="promo_summer" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
               <div>
-                <label for="promo_summer" class="font-bold text-xs text-slate-800 cursor-pointer">Chương Trình Mùa Hè Rực Rỡ (Vinfascination)</label>
-                <p class="text-[11px] text-slate-500">Giảm 2% - 3% MSRP trực tiếp quy đổi tiền mặt</p>
+                <label for="promo_summer" class="font-bold text-xs text-slate-800 cursor-pointer">Mùa Hè Rực Rỡ (Vinfascination)</label>
+                <p class="text-[11px] text-slate-500">Giảm 2% - 3% MSRP trực tiếp vào giá</p>
               </div>
             </div>
             <span class="text-xs font-bold text-blue-700" id="val_promo_summer">- 0 đ</span>
-          </div>
-
-          <!-- Tri ân xe xăng đổi xanh Fadil, Lux A, Lux SA -->
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <input type="checkbox" id="promo_gas_tradein" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
-                <div>
-                  <label for="promo_gas_tradein" class="font-bold text-xs text-slate-800 cursor-pointer">Tri Ân Khách Xe Xăng VinFast Chuyển Đổi Xanh</label>
-                  <p class="text-[11px] text-slate-500">Voucher Fadil (30tr), Lux A (60tr), Lux SA (80tr)</p>
-                </div>
-              </div>
-              <span class="text-xs font-bold text-blue-700" id="val_promo_gas_tradein">- 0 đ</span>
-            </div>
-            <div id="box_gas_tier" class="mt-2 pl-6 hidden flex gap-2">
-              <select id="sel_gas_tier" onchange="calculateQuote()" class="p-1 border rounded text-xs bg-white">
-                <option value="30000000">Đổi từ Fadil (Giảm 30.000.000 đ)</option>
-                <option value="60000000">Đổi từ Lux A (Giảm 60.000.000 đ)</option>
-                <option value="80000000">Đổi từ Lux SA (Giảm 80.000.000 đ)</option>
-              </select>
-            </div>
           </div>
 
           <!-- Công an / Quân đội (5%) hoặc VNPost (3%) -->
@@ -229,9 +202,9 @@
               <span class="text-emerald-700 font-bold">GIÁ THU THỰC TẾ XE:</span>
               <span id="bill_actualPrice" class="font-bold text-emerald-700">0 đ</span>
             </div>
-            <p class="text-[10px] text-slate-400 italic text-center">(Giá bán đã bao gồm VAT, áp dụng theo chính sách bán hàng)</p>
+            <p class="text-[10px] text-slate-400 italic text-center">(Giá bán đã bao gồm VAT và ưu đãi theo chính sách áp dụng)</p>
 
-            <!-- Banner tổng thanh toán lớn xanh đậm -->
+            <!-- Banner tổng giá thu thực tế -->
             <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white p-4 rounded-xl text-center shadow-md mt-4">
               <p class="text-[10px] text-blue-200 uppercase font-semibold">TỔNG CHI PHÍ THU KHÁCH HÀNG (GIÁ XUẤT THU)</p>
               <p id="bill_grandTotal" class="text-2xl font-black tracking-tight mt-1 text-white">0 đ</p>
@@ -485,25 +458,13 @@
           <div>
             <label class="block font-semibold text-slate-600 mb-1">Loại xe / Model</label>
             <select id="in_car_model" class="w-full p-2 border rounded-lg bg-white font-bold text-blue-700">
-              <option value="VF 2">VF 2</option>
-              <option value="VF 3">VF 3</option>
+              <option value="VF 3 Eco">VF 3 Eco</option>
+              <option value="VF 3 Plus">VF 3 Plus</option>
               <option value="VF 5 Plus">VF 5 Plus</option>
               <option value="VF 6 Eco">VF 6 Eco</option>
               <option value="VF 6 Plus">VF 6 Plus</option>
-              <option value="VF 7 Eco">VF 7 Eco</option>
-              <option value="VF 7 Plus">VF 7 Plus</option>
-              <option value="VF 8 Eco">VF 8 Eco</option>
-              <option value="VF 8 Plus">VF 8 Plus</option>
-              <option value="VF 8 Thế hệ mới">VF 8 Thế hệ mới</option>
-              <option value="VF 9 Eco">VF 9 Eco</option>
-              <option value="VF 9 Plus">VF 9 Plus</option>
               <option value="VF MPV 7">VF MPV 7</option>
-              <option value="Minio Green">Minio Green</option>
-              <option value="Herio Green">Herio Green</option>
-              <option value="Nerio Green">Nerio Green</option>
               <option value="Limo Green">Limo Green</option>
-              <option value="EC Van">EC Van</option>
-              <option value="Lạc Hồng 900">Lạc Hồng 900</option>
             </select>
           </div>
           <div><label class="block font-semibold text-slate-600 mb-1">Màu xe</label><input type="text" id="in_car_color" placeholder="Trắng, Vàng..." class="w-full p-2 border rounded-lg"></div>
@@ -552,29 +513,14 @@
 
   <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ CHỨC NĂNG -->
   <script>
-    // DỮ LIỆU CẤU HÌNH XE, MÀU NGOẠI THẤT & LINK HÌNH ẢNH RENDER CHUẨN VINFAST
+    // DỮ LIỆU CẤU HÌNH XE, GIÁ NIÊM YẾT CHÍNH XÁC & LINK HÌNH ĐỔI MÀU
     const CAR_DATA = {
-      'VF 2': {
-        name: 'VF 2',
-        maxStaffDiscount: 0,
-        versions: {
-          'Tiêu chuẩn 1': { price: 188000000, power: '40 hp', range: '200 km', length: '3.100 mm' }
-        },
-        colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-trang_1716365942.webp' },
-          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-do_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-xam_1716365942.webp' },
-          { name: 'Vàng nóc trắng', hex: '#fbbf24', fee: 8000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-vang_1716365942.webp' },
-          { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 8000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-xanh-la_1716365942.webp' }
-        ]
-      },
       'VF 3': {
         name: 'VF 3',
         maxStaffDiscount: 6000000,
         versions: {
-          'Tiêu chuẩn 1': { price: 278000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' },
-          'Tiêu chuẩn 2 (Eco)': { price: 285000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' },
-          'Tiêu chuẩn 2 (Plus)': { price: 296000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' }
+          'Eco': { price: 285000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' },
+          'Plus': { price: 296000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' }
         },
         colors: [
           { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-trang_1716365942.webp' },
@@ -590,7 +536,7 @@
         name: 'VF 5',
         maxStaffDiscount: 10000000,
         versions: {
-          'Plus (Tiêu chuẩn 1)': { price: 496000000, power: '134 hp / 100 kW', range: '326 km (NEDC)', length: '3.967 mm' }
+          'Plus': { price: 496000000, power: '134 hp / 100 kW', range: '326 km (NEDC)', length: '3.967 mm' }
         },
         colors: [
           { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf5-trang_1716365942.webp' },
@@ -604,12 +550,8 @@
         name: 'VF 6',
         maxStaffDiscount: 12000000,
         versions: {
-          'Eco (Tiêu chuẩn 1)': { price: 650000000, power: '174 hp / 130 kW', range: '399 km (WLTP)', length: '4.238 mm' },
-          'Eco (Tiêu chuẩn 2)': { price: 646000000, power: '174 hp / 130 kW', range: '399 km (WLTP)', length: '4.238 mm' },
-          'Eco (Nâng cấp)': { price: 699000000, power: '174 hp / 130 kW', range: '399 km (WLTP)', length: '4.238 mm' },
-          'Plus (Tiêu chuẩn 1)': { price: 710000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' },
-          'Plus (Tiêu chuẩn 2)': { price: 700000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' },
-          'Plus (Nâng cấp)': { price: 750000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' }
+          'Eco': { price: 646000000, power: '174 hp / 130 kW', range: '399 km (WLTP)', length: '4.238 mm' },
+          'Plus': { price: 699000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' }
         },
         colors: [
           { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-trang_1716365942.webp' },
@@ -619,79 +561,11 @@
           { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 8000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-xanh-mint_1716365942.webp' }
         ]
       },
-      'VF 7': {
-        name: 'VF 7',
-        maxStaffDiscount: 15000000,
-        versions: {
-          'Eco (Tiêu chuẩn 1)': { price: 750000000, power: '174 hp / 130 kW', range: '375 km (WLTP)', length: '4.545 mm' },
-          'Eco (Tiêu chuẩn 2)': { price: 740000000, power: '174 hp / 130 kW', range: '375 km (WLTP)', length: '4.545 mm' },
-          'Eco (Nâng cấp)': { price: 830000000, power: '174 hp / 130 kW', range: '375 km (WLTP)', length: '4.545 mm' },
-          'Plus Trần Thép (Tiêu chuẩn 1)': { price: 889000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
-          'Plus Trần Thép (Tiêu chuẩn 2)': { price: 840000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
-          'Plus Trần Thép (Nâng cấp)': { price: 920000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
-          'Plus Trần Kính (Tiêu chuẩn 1)': { price: 909000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
-          'Plus Trần Kính (Tiêu chuẩn 2)': { price: 860000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
-          'Plus Trần Kính (Nâng cấp)': { price: 850000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' }
-        },
-        colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-trang_1716365942.webp' },
-          { name: 'Đen (Jet Black)', hex: '#1e293b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-den_1716365942.webp' },
-          { name: 'Đỏ (Crimson Red)', hex: '#991b1b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-do_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xam_1716365942.webp' },
-          { name: 'Xanh Dương', hex: '#1d4ed8', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xanh_1716365942.webp' },
-          { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 8000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xanh-mint_1716365942.webp' }
-        ]
-      },
-      'VF 8': {
-        name: 'VF 8',
-        maxStaffDiscount: 20000000,
-        versions: {
-          'Eco (Tiêu chuẩn 1)': { price: 910000000, power: '349 hp / 260 kW', range: '471 km (WLTP)', length: '4.750 mm' },
-          'Eco (Tiêu chuẩn 2 - Pin CATL VN)': { price: 898000000, power: '349 hp / 260 kW', range: '471 km (WLTP)', length: '4.750 mm' },
-          'Plus (Tiêu chuẩn 2 - Pin CATL VN)': { price: 1079000000, power: '402 hp / 300 kW', range: '457 km (WLTP)', length: '4.750 mm' },
-          'Eco (Pin CATL US)': { price: 918000000, power: '349 hp / 260 kW', range: '471 km (WLTP)', length: '4.750 mm' },
-          'Plus (Pin CATL US)': { price: 1079000000, power: '402 hp / 300 kW', range: '457 km (WLTP)', length: '4.750 mm' }
-        },
-        colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-trang_1716365942.webp' },
-          { name: 'Đen (Jet Black)', hex: '#0f172a', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-den_1716365942.webp' },
-          { name: 'Đỏ (Crimson Red)', hex: '#b91c1c', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-do_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-xam_1716365942.webp' },
-          { name: 'Xanh Lá Đậm (Ivy Green)', hex: '#064e3b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-xanh_1716365942.webp' }
-        ]
-      },
-      'VF 8 Thế hệ mới': {
-        name: 'VF 8 Thế hệ mới',
-        maxStaffDiscount: 0,
-        versions: {
-          'Tiêu chuẩn 1': { price: 899000000, power: '349 hp / 260 kW', range: '500 km', length: '4.750 mm' }
-        },
-        colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-trang_1716365942.webp' },
-          { name: 'Đen (Jet Black)', hex: '#0f172a', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-den_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#475569', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-xam_1716365942.webp' },
-          { name: 'Cam Vitality + Nóc đen', hex: '#f97316', fee: 12000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf8-do_1716365942.webp' }
-        ]
-      },
-      'VF 9': {
-        name: 'VF 9',
-        maxStaffDiscount: 25000000,
-        versions: {
-          'Eco (CATL 3 Vùng)': { price: 1348000000, power: '402 hp / 300 kW', range: '438 km (WLTP)', length: '5.118 mm' },
-          'Plus Trần Thép (CATL 3 Vùng)': { price: 1529000000, power: '402 hp / 300 kW', range: '423 km (WLTP)', length: '5.118 mm' }
-        },
-        colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf9-trang_1716365942.webp' },
-          { name: 'Đen (Jet Black)', hex: '#020617', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf9-den_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#475569', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf9-xam_1716365942.webp' },
-          { name: 'Xanh Lá Đậm (Ivy Green)', hex: '#064e3b', fee: 12000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf9-xanh_1716365942.webp' }
-        ]
-      },
       'VF MPV 7': {
         name: 'VF MPV 7',
         maxStaffDiscount: 15000000,
         versions: {
-          'Tiêu chuẩn': { price: 699000000, power: '150 hp', range: '400 km', length: '4.700 mm' }
+          'Tiêu chuẩn': { price: 750000000, power: '150 hp', range: '400 km', length: '4.700 mm' }
         },
         promoDirect: 20000000,
         colors: [
@@ -699,42 +573,6 @@
           { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xam_1716365942.webp' },
           { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-den_1716365942.webp' },
           { name: 'Nâu (Introspective Brown)', hex: '#78350f', fee: 10000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-do_1716365942.webp' }
-        ]
-      },
-      'Minio Green': {
-        name: 'Minio Green',
-        maxStaffDiscount: 6000000,
-        versions: {
-          'Tiêu chuẩn': { price: 188000000, power: '30 hp', range: '170 km', length: '3.000 mm' }
-        },
-        colors: [
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-trang_1716365942.webp' },
-          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-xam_1716365942.webp' },
-          { name: 'Xanh Mint', hex: '#6ee7b7', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-xanh-la_1716365942.webp' },
-          { name: 'Hồng (Rose Pink)', hex: '#f472b6', fee: 8000000, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-hong_1716365942.webp' }
-        ]
-      },
-      'Herio Green': {
-        name: 'Herio Green',
-        maxStaffDiscount: 10000000,
-        versions: {
-          'Tiêu chuẩn': { price: 450000000, power: '100 hp', range: '300 km', length: '3.900 mm' },
-          'Nâng cấp': { price: 469000000, power: '100 hp', range: '300 km', length: '3.900 mm' }
-        },
-        colors: [
-          { name: 'Xanh Taxi GSM', hex: '#059669', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf5-xanh_1716365942.webp' },
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf5-trang_1716365942.webp' }
-        ]
-      },
-      'Nerio Green': {
-        name: 'Nerio Green',
-        maxStaffDiscount: 12000000,
-        versions: {
-          'Tiêu chuẩn': { price: 628000000, power: '150 hp', range: '380 km', length: '4.200 mm' }
-        },
-        colors: [
-          { name: 'Xanh Taxi GSM', hex: '#059669', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-xanh-la_1716365942.webp' },
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-trang_1716365942.webp' }
         ]
       },
       'Limo Green': {
@@ -748,36 +586,11 @@
           { name: 'Xanh Taxi GSM', hex: '#059669', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xanh_1716365942.webp' },
           { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-trang_1716365942.webp' }
         ]
-      },
-      'EC Van': {
-        name: 'EC Van',
-        maxStaffDiscount: 6000000,
-        versions: {
-          'Tiêu chuẩn': { price: 268000000, power: '40 hp', range: '180 km', length: '3.600 mm' },
-          'Nâng cao': { price: 286000000, power: '40 hp', range: '180 km', length: '3.600 mm' },
-          'Nâng cao + Cửa trượt': { price: 306000000, power: '40 hp', range: '180 km', length: '3.600 mm' }
-        },
-        promoDirect: 20000000,
-        colors: [
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-trang_1716365942.webp' },
-          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-xam_1716365942.webp' }
-        ]
-      },
-      'Lạc Hồng 900': {
-        name: 'Lạc Hồng 900',
-        maxStaffDiscount: 0,
-        versions: {
-          'Tiêu chuẩn': { price: 5000000000, power: '500 hp', range: '500 km', length: '5.300 mm' },
-          'Chống đạn': { price: 36000000000, power: '500 hp', range: '450 km', length: '5.300 mm' }
-        },
-        colors: [
-          { name: 'Đen Hoàng Gia', hex: '#020617', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf9-den_1716365942.webp' }
-        ]
       }
     };
 
     let curModel = 'VF 6';
-    let curVer = 'Plus (Nâng cấp)';
+    let curVer = 'Plus';
     let curColorIdx = 0;
 
     function formatVND(n) {
@@ -822,7 +635,7 @@
 
     function loadModelUI() {
       const c = CAR_DATA[curModel];
-      document.getElementById('q_carName').innerText = c.name;
+      document.getElementById('q_carName').innerText = `${c.name} - ${curVer}`;
       
       const verBox = document.getElementById('q_versionButtons');
       verBox.innerHTML = '';
@@ -838,7 +651,7 @@
       dotBox.innerHTML = '';
       c.colors.forEach((col, idx) => {
         const dot = document.createElement('button');
-        dot.className = `w-7 h-7 rounded-full border-2 transition shadow-xs ${idx === curColorIdx ? 'ring-2 ring-blue-600 scale-110 border-white' : 'border-slate-300 opacity-80'}`;
+        dot.className = `w-6 h-6 rounded-full border-2 transition shadow-xs ${idx === curColorIdx ? 'ring-2 ring-blue-600 scale-110 border-white' : 'border-slate-300 opacity-80'}`;
         dot.style.backgroundColor = col.hex;
         dot.title = col.name + (col.fee > 0 ? ` (+${formatVND(col.fee)})` : '');
         dot.onclick = () => {
@@ -863,9 +676,9 @@
       document.getElementById('promo_dealer').max = c.maxStaffDiscount;
 
       const promoDirectBox = document.getElementById('box_model_promo');
-      if (c.promoDirect && (curVer.includes('Tiêu chuẩn') || curModel === 'Limo Green' || curModel === 'VF MPV 7')) {
+      if (c.promoDirect) {
         promoDirectBox.classList.remove('hidden');
-        document.getElementById('txt_model_promo_desc').innerText = `Chính sách thúc đẩy bán hàng VinFast tháng 08/2026`;
+        document.getElementById('txt_model_promo_desc').innerText = `Chính sách thúc đẩy bán hàng VinFast`;
         document.getElementById('val_model_promo').innerText = '- ' + formatVND(c.promoDirect);
       } else {
         promoDirectBox.classList.add('hidden');
@@ -882,7 +695,7 @@
       let actualDiscount = 0;
 
       const c = CAR_DATA[curModel];
-      if (c.promoDirect && (curVer.includes('Tiêu chuẩn') || curModel === 'Limo Green' || curModel === 'VF MPV 7')) {
+      if (c.promoDirect) {
         invoiceDiscount += c.promoDirect;
       }
 
@@ -902,7 +715,7 @@
       const summerChecked = document.getElementById('promo_summer').checked;
       if (summerChecked) {
         let summerRate = 0.02;
-        if (['VF 5', 'Herio Green', 'Limo Green', 'VF MPV 7', 'Minio Green'].includes(curModel)) {
+        if (['VF 5', 'Limo Green', 'VF MPV 7', 'VF 3'].includes(curModel)) {
           summerRate = 0.03;
         }
         const summerVal = basePrice * summerRate;
@@ -910,18 +723,6 @@
         invoiceDiscount += summerVal;
       } else {
         document.getElementById('val_promo_summer').innerText = '- 0 đ';
-      }
-
-      const gasChecked = document.getElementById('promo_gas_tradein').checked;
-      const gasBox = document.getElementById('box_gas_tier');
-      if (gasChecked) {
-        gasBox.classList.remove('hidden');
-        const gasVal = parseFloat(document.getElementById('sel_gas_tier').value);
-        document.getElementById('val_promo_gas_tradein').innerText = '- ' + formatVND(gasVal);
-        invoiceDiscount += gasVal;
-      } else {
-        gasBox.classList.add('hidden');
-        document.getElementById('val_promo_gas_tradein').innerText = '- 0 đ';
       }
 
       const govChecked = document.getElementById('promo_gov').checked;
@@ -957,15 +758,15 @@
       const pActual = document.getElementById('bill_actualPrice').innerText;
       const cColor = CAR_DATA[curModel].colors[curColorIdx].name;
 
-      const text = `🚗 BẢNG DỰ TOÁN BÁO GIÁ VINFAST (ÁP DỤNG THÁNG 8)\n` +
+      const text = `🚗 BẢNG DỰ TOÁN BÁO GIÁ VINFAST\n` +
                    `• Dòng xe: ${curModel} (${curVer})\n` +
                    `• Màu ngoại thất: ${cColor}\n` +
                    `------------------------------------\n` +
-                   `• Giá niêm yết (kèm pin): ${pListed}\n` +
+                   `• Giá niêm yết: ${pListed}\n` +
                    `• GIÁ XUẤT HÓA ĐƠN (HĐMB): ${pHDMB}\n` +
                    `👉 TỔNG GIÁ THU THỰC TẾ: ${pActual}\n` +
                    `------------------------------------\n` +
-                   `Đã bao gồm VAT & các gói ưu đãi chính sách. Quý khách liên hệ hotline để nhận lịch giao xe sớm nhất!`;
+                   `Đã bao gồm VAT và ưu đãi chính sách. Quý khách liên hệ hotline để nhận lịch giao xe sớm nhất!`;
 
       navigator.clipboard.writeText(text).then(() => {
         alert('Đã sao chép nội dung báo giá! Bạn có thể dán (Paste) ngay sang Zalo cho khách hàng.');
@@ -1236,10 +1037,9 @@
       a.click();
     }
 
-    // Khởi chạy khi load trang
+    // Khởi chạy khi tải trang
     initQuote();
     renderCustomers();
   </script>
 </body>
 </html>
-
