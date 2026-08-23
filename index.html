@@ -16,7 +16,7 @@
       .no-print { display: none !important; }
     }
     .car-preview-box {
-      min-height: 240px;
+      min-height: 230px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -51,7 +51,7 @@
   </header>
 
   <!-- ========================================================================= -->
-  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE THỰC TẾ -->
+  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE THỰC TẾ (ẢNH GOOGLE STORAGE CDN) -->
   <!-- ========================================================================= -->
   <section id="tabQuote" class="max-w-7xl mx-auto px-4 py-4">
 
@@ -73,10 +73,10 @@
       <!-- Hàng 2: Hình ảnh thực tế & Đổi màu xe -->
       <div class="py-6 px-4 flex flex-col items-center justify-center bg-slate-50/70 rounded-2xl my-3 border border-slate-100 relative">
         <div class="car-preview-box w-full max-w-xl">
-          <img id="q_carImage" src="https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-trang_1716365942.webp" alt="Car Preview" class="h-44 sm:h-56 max-w-full object-contain drop-shadow-md transition-all duration-300">
+          <img id="q_carImage" src="https://storage.googleapis.com/vinfast-data-01/vf6-white.png" onerror="this.src='https://placehold.co/500x260?text=VinFast+Image'" alt="Car Preview" class="h-44 sm:h-56 max-w-full object-contain drop-shadow-md transition-all duration-300">
         </div>
         
-        <!-- Nút tròn chọn màu (Trắng, Xám, Đỏ, Bạc, Đen) -->
+        <!-- Nút tròn chọn màu -->
         <div class="mt-4 flex items-center flex-wrap justify-center gap-2.5 no-print" id="q_colorDots"></div>
         <p id="q_colorName" class="text-xs text-slate-600 mt-2.5 font-semibold">Màu ngoại thất: Trắng (Infinity Blanc)</p>
       </div>
@@ -106,7 +106,7 @@
             <i class="fa-solid fa-tags"></i> Chương Trình Ưu Đãi Áp Dụng
           </h3>
 
-          <!-- Ưu đãi dòng xe riêng theo chính sách (Limo Green / MPV 7) -->
+          <!-- Ưu đãi riêng dòng xe (Limo Green / MPV 7) -->
           <div id="box_model_promo" class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between hidden">
             <div class="flex items-center gap-2.5">
               <i class="fa-solid fa-gift text-emerald-600"></i>
@@ -518,7 +518,7 @@
 
   <!-- JAVASCRIPT XỬ LÝ -->
   <script>
-    // DỮ LIỆU DÒNG XE & MÀU NGOẠI THẤT (TRẮNG, XÁM, ĐỎ, BẠC, ĐEN - TRỪ VF3 & VF5 KHÔNG CÓ ĐEN)
+    // DỮ LIỆU DÒNG XE & MÀU NGOẠI THẤT (TRẮNG, XÁM, ĐỎ, BẠC, ĐEN - NGUỒN ẢNH GOOGLE STORAGE CDN)
     const CAR_DATA = {
       'VF 3': {
         name: 'VF 3',
@@ -528,10 +528,10 @@
           'Plus': { price: 296000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' }
         },
         colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-trang_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-xam_1716365942.webp' },
-          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-do_1716365942.webp' },
-          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf3-xam_1716365942.webp' }
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-white.png' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-gray.png' },
+          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-red.png' },
+          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-gray.png' }
         ]
       },
       'VF 5': {
@@ -541,10 +541,10 @@
           'Plus': { price: 496000000, power: '134 hp / 100 kW', range: '326 km (NEDC)', length: '3.967 mm' }
         },
         colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf5-trang_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf5-xam_1716365942.webp' },
-          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf5-do_1716365942.webp' },
-          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf5-xam_1716365942.webp' }
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-white.png' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-gray.png' },
+          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-red.png' },
+          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-gray.png' }
         ]
       },
       'VF 6': {
@@ -555,11 +555,11 @@
           'Plus': { price: 699000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' }
         },
         colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-trang_1716365942.webp' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-xam_1716365942.webp' },
-          { name: 'Đỏ (Crimson Red)', hex: '#b91c1c', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-do_1716365942.webp' },
-          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-xam_1716365942.webp' },
-          { name: 'Đen (Jet Black)', hex: '#1e293b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf6-den_1716365942.webp' }
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-white.png' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-gray.png' },
+          { name: 'Đỏ (Crimson Red)', hex: '#b91c1c', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-red.png' },
+          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-gray.png' },
+          { name: 'Đen (Jet Black)', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-black.png' }
         ]
       },
       'VF MPV 7': {
@@ -570,11 +570,11 @@
         },
         promoDirect: 20000000,
         colors: [
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-trang_1716365942.webp' },
-          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xam_1716365942.webp' },
-          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-do_1716365942.webp' },
-          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xam_1716365942.webp' },
-          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-den_1716365942.webp' }
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-white.png' },
+          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
+          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-red.png' },
+          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
+          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-black.png' }
         ]
       },
       'Limo Green': {
@@ -585,11 +585,11 @@
         },
         promoDirect: 35000000,
         colors: [
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-trang_1716365942.webp' },
-          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xam_1716365942.webp' },
-          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-do_1716365942.webp' },
-          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-xam_1716365942.webp' },
-          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://vinfastauto.com/sites/default/files/styles/1440xauto/public/2024-05/vf7-den_1716365942.webp' }
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-white.png' },
+          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
+          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-red.png' },
+          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
+          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-black.png' }
         ]
       }
     };
@@ -1042,7 +1042,7 @@
       a.click();
     }
 
-    // Khởi chạy khi load trang
+    // Khởi chạy khi tải trang
     initQuote();
     renderCustomers();
   </script>
