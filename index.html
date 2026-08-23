@@ -8,8 +8,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     @media print {
       body * { visibility: hidden; }
@@ -47,7 +45,7 @@
   </header>
 
   <!-- ========================================================================= -->
-  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE -->
+  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE (ẢNH THỰC TẾ) -->
   <!-- ========================================================================= -->
   <section id="tabQuote" class="max-w-7xl mx-auto px-4 py-4">
     <div class="bg-white rounded-xl p-1.5 shadow-xs border border-slate-200 mb-4 overflow-x-auto flex space-x-1.5 text-xs font-bold no-print" id="carModelNav"></div>
@@ -56,17 +54,18 @@
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-slate-100 gap-2">
         <div>
           <h2 id="q_carName" class="text-2xl font-black text-slate-900">VF 6</h2>
-          <p class="text-xs text-slate-500">Chọn phiên bản và màu sắc theo sở thích</p>
+          <p class="text-xs text-slate-500">Chọn phiên bản và màu sắc ngoại thất</p>
         </div>
         <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
 
+      <!-- Khung hiển thị hình ảnh xe thực tế -->
       <div class="py-6 px-4 flex flex-col items-center justify-center bg-slate-50/70 rounded-2xl my-3 border border-slate-100 relative">
-        <div class="w-full max-w-xl flex items-center justify-center min-h-[190px]">
-          <img id="q_carImage" src="https://storage.googleapis.com/vinfast-data-01/vf6-white.png" onerror="this.src='https://placehold.co/500x260?text=VinFast+Image'" alt="Car Preview" class="h-44 sm:h-56 max-w-full object-contain drop-shadow-md transition-all duration-300">
+        <div class="w-full max-w-xl flex items-center justify-center min-h-[220px]">
+          <img id="q_carImage" src="" alt="VinFast Car" class="max-h-56 max-w-full rounded-xl object-contain drop-shadow-md transition-all duration-300">
         </div>
         <div class="mt-4 flex items-center flex-wrap justify-center gap-2.5 no-print" id="q_colorDots"></div>
-        <p id="q_colorName" class="text-xs text-slate-600 mt-2.5 font-semibold">Màu ngoại thất: Trắng (Infinity Blanc)</p>
+        <p id="q_colorName" class="text-xs text-slate-600 mt-2.5 font-semibold">Màu ngoại thất: Trắng</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
@@ -207,11 +206,10 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG, KPI 8 XE & CỘT TRẠNG THÁI MÀU SẮC -->
+  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG & KPI 8 XE -->
   <!-- ========================================================================= -->
   <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
-
-    <!-- CỘT TIẾN ĐỘ KPI MỤC TIÊU 8 XE / THÁNG -->
+    <!-- TIẾN ĐỘ KPI MỤC TIÊU 8 XE -->
     <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-4 rounded-2xl shadow-sm mb-4 border border-blue-800 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="w-full md:w-1/3">
         <div class="flex items-center gap-2">
@@ -267,7 +265,7 @@
       </div>
     </div>
 
-    <!-- Thanh tìm kiếm & bộ lọc CRM -->
+    <!-- Bộ lọc CRM -->
     <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col md:flex-row gap-2.5 justify-between items-center">
       <div class="w-full md:w-1/3 relative">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
@@ -299,7 +297,7 @@
       </div>
     </div>
 
-    <!-- Bảng danh sách CRM với Cột Màu Trạng Thái -->
+    <!-- Bảng danh sách CRM -->
     <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs text-slate-600">
@@ -420,7 +418,7 @@
       <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-3 text-xs">
         <input type="hidden" id="editIndex">
 
-        <!-- Nhóm Độ Nóng Khách Hàng -->
+        <!-- Trạng Thái Độ Nóng Khách Hàng -->
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 mb-2">
           <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1.5">Trạng Thái Độ Nóng / Tiềm Năng Khách Hàng <span class="text-red-500">*</span></label>
           <div class="grid grid-cols-3 gap-3">
@@ -550,8 +548,9 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ HỆ THỐNG -->
+  <!-- JAVASCRIPT XỬ LÝ -->
   <script>
+    // DỮ LIỆU CÁC DÒNG XE & HÌNH ẢNH THỰC TẾ CHUẨN TỐC ĐỘ CAO
     const CAR_DATA = {
       'VF 3': {
         name: 'VF 3',
@@ -561,10 +560,10 @@
           'Plus': { price: 296000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' }
         },
         colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-white.png' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-gray.png' },
-          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-red.png' },
-          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-gray.png' }
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg/800px-2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg/800px-2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg' },
+          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg/800px-2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg' },
+          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg/800px-2024_VinFast_VF_3_%28Vietnam%29_front_view_01.jpg' }
         ]
       },
       'VF 5': {
@@ -574,10 +573,10 @@
           'Plus': { price: 496000000, power: '134 hp / 100 kW', range: '326 km (NEDC)', length: '3.967 mm' }
         },
         colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-white.png' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-gray.png' },
-          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-red.png' },
-          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-gray.png' }
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/2023_VinFast_VF_5_Plus_front_view.jpg/800px-2023_VinFast_VF_5_Plus_front_view.jpg' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/2023_VinFast_VF_5_Plus_front_view.jpg/800px-2023_VinFast_VF_5_Plus_front_view.jpg' },
+          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/2023_VinFast_VF_5_Plus_front_view.jpg/800px-2023_VinFast_VF_5_Plus_front_view.jpg' },
+          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/2023_VinFast_VF_5_Plus_front_view.jpg/800px-2023_VinFast_VF_5_Plus_front_view.jpg' }
         ]
       },
       'VF 6': {
@@ -588,11 +587,11 @@
           'Plus': { price: 699000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' }
         },
         colors: [
-          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-white.png' },
-          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-gray.png' },
-          { name: 'Đỏ (Crimson Red)', hex: '#b91c1c', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-red.png' },
-          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-gray.png' },
-          { name: 'Đen (Jet Black)', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-black.png' }
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/VinFast_VF_6_Plus_1X7A0349.jpg/800px-VinFast_VF_6_Plus_1X7A0349.jpg' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/VinFast_VF_6_Plus_1X7A0349.jpg/800px-VinFast_VF_6_Plus_1X7A0349.jpg' },
+          { name: 'Đỏ (Crimson Red)', hex: '#b91c1c', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/VinFast_VF_6_Plus_1X7A0349.jpg/800px-VinFast_VF_6_Plus_1X7A0349.jpg' },
+          { name: 'Bạc (Desat Silver)', hex: '#cbd5e1', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/VinFast_VF_6_Plus_1X7A0349.jpg/800px-VinFast_VF_6_Plus_1X7A0349.jpg' },
+          { name: 'Đen (Jet Black)', hex: '#1e293b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/VinFast_VF_6_Plus_1X7A0349.jpg/800px-VinFast_VF_6_Plus_1X7A0349.jpg' }
         ]
       },
       'VF MPV 7': {
@@ -603,11 +602,11 @@
         },
         promoDirect: 20000000,
         colors: [
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-white.png' },
-          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
-          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-red.png' },
-          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
-          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-black.png' }
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' }
         ]
       },
       'Limo Green': {
@@ -618,11 +617,11 @@
         },
         promoDirect: 35000000,
         colors: [
-          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-white.png' },
-          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
-          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-red.png' },
-          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
-          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-black.png' }
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Xám', hex: '#64748b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Đỏ', hex: '#991b1b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' },
+          { name: 'Đen', hex: '#1e293b', fee: 0, img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/VinFast_VF_7_Plus_1X7A0388.jpg/800px-VinFast_VF_7_Plus_1X7A0388.jpg' }
         ]
       }
     };
@@ -812,7 +811,7 @@
     }
 
     // =========================================================================
-    // CRM CODE QUẢN LÝ KHÁCH HÀNG & THEO DÕI KPI 8 XE
+    // CRM CODE QUẢN LÝ KHÁCH HÀNG
     // =========================================================================
     let customers = JSON.parse(localStorage.getItem('my_sales_customers_v4')) || [
       {
@@ -824,22 +823,6 @@
         car_model: 'VF 6 Plus', car_color: 'Trắng', car_year: '2026', plate: '51K-999.88',
         source: 'Live TikTok', payment: 'Trả thẳng', stage: 'Đã có VSO / Xe', next_date: '2026-08-25',
         note: 'Đã chốt báo giá, hẹn ngày bàn giao xe.'
-      },
-      {
-        id: 'KH-102', name: 'Trần Thị Mai', temperature: 'COOL', dob: '1995-10-20', gender: 'Nữ', phone: '0919888999', email: 'mai.tran@gmail.com',
-        cccd: '079195009876', cccd_date: '', cccd_exp: '', cccd_place: '', address_perm: 'Thủ Đức', address_temp: '',
-        bank_acc: '', bank_name: '', bank_owner: '', hdmb: '', vso: '', vin: '', engine: '',
-        car_model: 'VF 3 Plus', car_color: 'Vàng', car_year: '2026', plate: '',
-        source: 'Quảng cáo Facebook', payment: 'Vay ngân hàng (Trả góp)', stage: 'Đang tư vấn', next_date: '2026-08-24',
-        note: 'Đang đợi ngân hàng duyệt hồ sơ vay trả góp.'
-      },
-      {
-        id: 'KH-103', name: 'Lê Hoàng Minh', temperature: 'LẠNH', dob: '1988-02-12', gender: 'Nam', phone: '0933555777', email: '',
-        cccd: '', cccd_date: '', cccd_exp: '', cccd_place: '', address_perm: 'Bình Dương', address_temp: '',
-        bank_acc: '', bank_name: '', bank_owner: '', hdmb: '', vso: '', vin: '', engine: '',
-        car_model: 'VF 5 Plus', car_color: 'Xám', car_year: '2026', plate: '',
-        source: 'Spam Zalo / Nhóm Zalo', payment: 'Trả thẳng', stage: 'Tạm ngưng / Hủy', next_date: '',
-        note: 'Khách đổi kế hoạch sang năm sau mới mua xe.'
       }
     ];
 
@@ -866,7 +849,6 @@
         return matchSearch && matchStage && matchTemp;
       });
 
-      // KPI TÍNH TOÁN (8 XE/THÁNG)
       const KPI_TARGET = 8;
       const closedDeals = customers.filter(c => c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe').length;
       const kpiPercent = Math.min(100, Math.round((closedDeals / KPI_TARGET) * 100));
@@ -880,7 +862,6 @@
         ? `Còn thiếu ${remain} xe nữa để cán mốc chỉ tiêu tháng này. Cố lên!` 
         : `🎉 Xuất sắc! Bạn đã hoàn thành vượt chỉ tiêu KPI ${closedDeals}/${KPI_TARGET} xe!`;
 
-      // Cập nhật thống kê
       document.getElementById('stat-total').innerText = customers.length;
       document.getElementById('stat-hot').innerText = customers.filter(c => (c.temperature || 'COOL') === 'HOT').length;
       document.getElementById('stat-cool').innerText = customers.filter(c => (c.temperature || 'COOL') === 'COOL').length;
@@ -1126,7 +1107,6 @@
       }
     }
 
-    // TÍNH NĂNG GỬI EMAIL THÔNG BÁO NHẮC VIỆC 9H SÁNG
     function triggerEmailReminder() {
       const today = new Date().toISOString().split('T')[0];
       const hotList = customers.filter(c => (c.temperature || 'COOL') === 'HOT');
@@ -1149,7 +1129,6 @@
       const userEmail = prompt("Nhập Email của bạn để nhận báo cáo nhắc việc:", localStorage.getItem('user_email') || "");
       if (userEmail) {
         localStorage.setItem('user_email', userEmail);
-        // Mở ứng dụng Mail mặc định trên máy để gửi ngay
         const subject = encodeURIComponent(`[VINFAST KPI CRM] Danh Sách Khách Hàng Cần Chăm Sóc Hôm Nay`);
         const body = encodeURIComponent(summary);
         window.open(`mailto:${userEmail}?subject=${subject}&body=${body}`, '_blank');
