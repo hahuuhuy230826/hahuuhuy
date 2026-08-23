@@ -3,67 +3,286 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sales CRM • Hồ Sơ Khách Hàng & Hợp Đồng Ô Tô</title>
+  <title>VinFast Order & Price Management Portal</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #printArea, #printArea * { visibility: visible; }
+      #printArea { position: absolute; left: 0; top: 0; width: 100%; }
+      .no-print { display: none !important; }
+    }
+  </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white shadow-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center">
+  <!-- Top Header Navigation -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs no-print">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/20">
-          <i class="fa-solid fa-car text-xl text-white"></i>
+        <div class="w-8 h-8 bg-blue-700 text-white rounded-lg flex items-center justify-center font-bold text-base shadow-xs">
+          V
         </div>
         <div>
-          <h1 class="text-lg font-bold tracking-tight">SALES CRM • HỒ SƠ KHÁCH HÀNG Ô TÔ</h1>
-          <p class="text-xs text-blue-200">Quản lý khách hàng, Hợp đồng HĐMB & Hồ sơ bàn giao xe</p>
+          <h1 class="text-base font-extrabold tracking-tight text-slate-800">VINFAST BÁO GIÁ & BÁN HÀNG</h1>
+          <p class="text-[11px] text-slate-500 font-medium">Hệ thống tính dự toán chi tiết & Quản lý khách hàng</p>
         </div>
       </div>
-      <button onclick="openModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition shadow flex items-center gap-2">
-        <i class="fa-solid fa-user-plus"></i> Thêm Hồ Sơ Khách Mới
-      </button>
+      
+      <!-- Tab điều hướng -->
+      <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+        <button id="tabBtnQuote" onclick="switchTab('quote')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5">
+          <i class="fa-solid fa-calculator"></i> Bảng Báo Giá
+        </button>
+        <button id="tabBtnCrm" onclick="switchTab('crm')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5">
+          <i class="fa-solid fa-users"></i> Quản Lý Khách Hàng
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="max-w-7xl mx-auto px-4 py-6">
+  <!-- ========================================================================= -->
+  <!-- TAB 1: BẢNG BÁO GIÁ CHUẨN GIAO DIỆN SHOWROOM THUẬN AN -->
+  <!-- ========================================================================= -->
+  <section id="tabQuote" class="max-w-7xl mx-auto px-4 py-4">
 
-    <!-- KPI & Thống kê Phễu Bán Hàng -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200">
-        <p class="text-[11px] text-slate-500 font-semibold uppercase">Tổng Hồ Sơ</p>
-        <p id="stat-total" class="text-2xl font-bold text-slate-800 mt-1">0</p>
+    <!-- Danh sách chọn dòng xe (Horizontal Nav) -->
+    <div class="bg-white rounded-xl p-1.5 shadow-xs border border-slate-200 mb-4 overflow-x-auto flex space-x-1 text-xs font-bold no-print" id="carModelNav">
+      <!-- Sinh ra các nút xe: VF 2, VF 3, VF 5, VF 6, VF 7, VF 8, VF 8 New, VF 9, VF MPV 7, Minio Green, Herio Green, Nerio Green, Limo Green, EC Van, Lạc Hồng 900 -->
+    </div>
+
+    <!-- Khung chính hiển thị xe & Báo giá -->
+    <div id="printArea" class="bg-white rounded-2xl shadow-xs border border-slate-200 p-5 mb-6">
+      
+      <!-- Hàng 1: Tên xe & Nút chọn phiên bản -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-slate-100 gap-2">
+        <div>
+          <h2 id="q_carName" class="text-2xl font-black text-slate-900">VF 6</h2>
+          <p class="text-xs text-slate-500">Chọn phiên bản và màu sắc theo sở thích</p>
+        </div>
+        <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
-      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500">
-        <p class="text-[11px] text-amber-600 font-semibold uppercase">Đang Tư Vấn / Lái Thử</p>
-        <p id="stat-consulting" class="text-2xl font-bold text-amber-600 mt-1">0</p>
+
+      <!-- Hàng 2: Hình ảnh xe & Chọn màu ngoại thất -->
+      <div class="py-6 flex flex-col items-center justify-center bg-slate-50/70 rounded-2xl my-3 border border-slate-100 relative">
+        <img id="q_carImage" src="https://storage.googleapis.com/vinfast-data-01/vf6-white.png" onerror="this.src='https://placehold.co/480x240?text=VinFast+Car+Image'" alt="Car" class="h-44 sm:h-52 object-contain drop-shadow-md transition-all duration-300">
+        
+        <!-- Nút tròn chọn màu -->
+        <div class="mt-4 flex items-center gap-2 no-print" id="q_colorDots"></div>
+        <p id="q_colorName" class="text-xs text-slate-600 mt-2 font-semibold">Màu ngoại thất: Trắng (Infinity Blanc)</p>
       </div>
-      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
-        <p class="text-[11px] text-blue-600 font-semibold uppercase">Chờ Cọc / HĐMB</p>
-        <p id="stat-deposit" class="text-2xl font-bold text-blue-600 mt-1">0</p>
+
+      <!-- Hàng 3: Thông số kỹ thuật nhanh -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CÔNG SUẤT TỐI ĐA</p>
+          <p id="q_specPower" class="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">201 hp / 150 kW</p>
+        </div>
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">QUÃNG ĐƯỜNG DI CHUYỂN 1 LẦN SẠC</p>
+          <p id="q_specRange" class="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">381 km (WLTP)</p>
+        </div>
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CHIỀU DÀI CƠ SỞ</p>
+          <p id="q_specLength" class="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">2.730 mm</p>
+        </div>
       </div>
-      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-purple-500">
-        <p class="text-[11px] text-purple-600 font-semibold uppercase">Đã Có Số Khung/VSO</p>
-        <p id="stat-vso" class="text-2xl font-bold text-purple-600 mt-1">0</p>
+
+      <!-- Hàng 4: Chương trình ưu đãi & Bảng Dự Toán -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-3 border-t border-slate-200">
+        
+        <!-- Cột trái: Chương Trình Ưu Đãi Áp Dụng (7 Cột) -->
+        <div class="lg:col-span-7 space-y-2.5 no-print">
+          <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-tags"></i> Chương Trình Ưu Đãi Áp Dụng
+          </h3>
+
+          <!-- Ưu đãi dòng xe riêng theo chính sách -->
+          <div id="box_model_promo" class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between hidden">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-gift text-emerald-600"></i>
+              <div>
+                <p id="txt_model_promo_title" class="font-bold text-xs text-emerald-900">Ưu đãi giảm giá trực tiếp</p>
+                <p id="txt_model_promo_desc" class="text-[11px] text-emerald-700">Chính sách ưu đãi riêng dòng xe</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-emerald-700" id="val_model_promo">- 0 đ</span>
+          </div>
+
+          <!-- VinClub X3 -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" id="promo_vinclub" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
+                <div>
+                  <label for="promo_vinclub" class="font-bold text-xs text-slate-800 cursor-pointer">VinClub (Ưu đãi Đặc Biệt Nhân 3)</label>
+                  <p class="text-[11px] text-slate-500">Gold: 1.5% | Platinum: 3.0% | Diamond: 4.5% trực tiếp trên HĐMB</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-blue-700" id="val_promo_vinclub">- 0 đ</span>
+            </div>
+            <div id="box_vinclub_tier" class="mt-2 pl-6 hidden flex gap-2">
+              <select id="sel_vinclub_tier" onchange="calculateQuote()" class="p-1 border rounded text-xs bg-white">
+                <option value="0.015">Hạng Gold / Chưa có hạng (Giảm 1.5%)</option>
+                <option value="0.030">Hạng Platinum (Giảm 3.0%)</option>
+                <option value="0.045">Hạng Diamond (Giảm 4.5%)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Mùa hè rực rỡ / Thu xăng đổi điện -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <input type="checkbox" id="promo_summer" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
+              <div>
+                <label for="promo_summer" class="font-bold text-xs text-slate-800 cursor-pointer">Chương Trình Mùa Hè Rực Rỡ (Vinfascination)</label>
+                <p class="text-[11px] text-slate-500">Giảm 2% - 3% MSRP trực tiếp quy đổi tiền mặt</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-blue-700" id="val_promo_summer">- 0 đ</span>
+          </div>
+
+          <!-- Tri ân xe xăng đổi xanh Fadil, Lux A, Lux SA -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" id="promo_gas_tradein" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
+                <div>
+                  <label for="promo_gas_tradein" class="font-bold text-xs text-slate-800 cursor-pointer">Tri Ân Khách Xe Xăng VinFast Chuyển Đổi Xanh</label>
+                  <p class="text-[11px] text-slate-500">Voucher Fadil (30tr), Lux A (60tr), Lux SA (80tr)</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-blue-700" id="val_promo_gas_tradein">- 0 đ</span>
+            </div>
+            <div id="box_gas_tier" class="mt-2 pl-6 hidden flex gap-2">
+              <select id="sel_gas_tier" onchange="calculateQuote()" class="p-1 border rounded text-xs bg-white">
+                <option value="30000000">Đổi từ Fadil (Giảm 30.000.000 đ)</option>
+                <option value="60000000">Đổi từ Lux A (Giảm 60.000.000 đ)</option>
+                <option value="80000000">Đổi từ Lux SA (Giảm 80.000.000 đ)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Công an / Quân đội (5%) hoặc VNPost (3%) -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" id="promo_gov" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
+                <div>
+                  <label for="promo_gov" class="font-bold text-xs text-slate-800 cursor-pointer">Ưu Đãi Công An / Quân Đội / VNPost</label>
+                  <p class="text-[11px] text-slate-500">Lực lượng vũ trang: 5% | CBNV VNPost: 3%</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-blue-700" id="val_promo_gov">- 0 đ</span>
+            </div>
+            <div id="box_gov_tier" class="mt-2 pl-6 hidden flex gap-2">
+              <select id="sel_gov_tier" onchange="calculateQuote()" class="p-1 border rounded text-xs bg-white">
+                <option value="0.05">Công an & Quân đội nhân dân (Giảm 5% MSRP)</option>
+                <option value="0.03">Cán bộ nhân viên VNPost (Giảm 3% MSRP)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Chiết khấu Đại lý / TVBH -->
+          <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-200">
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="font-bold text-xs text-blue-900 flex items-center gap-2">
+                <i class="fa-solid fa-hand-holding-dollar"></i> Đại Lý Giảm Giá / Quà Tặng Showroom (VNĐ)
+              </label>
+              <span class="text-[11px] font-bold text-blue-700" id="txt_max_discount">Tối đa: 12.000.000 đ</span>
+            </div>
+            <input type="number" id="promo_dealer" oninput="calculateQuote()" value="0" step="1000000" class="w-full p-2 text-xs sm:text-sm border rounded-lg bg-white font-bold text-blue-800 focus:ring-2 focus:ring-blue-500">
+            <p class="text-[10px] text-slate-500 mt-1">Giảm giá tối đa trong phạm vi hoa hồng TVBH theo bảng quy định.</p>
+          </div>
+        </div>
+
+        <!-- Cột phải: BẢNG DỰ TOÁN CHI TIẾT (5 Cột) -->
+        <div class="lg:col-span-5 flex flex-col justify-between">
+          <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-3">
+            <h3 class="text-center font-bold text-xs uppercase tracking-wider text-slate-600 pb-2 border-b">BẢNG DỰ TOÁN CHI TIẾT</h3>
+            
+            <div class="flex justify-between items-center text-xs sm:text-sm">
+              <span class="text-slate-600" id="bill_title_model">VF 6 - Plus</span>
+              <span id="bill_listedPrice" class="font-bold text-slate-800">0 đ</span>
+            </div>
+
+            <div class="flex justify-between items-center text-xs sm:text-sm" id="row_color_fee">
+              <span class="text-slate-500">Phí màu sơn nâng cao:</span>
+              <span id="bill_colorFee" class="font-semibold text-slate-700">0 đ</span>
+            </div>
+
+            <div class="flex justify-between items-center text-xs sm:text-sm pt-2 border-t border-slate-200">
+              <span class="text-blue-700 font-bold">GIÁ XUẤT HÓA ĐƠN (HĐMB):</span>
+              <span id="bill_invoicePrice" class="font-bold text-blue-700">0 đ</span>
+            </div>
+
+            <div class="flex justify-between items-center text-xs sm:text-sm">
+              <span class="text-emerald-700 font-bold">GIÁ THU THỰC TẾ XE:</span>
+              <span id="bill_actualPrice" class="font-bold text-emerald-700">0 đ</span>
+            </div>
+            <p class="text-[10px] text-slate-400 italic text-center">(Giá bán đã bao gồm VAT, áp dụng theo chính sách bán hàng)</p>
+
+            <!-- Banner tổng thanh toán lớn xanh đậm -->
+            <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white p-4 rounded-xl text-center shadow-md mt-4">
+              <p class="text-[10px] text-blue-200 uppercase font-semibold">TỔNG CHI PHÍ THU KHÁCH HÀNG (GIÁ XUẤT THU)</p>
+              <p id="bill_grandTotal" class="text-2xl font-black tracking-tight mt-1 text-white">0 đ</p>
+            </div>
+          </div>
+
+          <div class="pt-3 flex gap-2 no-print">
+            <button onclick="window.print()" class="flex-1 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-xs">
+              <i class="fa-solid fa-print"></i> In Báo Giá
+            </button>
+            <button onclick="copyQuoteToZalo()" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-xs">
+              <i class="fa-solid fa-share-nodes"></i> Sao Chép Gửi Zalo
+            </button>
+          </div>
+        </div>
+
       </div>
-      <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-500">
-        <p class="text-[11px] text-emerald-600 font-semibold uppercase">Đã Giao Xe</p>
-        <p id="stat-delivered" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG & HỒ SƠ Ô TÔ (CRM) -->
+  <!-- ========================================================================= -->
+  <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
+    
+    <!-- KPI & Thống kê Phễu -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 mb-4">
+      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200">
+        <p class="text-[10px] text-slate-500 font-semibold uppercase">Tổng Hồ Sơ</p>
+        <p id="stat-total" class="text-xl font-bold text-slate-800 mt-0.5">0</p>
+      </div>
+      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500">
+        <p class="text-[10px] text-amber-600 font-semibold uppercase">Đang Tư Vấn</p>
+        <p id="stat-consulting" class="text-xl font-bold text-amber-600 mt-0.5">0</p>
+      </div>
+      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-500">
+        <p class="text-[10px] text-blue-600 font-semibold uppercase">Chờ Cọc / HĐMB</p>
+        <p id="stat-deposit" class="text-xl font-bold text-blue-600 mt-0.5">0</p>
+      </div>
+      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-purple-500">
+        <p class="text-[10px] text-purple-600 font-semibold uppercase">Đã Có VSO / VIN</p>
+        <p id="stat-vso" class="text-xl font-bold text-purple-600 mt-0.5">0</p>
+      </div>
+      <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500">
+        <p class="text-[10px] text-emerald-600 font-semibold uppercase">Đã Giao Xe</p>
+        <p id="stat-delivered" class="text-xl font-bold text-emerald-600 mt-0.5">0</p>
       </div>
     </div>
 
-    <!-- Bộ lọc & Tìm kiếm -->
-    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row gap-3 justify-between items-center">
+    <!-- Thanh tìm kiếm & bộ lọc CRM -->
+    <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col md:flex-row gap-2.5 justify-between items-center">
       <div class="w-full md:w-1/3 relative">
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400"></i>
-        <input type="text" id="searchInput" oninput="renderCustomers()" placeholder="Tìm tên, SĐT, CCCD, VSO, số khung, biển số..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+        <input type="text" id="searchInput" oninput="renderCustomers()" placeholder="Tìm tên, SĐT, CCCD, VSO, số khung, biển số..." class="w-full pl-8 pr-3 py-1.5 border rounded-lg text-xs focus:ring-2 focus:ring-blue-500">
       </div>
       <div class="w-full md:w-auto flex flex-wrap gap-2">
-        <select id="stageFilter" onchange="renderCustomers()" class="px-3 py-2 border rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select id="stageFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs">
           <option value="ALL">Tất cả giai đoạn</option>
           <option value="Khách mới">Khách mới</option>
           <option value="Đang tư vấn">Đang tư vấn</option>
@@ -74,426 +293,700 @@
           <option value="Đã giao xe">Đã giao xe</option>
           <option value="Tạm ngưng / Hủy">Tạm ngưng / Hủy</option>
         </select>
-        <select id="sourceFilter" onchange="renderCustomers()" class="px-3 py-2 border rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="ALL">Tất cả nguồn khách</option>
-          <option value="Live TikTok">Live TikTok</option>
-          <option value="Video TikTok">Video TikTok</option>
-          <option value="Khách cũ giới thiệu">Khách cũ giới thiệu</option>
-          <option value="Quảng cáo Facebook">Quảng cáo Facebook</option>
-          <option value="Spam Zalo / Nhóm Zalo">Spam Zalo / Nhóm Zalo</option>
-          <option value="Khách Showroom">Khách Showroom</option>
-          <option value="Nguồn khác">Nguồn khác</option>
-        </select>
-        <button onclick="exportCSV()" class="px-3.5 py-2 bg-slate-700 hover:bg-slate-800 text-white text-sm rounded-lg transition flex items-center gap-1.5 shadow-sm">
-          <i class="fa-solid fa-file-excel"></i> Xuất File Excel
+        <button onclick="openModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs">
+          <i class="fa-solid fa-user-plus"></i> Thêm Khách Mới
+        </button>
+        <button onclick="exportCSV()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs">
+          <i class="fa-solid fa-file-excel"></i> Xuất Excel
         </button>
       </div>
     </div>
 
-    <!-- Bảng danh sách khách hàng -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <!-- Bảng danh sách CRM -->
+    <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
       <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm text-slate-600">
-          <thead class="bg-slate-50 border-b text-[11px] uppercase font-bold text-slate-600 tracking-wider">
+        <table class="w-full text-left text-xs text-slate-600">
+          <thead class="bg-slate-50 border-b text-[10px] uppercase font-bold text-slate-600 tracking-wider">
             <tr>
-              <th class="py-3.5 px-4">Khách Hàng (Bấm để xem hồ sơ)</th>
-              <th class="py-3.5 px-4">Xe / Model</th>
-              <th class="py-3.5 px-4">HĐMB / Số VSO</th>
-              <th class="py-3.5 px-4">Số Khung / Biển Số</th>
-              <th class="py-3.5 px-4">Giai Đoạn</th>
-              <th class="py-3.5 px-4">Nguồn Tiếp Cận</th>
-              <th class="py-3.5 px-4 text-center">Liên Hệ</th>
-              <th class="py-3.5 px-4 text-center">Thao Tác</th>
+              <th class="py-3 px-3">Khách Hàng (Bấm xem hồ sơ)</th>
+              <th class="py-3 px-3">Xe / Model</th>
+              <th class="py-3 px-3">HĐMB / Số VSO</th>
+              <th class="py-3 px-3">Số Khung / Biển Số</th>
+              <th class="py-3 px-3">Giai Đoạn</th>
+              <th class="py-3 px-3">Nguồn Tiếp Cận</th>
+              <th class="py-3 px-3 text-center">Liên Hệ</th>
+              <th class="py-3 px-3 text-center">Thao Tác</th>
             </tr>
           </thead>
-          <tbody id="customerTableBody" class="divide-y divide-slate-100">
-            <!-- Dữ liệu render tại đây -->
-          </tbody>
+          <tbody id="customerTableBody" class="divide-y divide-slate-100"></tbody>
         </table>
       </div>
-      <div id="emptyState" class="hidden p-10 text-center text-slate-400">
-        <i class="fa-solid fa-address-book text-4xl mb-2 text-slate-300"></i>
-        <p class="text-sm">Chưa có thông tin khách hàng phù hợp.</p>
+      <div id="emptyState" class="hidden p-8 text-center text-slate-400">
+        <i class="fa-solid fa-address-book text-3xl mb-1 text-slate-300"></i>
+        <p class="text-xs">Chưa có thông tin khách hàng phù hợp.</p>
       </div>
     </div>
-  </main>
+  </section>
 
-  <!-- MODAL 1: BẢNG XEM CHI TIẾT ĐẦY ĐỦ HỒ SƠ KHÁCH HÀNG (FULL DETAIL POPUP) -->
+  <!-- MODAL: XEM CHI TIẾT ĐẦY ĐỦ HỒ SƠ KHÁCH HÀNG -->
   <div id="detailModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
-    <div class="bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto">
-      
-      <!-- Modal Header -->
-      <div class="flex justify-between items-start pb-4 border-b border-slate-200">
+    <div class="bg-white rounded-2xl max-w-4xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-start pb-3 border-b border-slate-200">
         <div>
-          <div class="flex items-center gap-3">
-            <h2 id="dt_name" class="text-2xl font-bold text-slate-900">Tên Khách Hàng</h2>
-            <span id="dt_stage_badge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold">Giai đoạn</span>
+          <div class="flex items-center gap-2">
+            <h2 id="dt_name" class="text-xl font-bold text-slate-900">Tên Khách Hàng</h2>
+            <span id="dt_stage_badge" class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 text-blue-800">Giai đoạn</span>
           </div>
-          <p class="text-xs text-slate-500 mt-1">Mã hồ sơ: <span id="dt_id" class="font-mono text-blue-600 font-bold">---</span> | Nguồn: <span id="dt_source" class="font-medium text-slate-700">---</span></p>
+          <p class="text-[11px] text-slate-500 mt-0.5">Mã hồ sơ: <span id="dt_id" class="font-mono text-blue-600 font-bold">---</span> | Nguồn: <span id="dt_source" class="font-medium text-slate-700">---</span></p>
         </div>
-        <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-xmark text-xl"></i></button>
+        <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
-      <!-- Modal Body (Hồ sơ dạng phân nhóm) -->
-      <div class="space-y-5 pt-4 text-sm">
-
-        <!-- 1. THÔNG TIN CÁ NHÂN & CCCD -->
-        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-          <h3 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-id-card text-blue-600"></i> 1. Thông Tin Cá Nhân & Giấy Tờ Tùy Thân (CCCD)
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div><span class="text-xs text-slate-500">Giới tính:</span> <p id="dt_gender" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Ngày sinh:</span> <p id="dt_dob" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Số điện thoại:</span> <p id="dt_phone" class="font-semibold text-slate-800 font-mono">---</p></div>
-            <div><span class="text-xs text-slate-500">Email:</span> <p id="dt_email" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Số CCCD:</span> <p id="dt_cccd" class="font-bold text-indigo-700 font-mono">---</p></div>
-            <div><span class="text-xs text-slate-500">Nơi cấp CCCD:</span> <p id="dt_cccd_place" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Ngày cấp CCCD:</span> <p id="dt_cccd_date" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Ngày hết hạn CCCD:</span> <p id="dt_cccd_exp" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Hình thức mua:</span> <p id="dt_payment" class="font-semibold text-slate-800">---</p></div>
+      <div class="space-y-4 pt-3 text-xs">
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <h3 class="text-[11px] font-bold text-blue-800 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"><i class="fa-solid fa-id-card text-blue-600"></i> 1. Thông Tin Cá Nhân & CCCD</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+            <div><span class="text-slate-500">Giới tính:</span> <p id="dt_gender" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Ngày sinh:</span> <p id="dt_dob" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Số điện thoại:</span> <p id="dt_phone" class="font-semibold text-slate-800 font-mono">---</p></div>
+            <div><span class="text-slate-500">Email:</span> <p id="dt_email" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Số CCCD:</span> <p id="dt_cccd" class="font-bold text-indigo-700 font-mono">---</p></div>
+            <div><span class="text-slate-500">Nơi cấp CCCD:</span> <p id="dt_cccd_place" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Ngày cấp:</span> <p id="dt_cccd_date" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Ngày hết hạn:</span> <p id="dt_cccd_exp" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Hình thức mua:</span> <p id="dt_payment" class="font-semibold text-slate-800">---</p></div>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-slate-200">
-            <div><span class="text-xs text-slate-500">Địa chỉ thường trú (theo CCCD):</span> <p id="dt_address_perm" class="font-medium text-slate-800 mt-0.5">---</p></div>
-            <div><span class="text-xs text-slate-500">Địa chỉ tạm trú / Hiện tại:</span> <p id="dt_address_temp" class="font-medium text-slate-800 mt-0.5">---</p></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-2.5 pt-2.5 border-t border-slate-200">
+            <div><span class="text-slate-500">Địa chỉ thường trú:</span> <p id="dt_address_perm" class="font-medium text-slate-800 mt-0.5">---</p></div>
+            <div><span class="text-slate-500">Địa chỉ tạm trú:</span> <p id="dt_address_temp" class="font-medium text-slate-800 mt-0.5">---</p></div>
           </div>
         </div>
 
-        <!-- 2. THÔNG TIN XE & HỢP ĐỒNG MUA BÁN -->
-        <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-200">
-          <h3 class="text-xs font-bold text-blue-900 uppercase tracking-wider mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-car-side text-blue-700"></i> 2. Thông Tin Xe & Hợp Đồng (HĐMB / VSO)
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div><span class="text-xs text-slate-500">Loại xe / Model:</span> <p id="dt_car_model" class="font-bold text-blue-800 text-base">---</p></div>
-            <div><span class="text-xs text-slate-500">Màu xe:</span> <p id="dt_car_color" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Năm sản xuất:</span> <p id="dt_car_year" class="font-semibold text-slate-800">---</p></div>
-            <div><span class="text-xs text-slate-500">Biển số xe:</span> <p id="dt_plate" class="font-bold text-emerald-700 font-mono">---</p></div>
-            <div><span class="text-xs text-slate-500">Số HĐMB:</span> <p id="dt_hdmb" class="font-semibold text-slate-800 font-mono">---</p></div>
-            <div><span class="text-xs text-slate-500">Số VSO:</span> <p id="dt_vso" class="font-bold text-purple-700 font-mono">---</p></div>
-            <div><span class="text-xs text-slate-500">Số khung (VIN):</span> <p id="dt_vin" class="font-semibold text-slate-800 font-mono">---</p></div>
-            <div><span class="text-xs text-slate-500">Số máy:</span> <p id="dt_engine" class="font-semibold text-slate-800 font-mono">---</p></div>
+        <div class="bg-blue-50/50 p-3.5 rounded-xl border border-blue-200">
+          <h3 class="text-[11px] font-bold text-blue-900 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"><i class="fa-solid fa-car-side text-blue-700"></i> 2. Thông Tin Xe & Hợp Đồng (HĐMB / VSO)</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5">
+            <div><span class="text-slate-500">Loại xe:</span> <p id="dt_car_model" class="font-bold text-blue-800 text-sm">---</p></div>
+            <div><span class="text-slate-500">Màu xe:</span> <p id="dt_car_color" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Năm SX:</span> <p id="dt_car_year" class="font-semibold text-slate-800">---</p></div>
+            <div><span class="text-slate-500">Biển số:</span> <p id="dt_plate" class="font-bold text-emerald-700 font-mono">---</p></div>
+            <div><span class="text-slate-500">Số HĐMB:</span> <p id="dt_hdmb" class="font-semibold text-slate-800 font-mono">---</p></div>
+            <div><span class="text-slate-500">Số VSO:</span> <p id="dt_vso" class="font-bold text-purple-700 font-mono">---</p></div>
+            <div><span class="text-slate-500">Số khung (VIN):</span> <p id="dt_vin" class="font-semibold text-slate-800 font-mono">---</p></div>
+            <div><span class="text-slate-500">Số máy:</span> <p id="dt_engine" class="font-semibold text-slate-800 font-mono">---</p></div>
           </div>
         </div>
 
-        <!-- 3. TÀI KHOẢN NGÂN HÀNG & LỊCH HẸN -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-              <i class="fa-solid fa-building-columns text-slate-600"></i> 3. Tài Khoản Ngân Hàng Hoàn Cọc/Thanh Toán
-            </h3>
-            <div class="space-y-1.5 text-xs">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+            <h3 class="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5"><i class="fa-solid fa-building-columns text-slate-600"></i> 3. Tài Khoản Ngân Hàng</h3>
+            <div class="space-y-1 text-xs">
               <div><span class="text-slate-500">Số tài khoản:</span> <span id="dt_bank_acc" class="font-bold text-slate-800 font-mono">---</span></div>
               <div><span class="text-slate-500">Tên ngân hàng:</span> <span id="dt_bank_name" class="font-semibold text-slate-800">---</span></div>
               <div><span class="text-slate-500">Chủ tài khoản:</span> <span id="dt_bank_owner" class="font-bold text-slate-800 uppercase">---</span></div>
             </div>
           </div>
 
-          <div class="bg-rose-50/50 p-4 rounded-xl border border-rose-200 flex flex-col justify-between">
+          <div class="bg-rose-50/50 p-3.5 rounded-xl border border-rose-200 flex flex-col justify-between">
             <div>
-              <h3 class="text-xs font-bold text-rose-800 uppercase tracking-wider mb-2 flex items-center gap-2">
-                <i class="fa-regular fa-calendar-check text-rose-600"></i> 4. Lịch Hẹn / Kế Hoạch Chăm Sóc
-              </h3>
-              <p id="dt_next_date" class="font-semibold text-rose-700 text-sm">Chưa có lịch hẹn</p>
+              <h3 class="text-[11px] font-bold text-rose-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5"><i class="fa-regular fa-calendar-check text-rose-600"></i> 4. Lịch Hẹn Chăm Sóc</h3>
+              <p id="dt_next_date" class="font-semibold text-rose-700 text-xs">Chưa có lịch hẹn</p>
             </div>
-            <!-- Nút liên hệ -->
-            <div class="grid grid-cols-2 gap-2 mt-3 pt-2 border-t border-rose-200/60">
-              <a id="dt_btn_call" href="#" class="py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-center text-xs flex items-center justify-center gap-1.5 shadow">
-                <i class="fa-solid fa-phone"></i> Gọi Điện
-              </a>
-              <a id="dt_btn_zalo" href="#" target="_blank" class="py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-center text-xs flex items-center justify-center gap-1.5 shadow">
-                <i class="fa-solid fa-comment-dots"></i> Nhắn Zalo
-              </a>
+            <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-rose-200/60">
+              <a id="dt_btn_call" href="#" class="py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-center text-xs flex items-center justify-center gap-1 shadow-xs"><i class="fa-solid fa-phone"></i> Gọi Điện</a>
+              <a id="dt_btn_zalo" href="#" target="_blank" class="py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-center text-xs flex items-center justify-center gap-1 shadow-xs"><i class="fa-solid fa-comment-dots"></i> Nhắn Zalo</a>
             </div>
           </div>
         </div>
 
-        <!-- 4. GHI CHÚ THÊM -->
         <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Ghi Chú Chi Tiết Nhu Cầu & Tiến Trình Hồ Sơ</label>
-          <div id="dt_note" class="p-3.5 bg-slate-50 border rounded-xl text-slate-700 text-xs whitespace-pre-wrap leading-relaxed min-h-[70px]">
-            Chưa có ghi chú.
-          </div>
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Ghi Chú Tiến Trình</label>
+          <div id="dt_note" class="p-2.5 bg-slate-50 border rounded-xl text-slate-700 text-xs whitespace-pre-wrap min-h-[50px]">Chưa có ghi chú.</div>
         </div>
       </div>
 
-      <!-- Footer Buttons -->
-      <div class="flex justify-end space-x-3 pt-4 border-t border-slate-200 mt-5">
-        <button type="button" onclick="closeDetailModal()" class="px-5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm">Đóng</button>
-        <button id="dt_btn_edit" type="button" class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow">
-          <i class="fa-solid fa-pen-to-square mr-1"></i> Chỉnh Sửa Hồ Sơ Này
-        </button>
+      <div class="flex justify-end space-x-2 pt-3 border-t border-slate-200 mt-4">
+        <button type="button" onclick="closeDetailModal()" class="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs">Đóng</button>
+        <button id="dt_btn_edit" type="button" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-xs"><i class="fa-solid fa-pen-to-square mr-1"></i> Chỉnh Sửa Hồ Sơ</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: FORM THÊM & CẬP NHẬT HỒ SƠ KHÁCH HÀNG (FULL FORM) -->
+  <!-- MODAL: FORM THÊM & SỬA HỒ SƠ KHÁCH HÀNG -->
   <div id="customerModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
-    <div class="bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center pb-3 border-b mb-4">
-        <h2 id="modalTitle" class="text-lg font-bold text-slate-800">Thêm Hồ Sơ Khách Hàng Mới</h2>
+    <div class="bg-white rounded-2xl max-w-4xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-3 border-b mb-3">
+        <h2 id="modalTitle" class="text-base font-bold text-slate-800">Thêm Hồ Sơ Khách Hàng Mới</h2>
         <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
-      <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-5">
+      <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-3 text-xs">
         <input type="hidden" id="editIndex">
 
-        <!-- Phần 1: Thông tin cá nhân & Liên hệ -->
-        <div>
-          <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <i class="fa-solid fa-user"></i> 1. Thông Tin Khách Hàng & Liên Hệ
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Tên khách hàng <span class="text-red-500">*</span></label>
-              <input type="text" id="in_name" required placeholder="Họ và tên..." class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Số điện thoại <span class="text-red-500">*</span></label>
-              <input type="tel" id="in_phone" required placeholder="09xxxxxxx" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Giới tính</label>
-              <select id="in_gender" class="w-full p-2 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500">
-                <option value="Nam">Nam</option>
-                <option value="Nữ">Nữ</option>
-                <option value="Khác">Khác</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày sinh</label>
-              <input type="date" id="in_dob" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Email</label>
-              <input type="email" id="in_email" placeholder="example@email.com" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Nguồn tiếp cận khách</label>
-              <select id="in_source" class="w-full p-2 border rounded-lg text-sm bg-white font-medium text-indigo-700 focus:ring-2 focus:ring-blue-500">
-                <option value="Live TikTok">📱 Live TikTok</option>
-                <option value="Video TikTok">🎬 Video TikTok</option>
-                <option value="Khách cũ giới thiệu">🤝 Khách cũ giới thiệu</option>
-                <option value="Quảng cáo Facebook">📢 Quảng cáo Facebook</option>
-                <option value="Spam Zalo / Nhóm Zalo">💬 Spam Zalo / Nhóm Zalo</option>
-                <option value="Khách Showroom">🏢 Khách Showroom (Walk-in)</option>
-                <option value="Nguồn khác">🌐 Nguồn khác</option>
-              </select>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5">
+          <div class="md:col-span-2">
+            <label class="block font-semibold text-slate-600 mb-1">Tên khách hàng <span class="text-red-500">*</span></label>
+            <input type="text" id="in_name" required placeholder="Họ và tên..." class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-600 mb-1">Số điện thoại <span class="text-red-500">*</span></label>
+            <input type="tel" id="in_phone" required placeholder="09xxxxxxx" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-600 mb-1">Giới tính</label>
+            <select id="in_gender" class="w-full p-2 border rounded-lg bg-white">
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-600 mb-1">Ngày sinh</label>
+            <input type="date" id="in_dob" class="w-full p-2 border rounded-lg">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-600 mb-1">Email</label>
+            <input type="email" id="in_email" placeholder="email@gmail.com" class="w-full p-2 border rounded-lg">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block font-semibold text-slate-600 mb-1">Nguồn tiếp cận</label>
+            <select id="in_source" class="w-full p-2 border rounded-lg bg-white font-medium text-indigo-700">
+              <option value="Live TikTok">📱 Live TikTok</option>
+              <option value="Video TikTok">🎬 Video TikTok</option>
+              <option value="Khách cũ giới thiệu">🤝 Khách cũ giới thiệu</option>
+              <option value="Quảng cáo Facebook">📢 Quảng cáo Facebook</option>
+              <option value="Spam Zalo / Nhóm Zalo">💬 Spam Zalo / Nhóm Zalo</option>
+              <option value="Khách Showroom">🏢 Khách Showroom</option>
+              <option value="Nguồn khác">🌐 Nguồn khác</option>
+            </select>
           </div>
         </div>
 
-        <!-- Phần 2: Căn cước công dân & Địa chỉ -->
-        <div class="border-t pt-3">
-          <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <i class="fa-solid fa-address-card"></i> 2. Căn Cước Công Dân (CCCD) & Địa Chỉ
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Số CCCD</label>
-              <input type="text" id="in_cccd" placeholder="12 số CCCD" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Nơi cấp</label>
-              <input type="text" id="in_cccd_place" placeholder="Cục CS QLHC về TTXH..." class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày cấp</label>
-              <input type="date" id="in_cccd_date" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày hết hạn</label>
-              <input type="date" id="in_cccd_exp" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Địa chỉ thường trú (theo CCCD)</label>
-              <input type="text" id="in_address_perm" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/TP" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Địa chỉ tạm trú / Nơi ở hiện tại</label>
-              <input type="text" id="in_address_temp" placeholder="Nhập địa chỉ hiện tại nếu khác thường trú" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-          </div>
+        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-4 gap-2.5">
+          <div><label class="block font-semibold text-slate-600 mb-1">Số CCCD</label><input type="text" id="in_cccd" placeholder="12 số CCCD" class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Nơi cấp</label><input type="text" id="in_cccd_place" placeholder="Nơi cấp..." class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Ngày cấp</label><input type="date" id="in_cccd_date" class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Ngày hết hạn</label><input type="date" id="in_cccd_exp" class="w-full p-2 border rounded-lg"></div>
+          <div class="md:col-span-2"><label class="block font-semibold text-slate-600 mb-1">Địa chỉ thường trú</label><input type="text" id="in_address_perm" placeholder="Thường trú theo CCCD..." class="w-full p-2 border rounded-lg"></div>
+          <div class="md:col-span-2"><label class="block font-semibold text-slate-600 mb-1">Địa chỉ tạm trú</label><input type="text" id="in_address_temp" placeholder="Tạm trú..." class="w-full p-2 border rounded-lg"></div>
         </div>
 
-        <!-- Phần 3: Tài khoản ngân hàng -->
-        <div class="border-t pt-3">
-          <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <i class="fa-solid fa-building-columns"></i> 3. Thông Tin Tài Khoản Ngân Hàng
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Số tài khoản</label>
-              <input type="text" id="in_bank_acc" placeholder="Số tài khoản" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Tên ngân hàng</label>
-              <input type="text" id="in_bank_name" placeholder="VD: Vietcombank, Techcombank..." class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Tên chủ tài khoản</label>
-              <input type="text" id="in_bank_owner" placeholder="NGUYEN VAN A" class="w-full p-2 border rounded-lg text-sm uppercase focus:ring-2 focus:ring-blue-500">
-            </div>
-          </div>
+        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-3 gap-2.5">
+          <div><label class="block font-semibold text-slate-600 mb-1">Số tài khoản ngân hàng</label><input type="text" id="in_bank_acc" placeholder="Số TK" class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Tên ngân hàng</label><input type="text" id="in_bank_name" placeholder="VD: Vietcombank..." class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Chủ tài khoản</label><input type="text" id="in_bank_owner" placeholder="NGUYEN VAN A" class="w-full p-2 border rounded-lg uppercase"></div>
         </div>
 
-        <!-- Phần 4: Thông tin Xe & Hợp Đồng (HĐMB, VSO, Số Khung, Số Máy) -->
-        <div class="border-t pt-3">
-          <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <i class="fa-solid fa-file-contract"></i> 4. Thông Tin Xe & Hợp Đồng Mua Bán (HĐMB)
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Loại xe / Model</label>
-              <select id="in_car_model" class="w-full p-2 border rounded-lg text-sm bg-white font-bold text-blue-700 focus:ring-2 focus:ring-blue-500">
-                <option value="VF 3">VF 3</option>
-                <option value="VF 5 Plus">VF 5 Plus</option>
-                <option value="VF 6">VF 6</option>
-                <option value="VF 7">VF 7</option>
-                <option value="VF 8">VF 8</option>
-                <option value="VF 9">VF 9</option>
-                <option value="Dòng xe khác">Dòng xe khác</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Màu xe / Phiên bản</label>
-              <input type="text" id="in_car_color" placeholder="VD: Vàng nóc trắng, Plus..." class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Năm sản xuất</label>
-              <input type="text" id="in_car_year" placeholder="2026" value="2026" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Biển số xe (nếu có)</label>
-              <input type="text" id="in_plate" placeholder="51K-xxxx" class="w-full p-2 border rounded-lg text-sm font-mono focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Số HĐMB</label>
-              <input type="text" id="in_hdmb" placeholder="HDMB-xxxxx" class="w-full p-2 border rounded-lg text-sm font-mono focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Số VSO</label>
-              <input type="text" id="in_vso" placeholder="VSO-xxxxx" class="w-full p-2 border rounded-lg text-sm font-mono focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Số khung (VIN)</label>
-              <input type="text" id="in_vin" placeholder="17 ký tự VIN" class="w-full p-2 border rounded-lg text-sm font-mono focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Số máy</label>
-              <input type="text" id="in_engine" placeholder="Số máy xe" class="w-full p-2 border rounded-lg text-sm font-mono focus:ring-2 focus:ring-blue-500">
-            </div>
+        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-4 gap-2.5">
+          <div>
+            <label class="block font-semibold text-slate-600 mb-1">Loại xe / Model</label>
+            <select id="in_car_model" class="w-full p-2 border rounded-lg bg-white font-bold text-blue-700">
+              <option value="VF 2">VF 2</option>
+              <option value="VF 3">VF 3</option>
+              <option value="VF 5 Plus">VF 5 Plus</option>
+              <option value="VF 6 Eco">VF 6 Eco</option>
+              <option value="VF 6 Plus">VF 6 Plus</option>
+              <option value="VF 7 Eco">VF 7 Eco</option>
+              <option value="VF 7 Plus">VF 7 Plus</option>
+              <option value="VF 8 Eco">VF 8 Eco</option>
+              <option value="VF 8 Plus">VF 8 Plus</option>
+              <option value="VF 8 Thế hệ mới">VF 8 Thế hệ mới</option>
+              <option value="VF 9 Eco">VF 9 Eco</option>
+              <option value="VF 9 Plus">VF 9 Plus</option>
+              <option value="VF MPV 7">VF MPV 7</option>
+              <option value="Minio Green">Minio Green</option>
+              <option value="Herio Green">Herio Green</option>
+              <option value="Nerio Green">Nerio Green</option>
+              <option value="Limo Green">Limo Green</option>
+              <option value="EC Van">EC Van</option>
+              <option value="Lạc Hồng 900">Lạc Hồng 900</option>
+            </select>
           </div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Màu xe</label><input type="text" id="in_car_color" placeholder="Trắng, Vàng..." class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Năm sản xuất</label><input type="text" id="in_car_year" value="2026" class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Biển số xe</label><input type="text" id="in_plate" placeholder="51K-xxxx" class="w-full p-2 border rounded-lg"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Số HĐMB</label><input type="text" id="in_hdmb" placeholder="HDMB-xxxxx" class="w-full p-2 border rounded-lg font-mono"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Số VSO</label><input type="text" id="in_vso" placeholder="VSO-xxxxx" class="w-full p-2 border rounded-lg font-mono"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Số khung (VIN)</label><input type="text" id="in_vin" placeholder="17 ký tự VIN" class="w-full p-2 border rounded-lg font-mono"></div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Số máy</label><input type="text" id="in_engine" placeholder="Số máy..." class="w-full p-2 border rounded-lg font-mono"></div>
         </div>
 
-        <!-- Phần 5: Tiến trình chăm sóc & Ghi chú -->
-        <div class="border-t pt-3">
-          <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <i class="fa-solid fa-list-check"></i> 5. Tiến Trình Bán Hàng & Lịch Hẹn
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Giai đoạn chăm sóc</label>
-              <select id="in_stage" class="w-full p-2 border rounded-lg text-sm bg-white font-semibold focus:ring-2 focus:ring-blue-500">
-                <option value="Khách mới">Khách mới</option>
-                <option value="Đang tư vấn">Đang tư vấn</option>
-                <option value="Đã lái thử">Đã lái thử</option>
-                <option value="Chờ cọc">Chờ cọc</option>
-                <option value="Đã ký HĐ">Đã ký HĐ</option>
-                <option value="Đã có VSO / Xe">Đã có VSO / Xe</option>
-                <option value="Đã giao xe">Đã giao xe</option>
-                <option value="Tạm ngưng / Hủy">Tạm ngưng / Hủy</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Hình thức thanh toán</label>
-              <select id="in_payment" class="w-full p-2 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500">
-                <option value="Trả thẳng">Trả thẳng (100%)</option>
-                <option value="Vay ngân hàng (Trả góp)">Vay ngân hàng (Trả góp)</option>
-                <option value="Chưa quyết định">Chưa quyết định</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày hẹn tiếp theo / Giao xe</label>
-              <input type="date" id="in_next_date" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-            </div>
+        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-3 gap-2.5">
+          <div>
+            <label class="block font-semibold text-slate-600 mb-1">Giai đoạn</label>
+            <select id="in_stage" class="w-full p-2 border rounded-lg bg-white font-semibold">
+              <option value="Khách mới">Khách mới</option>
+              <option value="Đang tư vấn">Đang tư vấn</option>
+              <option value="Đã lái thử">Đã lái thử</option>
+              <option value="Chờ cọc">Chờ cọc</option>
+              <option value="Đã ký HĐ">Đã ký HĐ</option>
+              <option value="Đã có VSO / Xe">Đã có VSO / Xe</option>
+              <option value="Đã giao xe">Đã giao xe</option>
+              <option value="Tạm ngưng / Hủy">Tạm ngưng / Hủy</option>
+            </select>
           </div>
-          <div class="mt-3">
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Ghi chú thêm</label>
-            <textarea id="in_note" rows="2" placeholder="Ghi chú thêm về yêu cầu khuyến mãi, ngày lấy xe, phong thủy..." class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500"></textarea>
+          <div>
+            <label class="block font-semibold text-slate-600 mb-1">Hình thức thanh toán</label>
+            <select id="in_payment" class="w-full p-2 border rounded-lg bg-white">
+              <option value="Trả thẳng">Trả thẳng (100%)</option>
+              <option value="Vay ngân hàng (Trả góp)">Vay ngân hàng (Trả góp)</option>
+              <option value="Chưa quyết định">Chưa quyết định</option>
+            </select>
           </div>
+          <div><label class="block font-semibold text-slate-600 mb-1">Lịch hẹn chăm sóc / Giao xe</label><input type="date" id="in_next_date" class="w-full p-2 border rounded-lg"></div>
         </div>
 
-        <div class="flex justify-end space-x-3 pt-4 border-t">
-          <button type="button" onclick="closeModal()" class="px-5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm">Hủy</button>
-          <button type="submit" class="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow">Lưu Hồ Sơ</button>
+        <div><label class="block font-semibold text-slate-600 mb-1">Ghi chú thêm</label><textarea id="in_note" rows="2" placeholder="Ghi chú chi tiết..." class="w-full p-2 border rounded-lg"></textarea></div>
+
+        <div class="flex justify-end space-x-2 pt-2.5 border-t">
+          <button type="button" onclick="closeModal()" class="px-4 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">Hủy</button>
+          <button type="submit" class="px-5 py-1.5 rounded-lg bg-blue-600 text-white font-semibold shadow-xs">Lưu Hồ Sơ</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- JavaScript Xử Lý Toàn Bộ Dữ Liệu -->
+  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ CHỨC NĂNG -->
   <script>
+    // DỮ LIỆU CẤU HÌNH BÁO GIÁ CÁC DÒNG XE (Cập nhật chuẩn theo bảng giá 15/07 & 01/08/2026)
+    const CAR_DATA = {
+      'VF 2': {
+        name: 'VF 2',
+        maxStaffDiscount: 0,
+        versions: {
+          'Tiêu chuẩn 1': { price: 188000000, power: '40 hp', range: '200 km', length: '3.100 mm' }
+        },
+        colors: [
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: '' },
+          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: '' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: '' },
+          { name: 'Vàng (Summer Yellow)', hex: '#fbbf24', fee: 8000000, img: '' },
+          { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 8000000, img: '' }
+        ]
+      },
+      'VF 3': {
+        name: 'VF 3',
+        maxStaffDiscount: 6000000,
+        versions: {
+          'Tiêu chuẩn 1': { price: 278000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' },
+          'Tiêu chuẩn 2 (Eco)': { price: 285000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' },
+          'Tiêu chuẩn 2 (Plus)': { price: 296000000, power: '43 hp / 32 kW', range: '215 km (NEDC)', length: '3.190 mm' }
+        },
+        colors: [
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-white.png' },
+          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-red.png' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-gray.png' },
+          { name: 'Vàng nóc trắng', hex: '#fbbf24', fee: 8000000, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-yellow.png' },
+          { name: 'Xanh Mint nóc trắng', hex: '#6ee7b7', fee: 8000000, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-mint.png' },
+          { name: 'Hồng nóc trắng', hex: '#f472b6', fee: 8000000, img: 'https://storage.googleapis.com/vinfast-data-01/vf3-pink.png' }
+        ]
+      },
+      'VF 5': {
+        name: 'VF 5',
+        maxStaffDiscount: 10000000,
+        versions: {
+          'Plus (Tiêu chuẩn 1)': { price: 496000000, power: '134 hp / 100 kW', range: '326 km (NEDC)', length: '3.967 mm' }
+        },
+        colors: [
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-white.png' },
+          { name: 'Đỏ (Solar Ruby)', hex: '#dc2626', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-red.png' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-gray.png' },
+          { name: 'Xanh Dương', hex: '#2563eb', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-blue.png' },
+          { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 8000000, img: 'https://storage.googleapis.com/vinfast-data-01/vf5-mint.png' }
+        ]
+      },
+      'VF 6': {
+        name: 'VF 6',
+        maxStaffDiscount: 12000000,
+        versions: {
+          'Eco (Tiêu chuẩn 1)': { price: 650000000, power: '174 hp / 130 kW', range: '399 km (WLTP)', length: '4.238 mm' },
+          'Eco (Tiêu chuẩn 2)': { price: 646000000, power: '174 hp / 130 kW', range: '399 km (WLTP)', length: '4.238 mm' },
+          'Eco (Nâng cấp)': { price: 699000000, power: '174 hp / 130 kW', range: '399 km (WLTP)', length: '4.238 mm' },
+          'Plus (Tiêu chuẩn 1)': { price: 710000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' },
+          'Plus (Tiêu chuẩn 2)': { price: 700000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' },
+          'Plus (Nâng cấp)': { price: 750000000, power: '201 hp / 150 kW', range: '381 km (WLTP)', length: '4.238 mm' }
+        },
+        colors: [
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-white.png' },
+          { name: 'Đen (Jet Black)', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-black.png' },
+          { name: 'Đỏ (Crimson Red)', hex: '#b91c1c', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-red.png' },
+          { name: 'Xanh Lá (Deep Ocean)', hex: '#065f46', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-green.png' },
+          { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 8000000, img: 'https://storage.googleapis.com/vinfast-data-01/vf6-mint.png' }
+        ]
+      },
+      'VF 7': {
+        name: 'VF 7',
+        maxStaffDiscount: 15000000,
+        versions: {
+          'Eco (Tiêu chuẩn 1)': { price: 750000000, power: '174 hp / 130 kW', range: '375 km (WLTP)', length: '4.545 mm' },
+          'Eco (Tiêu chuẩn 2)': { price: 740000000, power: '174 hp / 130 kW', range: '375 km (WLTP)', length: '4.545 mm' },
+          'Eco (Nâng cấp)': { price: 830000000, power: '174 hp / 130 kW', range: '375 km (WLTP)', length: '4.545 mm' },
+          'Plus Trần Thép (Tiêu chuẩn 1)': { price: 889000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
+          'Plus Trần Thép (Tiêu chuẩn 2)': { price: 840000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
+          'Plus Trần Thép (Nâng cấp)': { price: 920000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
+          'Plus Trần Kính (Tiêu chuẩn 1)': { price: 909000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
+          'Plus Trần Kính (Tiêu chuẩn 2)': { price: 860000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' },
+          'Plus Trần Kính (Nâng cấp)': { price: 850000000, power: '349 hp / 260 kW', range: '431 km (WLTP)', length: '4.545 mm' }
+        },
+        colors: [
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-white.png' },
+          { name: 'Đen (Jet Black)', hex: '#1e293b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-black.png' },
+          { name: 'Đỏ (Crimson Red)', hex: '#991b1b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-red.png' },
+          { name: 'Xám (Zenith Grey)', hex: '#64748b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-gray.png' },
+          { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 8000000, img: 'https://storage.googleapis.com/vinfast-data-01/vf7-mint.png' }
+        ]
+      },
+      'VF 8': {
+        name: 'VF 8',
+        maxStaffDiscount: 20000000,
+        versions: {
+          'Eco (Tiêu chuẩn 1)': { price: 910000000, power: '349 hp / 260 kW', range: '471 km (WLTP)', length: '4.750 mm' },
+          'Eco (Tiêu chuẩn 2 - Pin CATL VN)': { price: 898000000, power: '349 hp / 260 kW', range: '471 km (WLTP)', length: '4.750 mm' },
+          'Plus (Tiêu chuẩn 2 - Pin CATL VN)': { price: 1079000000, power: '402 hp / 300 kW', range: '457 km (WLTP)', length: '4.750 mm' },
+          'Eco (Pin CATL US)': { price: 918000000, power: '349 hp / 260 kW', range: '471 km (WLTP)', length: '4.750 mm' },
+          'Plus (Pin CATL US)': { price: 1079000000, power: '402 hp / 300 kW', range: '457 km (WLTP)', length: '4.750 mm' }
+        },
+        colors: [
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf8-white.png' },
+          { name: 'Đen (Jet Black)', hex: '#0f172a', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf8-black.png' },
+          { name: 'Đỏ (Crimson Red)', hex: '#b91c1c', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf8-red.png' },
+          { name: 'Xanh Lá Đậm (Ivy Green)', hex: '#064e3b', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf8-green.png' }
+        ]
+      },
+      'VF 8 Thế hệ mới': {
+        name: 'VF 8 Thế hệ mới',
+        maxStaffDiscount: 0,
+        versions: {
+          'Tiêu chuẩn 1': { price: 899000000, power: '349 hp / 260 kW', range: '500 km', length: '4.750 mm' }
+        },
+        colors: [
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: '' },
+          { name: 'Đen', hex: '#0f172a', fee: 0, img: '' },
+          { name: 'Xám', hex: '#475569', fee: 0, img: '' },
+          { name: 'Cam Vitality + Nóc đen', hex: '#f97316', fee: 12000000, img: '' }
+        ]
+      },
+      'VF 9': {
+        name: 'VF 9',
+        maxStaffDiscount: 25000000,
+        versions: {
+          'Eco (CATL 3 Vùng)': { price: 1348000000, power: '402 hp / 300 kW', range: '438 km (WLTP)', length: '5.118 mm' },
+          'Plus Trần Thép (CATL 3 Vùng)': { price: 1529000000, power: '402 hp / 300 kW', range: '423 km (WLTP)', length: '5.118 mm' }
+        },
+        colors: [
+          { name: 'Trắng (Infinity Blanc)', hex: '#ffffff', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf9-white.png' },
+          { name: 'Đen (Jet Black)', hex: '#020617', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf9-black.png' },
+          { name: 'Xám (Zenith Grey)', hex: '#475569', fee: 0, img: 'https://storage.googleapis.com/vinfast-data-01/vf9-gray.png' },
+          { name: 'Xanh Lá Đậm (Ivy Green)', hex: '#064e3b', fee: 12000000, img: 'https://storage.googleapis.com/vinfast-data-01/vf9-green.png' }
+        ]
+      },
+      'VF MPV 7': {
+        name: 'VF MPV 7',
+        maxStaffDiscount: 15000000,
+        versions: {
+          'Tiêu chuẩn': { price: 699000000, power: '150 hp', range: '400 km', length: '4.700 mm' }
+        },
+        promoDirect: 20000000, // Ưu đãi giảm 20tr theo CS thúc đẩy bán hàng 01/08
+        colors: [
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: '' },
+          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: '' },
+          { name: 'Đen', hex: '#1e293b', fee: 0, img: '' },
+          { name: 'Nâu (Introspective Brown)', hex: '#78350f', fee: 10000000, img: '' }
+        ]
+      },
+      'Minio Green': {
+        name: 'Minio Green',
+        maxStaffDiscount: 6000000,
+        versions: {
+          'Tiêu chuẩn': { price: 188000000, power: '30 hp', range: '170 km', length: '3.000 mm' }
+        },
+        colors: [
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: '' },
+          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: '' },
+          { name: 'Xanh Mint (Urban Mint)', hex: '#6ee7b7', fee: 0, img: '' },
+          { name: 'Hồng (Rose Pink)', hex: '#f472b6', fee: 8000000, img: '' },
+          { name: 'Vàng nóc trắng', hex: '#fbbf24', fee: 3000000, img: '' }
+        ]
+      },
+      'Herio Green': {
+        name: 'Herio Green',
+        maxStaffDiscount: 10000000,
+        versions: {
+          'Tiêu chuẩn': { price: 450000000, power: '100 hp', range: '300 km', length: '3.900 mm' },
+          'Nâng cấp': { price: 469000000, power: '100 hp', range: '300 km', length: '3.900 mm' }
+        },
+        colors: [
+          { name: 'Xanh Taxi GSM', hex: '#059669', fee: 0, img: '' },
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: '' }
+        ]
+      },
+      'Nerio Green': {
+        name: 'Nerio Green',
+        maxStaffDiscount: 12000000,
+        versions: {
+          'Tiêu chuẩn': { price: 628000000, power: '150 hp', range: '380 km', length: '4.200 mm' }
+        },
+        colors: [
+          { name: 'Xanh Taxi GSM', hex: '#059669', fee: 0, img: '' },
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: '' }
+        ]
+      },
+      'Limo Green': {
+        name: 'Limo Green',
+        maxStaffDiscount: 12000000,
+        versions: {
+          'Tiêu chuẩn': { price: 699000000, power: '134 hp', range: '350 km', length: '4.400 mm' }
+        },
+        promoDirect: 35000000, // Ưu đãi giảm giá 35 triệu theo CS thúc đẩy 01/08
+        colors: [
+          { name: 'Xanh Taxi GSM', hex: '#059669', fee: 0, img: '' },
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: '' }
+        ]
+      },
+      'EC Van': {
+        name: 'EC Van',
+        maxStaffDiscount: 6000000,
+        versions: {
+          'Tiêu chuẩn': { price: 268000000, power: '40 hp', range: '180 km', length: '3.600 mm' },
+          'Nâng cao': { price: 286000000, power: '40 hp', range: '180 km', length: '3.600 mm' },
+          'Nâng cao + Cửa trượt': { price: 306000000, power: '40 hp', range: '180 km', length: '3.600 mm' }
+        },
+        promoDirect: 20000000, // Ưu đãi giảm giá 20 triệu cho bản Tiêu chuẩn
+        colors: [
+          { name: 'Trắng', hex: '#ffffff', fee: 0, img: '' },
+          { name: 'Bạc', hex: '#cbd5e1', fee: 0, img: '' }
+        ]
+      },
+      'Lạc Hồng 900': {
+        name: 'Lạc Hồng 900',
+        maxStaffDiscount: 0,
+        versions: {
+          'Tiêu chuẩn': { price: 5000000000, power: '500 hp', range: '500 km', length: '5.300 mm' },
+          'Chống đạn': { price: 36000000000, power: '500 hp', range: '450 km', length: '5.300 mm' }
+        },
+        colors: [
+          { name: 'Đen Hoàng Gia', hex: '#020617', fee: 0, img: '' }
+        ]
+      }
+    };
+
+    let curModel = 'VF 6';
+    let curVer = 'Plus (Nâng cấp)';
+    let curColorIdx = 0;
+
+    function formatVND(n) {
+      return new Intl.NumberFormat('vi-VN').format(Math.round(n)) + ' đ';
+    }
+
+    function switchTab(tab) {
+      if (tab === 'quote') {
+        document.getElementById('tabQuote').classList.remove('hidden');
+        document.getElementById('tabCrm').classList.add('hidden');
+        document.getElementById('tabBtnQuote').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5';
+        document.getElementById('tabBtnCrm').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5';
+      } else {
+        document.getElementById('tabQuote').classList.add('hidden');
+        document.getElementById('tabCrm').classList.remove('hidden');
+        document.getElementById('tabBtnCrm').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5';
+        document.getElementById('tabBtnQuote').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5';
+        renderCustomers();
+      }
+    }
+
+    function initQuote() {
+      const nav = document.getElementById('carModelNav');
+      nav.innerHTML = '';
+      Object.keys(CAR_DATA).forEach(modelKey => {
+        const btn = document.createElement('button');
+        btn.className = `px-3.5 py-1.5 rounded-lg whitespace-nowrap transition ${modelKey === curModel ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-50 text-slate-700 hover:bg-slate-100'}`;
+        btn.innerText = modelKey;
+        btn.onclick = () => selectModel(modelKey);
+        nav.appendChild(btn);
+      });
+      loadModelUI();
+    }
+
+    function selectModel(m) {
+      curModel = m;
+      const verKeys = Object.keys(CAR_DATA[m].versions);
+      curVer = verKeys[0];
+      curColorIdx = 0;
+      initQuote();
+    }
+
+    function loadModelUI() {
+      const c = CAR_DATA[curModel];
+      document.getElementById('q_carName').innerText = c.name;
+      
+      const verBox = document.getElementById('q_versionButtons');
+      verBox.innerHTML = '';
+      Object.keys(c.versions).forEach(v => {
+        const btn = document.createElement('button');
+        btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold transition border ${v === curVer ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'}`;
+        btn.innerText = v;
+        btn.onclick = () => { curVer = v; loadModelUI(); };
+        verBox.appendChild(btn);
+      });
+
+      const dotBox = document.getElementById('q_colorDots');
+      dotBox.innerHTML = '';
+      c.colors.forEach((col, idx) => {
+        const dot = document.createElement('button');
+        dot.className = `w-6 h-6 rounded-full border-2 transition shadow-xs ${idx === curColorIdx ? 'ring-2 ring-blue-600 scale-110 border-white' : 'border-slate-300 opacity-80'}`;
+        dot.style.backgroundColor = col.hex;
+        dot.title = col.name + (col.fee > 0 ? ` (+${formatVND(col.fee)})` : '');
+        dot.onclick = () => {
+          curColorIdx = idx;
+          loadModelUI();
+        };
+        dotBox.appendChild(dot);
+      });
+
+      const curCol = c.colors[curColorIdx];
+      document.getElementById('q_colorName').innerText = `Màu ngoại thất: ${curCol.name}` + (curCol.fee > 0 ? ` (+${formatVND(curCol.fee)})` : '');
+      if (curCol.img) {
+        document.getElementById('q_carImage').src = curCol.img;
+      }
+
+      const spec = c.versions[curVer];
+      document.getElementById('q_specPower').innerText = spec.power;
+      document.getElementById('q_specRange').innerText = spec.range;
+      document.getElementById('q_specLength').innerText = spec.length;
+
+      // Hạn mức TVBH
+      document.getElementById('txt_max_discount').innerText = `Tối đa: ${formatVND(c.maxStaffDiscount)}`;
+      document.getElementById('promo_dealer').max = c.maxStaffDiscount;
+
+      // Ưu đãi trực tiếp riêng của dòng xe
+      const promoDirectBox = document.getElementById('box_model_promo');
+      if (c.promoDirect && (curVer.includes('Tiêu chuẩn') || curModel === 'Limo Green' || curModel === 'VF MPV 7')) {
+        promoDirectBox.classList.remove('hidden');
+        document.getElementById('txt_model_promo_desc').innerText = `Chính sách thúc đẩy bán hàng VinFast tháng 08/2026`;
+        document.getElementById('val_model_promo').innerText = '- ' + formatVND(c.promoDirect);
+      } else {
+        promoDirectBox.classList.add('hidden');
+      }
+
+      calculateQuote();
+    }
+
+    function calculateQuote() {
+      const basePrice = CAR_DATA[curModel].versions[curVer].price;
+      const colorFee = CAR_DATA[curModel].colors[curColorIdx].fee || 0;
+      
+      let invoiceDiscount = 0;
+      let actualDiscount = 0;
+
+      // 1. Ưu đãi trực tiếp dòng xe
+      const c = CAR_DATA[curModel];
+      if (c.promoDirect && (curVer.includes('Tiêu chuẩn') || curModel === 'Limo Green' || curModel === 'VF MPV 7')) {
+        invoiceDiscount += c.promoDirect;
+      }
+
+      // 2. VinClub X3
+      const vinclubChecked = document.getElementById('promo_vinclub').checked;
+      const vinclubBox = document.getElementById('box_vinclub_tier');
+      if (vinclubChecked) {
+        vinclubBox.classList.remove('hidden');
+        const rate = parseFloat(document.getElementById('sel_vinclub_tier').value);
+        const vinclubVal = basePrice * rate;
+        document.getElementById('val_promo_vinclub').innerText = '- ' + formatVND(vinclubVal);
+        invoiceDiscount += vinclubVal;
+      } else {
+        vinclubBox.classList.add('hidden');
+        document.getElementById('val_promo_vinclub').innerText = '- 0 đ';
+      }
+
+      // 3. Mùa hè rực rỡ (Vinfascination: 3% với VF 5, Herio, Limo, MPV7, Minio; 2% với xe khác)
+      const summerChecked = document.getElementById('promo_summer').checked;
+      if (summerChecked) {
+        let summerRate = 0.02;
+        if (['VF 5', 'Herio Green', 'Limo Green', 'VF MPV 7', 'Minio Green'].includes(curModel)) {
+          summerRate = 0.03;
+        }
+        const summerVal = basePrice * summerRate;
+        document.getElementById('val_promo_summer').innerText = '- ' + formatVND(summerVal);
+        invoiceDiscount += summerVal;
+      } else {
+        document.getElementById('val_promo_summer').innerText = '- 0 đ';
+      }
+
+      // 4. Tri ân xe xăng
+      const gasChecked = document.getElementById('promo_gas_tradein').checked;
+      const gasBox = document.getElementById('box_gas_tier');
+      if (gasChecked) {
+        gasBox.classList.remove('hidden');
+        const gasVal = parseFloat(document.getElementById('sel_gas_tier').value);
+        document.getElementById('val_promo_gas_tradein').innerText = '- ' + formatVND(gasVal);
+        invoiceDiscount += gasVal;
+      } else {
+        gasBox.classList.add('hidden');
+        document.getElementById('val_promo_gas_tradein').innerText = '- 0 đ';
+      }
+
+      // 5. Công an / Quân đội (5%) hoặc VNPost (3%)
+      const govChecked = document.getElementById('promo_gov').checked;
+      const govBox = document.getElementById('box_gov_tier');
+      if (govChecked) {
+        govBox.classList.remove('hidden');
+        const govRate = parseFloat(document.getElementById('sel_gov_tier').value);
+        const govVal = basePrice * govRate;
+        document.getElementById('val_promo_gov').innerText = '- ' + formatVND(govVal);
+        invoiceDiscount += govVal;
+      } else {
+        govBox.classList.add('hidden');
+        document.getElementById('val_promo_gov').innerText = '- 0 đ';
+      }
+
+      // 6. Chiết khấu Showroom / TVBH
+      let dealerVal = Number(document.getElementById('promo_dealer').value) || 0;
+      actualDiscount += dealerVal;
+
+      // Tính tổng kết quả
+      const invoicePrice = Math.max(0, basePrice + colorFee - invoiceDiscount);
+      const actualPrice = Math.max(0, invoicePrice - actualDiscount);
+
+      document.getElementById('bill_title_model').innerText = `${curModel} - ${curVer}`;
+      document.getElementById('bill_listedPrice').innerText = formatVND(basePrice);
+      document.getElementById('bill_colorFee').innerText = formatVND(colorFee);
+      document.getElementById('bill_invoicePrice').innerText = formatVND(invoicePrice);
+      document.getElementById('bill_actualPrice').innerText = formatVND(actualPrice);
+      document.getElementById('bill_grandTotal').innerText = formatVND(actualPrice);
+    }
+
+    function copyQuoteToZalo() {
+      const pListed = document.getElementById('bill_listedPrice').innerText;
+      const pHDMB = document.getElementById('bill_invoicePrice').innerText;
+      const pActual = document.getElementById('bill_actualPrice').innerText;
+      const cColor = CAR_DATA[curModel].colors[curColorIdx].name;
+
+      const text = `🚗 BẢNG DỰ TOÁN BÁO GIÁ VINFAST (ÁP DỤNG THÁNG 8)\n` +
+                   `• Dòng xe: ${curModel} (${curVer})\n` +
+                   `• Màu ngoại thất: ${cColor}\n` +
+                   `------------------------------------\n` +
+                   `• Giá niêm yết (kèm pin): ${pListed}\n` +
+                   `• GIÁ XUẤT HÓA ĐƠN (HĐMB): ${pHDMB}\n` +
+                   `👉 TỔNG GIÁ THU THỰC TẾ: ${pActual}\n` +
+                   `------------------------------------\n` +
+                   `Đã bao gồm VAT & các gói ưu đãi chính sách. Quý khách liên hệ hotline để nhận lịch giao xe sớm nhất!`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Đã sao chép nội dung báo giá! Bạn có thể dán (Paste) ngay sang Zalo cho khách hàng.');
+      });
+    }
+
+    // =========================================================================
+    // CODE CRM QUẢN LÝ KHÁCH HÀNG & HỒ SƠ CHUYÊN SÂU
+    // =========================================================================
     let customers = JSON.parse(localStorage.getItem('my_sales_customers_v3')) || [
       {
-        id: 'KH-101',
-        name: 'Nguyễn Văn An',
-        dob: '1990-05-15',
-        gender: 'Nam',
-        phone: '0908123456',
-        email: 'an.nguyen@gmail.com',
-        cccd: '079090001234',
-        cccd_date: '2021-06-10',
-        cccd_exp: '2030-05-15',
-        cccd_place: 'Cục CS QLHC về TTXH',
-        address_perm: '123 Nguyễn Thị Thập, P. Tân Quy, Quận 7, TP.HCM',
-        address_temp: 'Chung cư Sunrise City, Quận 7, TP.HCM',
-        bank_acc: '1012345678',
-        bank_name: 'Vietcombank - CN Nam Sài Gòn',
-        bank_owner: 'NGUYEN VAN AN',
-        hdmb: 'HDMB-VF-2026-089',
-        vso: 'VSO-88992',
-        vin: 'VF88992026VIN01',
-        engine: 'ENG-20268899',
-        car_model: 'VF 3',
-        car_color: 'Vàng nóc trắng',
-        car_year: '2026',
-        plate: '51K-999.88',
-        source: 'Live TikTok',
-        payment: 'Trả thẳng',
-        stage: 'Đã có VSO / Xe',
-        next_date: '2026-08-28',
-        note: 'Khách cọc từ live TikTok. Đã ra số khung và VSO, hẹn ngày 28/08 bàn giao xe tại Showroom.'
-      },
-      {
-        id: 'KH-102',
-        name: 'Trần Thị Mai',
-        dob: '1995-10-20',
-        gender: 'Nữ',
-        phone: '0919888999',
-        email: 'mai.tran@gmail.com',
-        cccd: '079195009876',
-        cccd_date: '2022-01-12',
-        cccd_exp: '2035-10-20',
-        cccd_place: 'Cục CS QLHC về TTXH',
-        address_perm: '45 Lê Văn Việt, TP. Thủ Đức, TP.HCM',
-        address_temp: '',
-        bank_acc: '',
-        bank_name: '',
-        bank_owner: '',
-        hdmb: '',
-        vso: '',
-        vin: '',
-        engine: '',
-        car_model: 'VF 7',
-        car_color: 'Xanh dương / Plus',
-        car_year: '2026',
-        plate: '',
-        source: 'Quảng cáo Facebook',
-        payment: 'Vay ngân hàng (Trả góp)',
-        stage: 'Đã lái thử',
-        next_date: '2026-08-26',
-        note: 'Đang đợi ngân hàng thẩm định hồ sơ vay 80%.'
+        id: 'KH-101', name: 'Nguyễn Văn An', dob: '1990-05-15', gender: 'Nam', phone: '0908123456', email: 'an.nguyen@gmail.com',
+        cccd: '079090001234', cccd_date: '2021-06-10', cccd_exp: '2030-05-15', cccd_place: 'Cục CS QLHC về TTXH',
+        address_perm: '123 Nguyễn Thị Thập, P. Tân Quy, Quận 7, TP.HCM', address_temp: 'Sunrise City, Q.7',
+        bank_acc: '1012345678', bank_name: 'Vietcombank', bank_owner: 'NGUYEN VAN AN',
+        hdmb: 'HDMB-VF-2026-089', vso: 'VSO-88992', vin: 'VF88992026VIN01', engine: 'ENG-20268899',
+        car_model: 'VF 6 Plus', car_color: 'Trắng', car_year: '2026', plate: '51K-999.88',
+        source: 'Live TikTok', payment: 'Trả thẳng', stage: 'Đã có VSO / Xe', next_date: '2026-08-28',
+        note: 'Đã chốt báo giá, hẹn 28/08 bàn giao xe.'
       }
     ];
 
@@ -504,9 +997,8 @@
 
     function renderCustomers() {
       const tbody = document.getElementById('customerTableBody');
-      const search = document.getElementById('searchInput').value.toLowerCase();
+      const search = (document.getElementById('searchInput').value || '').toLowerCase();
       const stageFilter = document.getElementById('stageFilter').value;
-      const sourceFilter = document.getElementById('sourceFilter').value;
       tbody.innerHTML = '';
 
       let filtered = customers.filter(c => {
@@ -515,14 +1007,11 @@
                             (c.cccd && c.cccd.includes(search)) ||
                             (c.vso && c.vso.toLowerCase().includes(search)) ||
                             (c.vin && c.vin.toLowerCase().includes(search)) ||
-                            (c.plate && c.plate.toLowerCase().includes(search)) ||
-                            (c.car_model && c.car_model.toLowerCase().includes(search));
+                            (c.plate && c.plate.toLowerCase().includes(search));
         const matchStage = stageFilter === 'ALL' || c.stage === stageFilter;
-        const matchSource = sourceFilter === 'ALL' || c.source === sourceFilter;
-        return matchSearch && matchStage && matchSource;
+        return matchSearch && matchStage;
       });
 
-      // Cập nhật thống kê
       document.getElementById('stat-total').innerText = customers.length;
       document.getElementById('stat-consulting').innerText = customers.filter(c => c.stage === 'Đang tư vấn' || c.stage === 'Đã lái thử').length;
       document.getElementById('stat-deposit').innerText = customers.filter(c => c.stage === 'Chờ cọc' || c.stage === 'Đã ký HĐ').length;
@@ -536,14 +1025,10 @@
       }
 
       filtered.forEach((cust, index) => {
-        let stageBadge = '';
-        if (cust.stage === 'Khách mới') stageBadge = '<span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full text-xs font-semibold">Khách mới</span>';
-        else if (cust.stage === 'Đang tư vấn') stageBadge = '<span class="bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-semibold">Đang tư vấn</span>';
-        else if (cust.stage === 'Đã lái thử') stageBadge = '<span class="bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-xs font-semibold">Đã lái thử</span>';
-        else if (cust.stage === 'Chờ cọc' || cust.stage === 'Đã ký HĐ') stageBadge = '<span class="bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full text-xs font-semibold">Chờ cọc / Ký HĐ</span>';
-        else if (cust.stage === 'Đã có VSO / Xe') stageBadge = '<span class="bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full text-xs font-semibold">Đã có VSO/Xe</span>';
-        else if (cust.stage === 'Đã giao xe') stageBadge = '<span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">Đã giao xe</span>';
-        else stageBadge = '<span class="bg-rose-100 text-rose-700 px-2.5 py-1 rounded-full text-xs font-semibold">Tạm ngưng / Hủy</span>';
+        let stageBadge = `<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">${cust.stage}</span>`;
+        if (cust.stage === 'Đang tư vấn') stageBadge = '<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đang tư vấn</span>';
+        else if (cust.stage === 'Đã có VSO / Xe') stageBadge = '<span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã có VSO/VIN</span>';
+        else if (cust.stage === 'Đã giao xe') stageBadge = '<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã giao xe</span>';
 
         const cleanPhone = (cust.phone || '').replace(/[^0-9]/g, '');
         const zaloPhone = cleanPhone.startsWith('0') ? '84' + cleanPhone.slice(1) : cleanPhone;
@@ -551,57 +1036,46 @@
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-blue-50/40 transition border-b group';
         tr.innerHTML = `
-          <td class="py-3 px-4 cursor-pointer" onclick="viewDetail(${index})">
-            <div class="font-bold text-blue-700 group-hover:underline flex items-center gap-1.5">
-              ${cust.name} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 group-hover:text-blue-600"></i>
+          <td class="py-2.5 px-3 cursor-pointer" onclick="viewDetail(${index})">
+            <div class="font-bold text-blue-700 group-hover:underline flex items-center gap-1">
+              ${cust.name} <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-400 group-hover:text-blue-600"></i>
             </div>
-            <div class="text-xs text-slate-500 font-mono">${cust.phone}</div>
-            ${cust.cccd ? `<div class="text-[11px] text-slate-400 font-mono">CCCD: ${cust.cccd}</div>` : ''}
+            <div class="text-[11px] text-slate-500 font-mono">${cust.phone}</div>
           </td>
-          <td class="py-3 px-4">
+          <td class="py-2.5 px-3">
             <div class="font-bold text-slate-800">${cust.car_model || '---'}</div>
-            <div class="text-xs text-slate-500">${cust.car_color || 'Chưa chọn màu'}</div>
+            <div class="text-[11px] text-slate-500">${cust.car_color || 'Chưa chọn'}</div>
           </td>
-          <td class="py-3 px-4 text-xs font-mono">
+          <td class="py-2.5 px-3 font-mono text-[11px]">
             <div class="text-slate-700">${cust.hdmb ? 'HĐ: ' + cust.hdmb : '---'}</div>
             <div class="text-purple-700 font-semibold">${cust.vso ? 'VSO: ' + cust.vso : ''}</div>
           </td>
-          <td class="py-3 px-4 text-xs font-mono">
-            <div class="text-slate-700">${cust.vin ? 'Số khung: ' + cust.vin : '---'}</div>
+          <td class="py-2.5 px-3 font-mono text-[11px]">
+            <div class="text-slate-700">${cust.vin ? 'VIN: ' + cust.vin : '---'}</div>
             ${cust.plate ? `<div class="text-emerald-700 font-bold">${cust.plate}</div>` : ''}
           </td>
-          <td class="py-3 px-4">${stageBadge}</td>
-          <td class="py-3 px-4">
-            <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-100">${cust.source || 'N/A'}</span>
-          </td>
-          <td class="py-3 px-4 text-center">
-            <div class="flex justify-center space-x-1.5">
-              <a href="tel:${cust.phone}" title="Gọi điện" class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 hover:bg-emerald-200 flex items-center justify-center transition">
-                <i class="fa-solid fa-phone text-xs"></i>
-              </a>
-              <a href="https://zalo.me/${zaloPhone}" target="_blank" title="Mở Zalo" class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 flex items-center justify-center transition font-bold text-xs">
-                Z
-              </a>
+          <td class="py-2.5 px-3">${stageBadge}</td>
+          <td class="py-2.5 px-3"><span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700">${cust.source || 'N/A'}</span></td>
+          <td class="py-2.5 px-3 text-center">
+            <div class="flex justify-center space-x-1">
+              <a href="tel:${cust.phone}" title="Gọi" class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 hover:bg-emerald-200 flex items-center justify-center"><i class="fa-solid fa-phone text-[10px]"></i></a>
+              <a href="https://zalo.me/${zaloPhone}" target="_blank" title="Zalo" class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 flex items-center justify-center font-bold text-[10px]">Z</a>
             </div>
           </td>
-          <td class="py-3 px-4 text-center space-x-2">
-            <button onclick="editCustomer(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Chỉnh sửa"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button onclick="deleteCustomer(${index})" class="text-rose-500 hover:text-rose-700 p-1" title="Xóa"><i class="fa-solid fa-trash"></i></button>
+          <td class="py-2.5 px-3 text-center space-x-1.5">
+            <button onclick="editCustomer(${index})" class="text-blue-500 hover:text-blue-700"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button onclick="deleteCustomer(${index})" class="text-rose-500 hover:text-rose-700"><i class="fa-solid fa-trash"></i></button>
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    // HIỂN THỊ CHI TIẾT POPUP
     function viewDetail(idx) {
       const c = customers[idx];
       document.getElementById('dt_name').innerText = c.name || '---';
       document.getElementById('dt_id').innerText = c.id || '---';
       document.getElementById('dt_source').innerText = c.source || '---';
-      document.getElementById('dt_stage_badge').innerText = c.stage || '---';
-      document.getElementById('dt_stage_badge').className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800';
-
       document.getElementById('dt_gender').innerText = c.gender || '---';
       document.getElementById('dt_dob').innerText = c.dob || '---';
       document.getElementById('dt_phone').innerText = c.phone || '---';
@@ -626,15 +1100,8 @@
       document.getElementById('dt_bank_acc').innerText = c.bank_acc || '---';
       document.getElementById('dt_bank_name').innerText = c.bank_name || '---';
       document.getElementById('dt_bank_owner').innerText = c.bank_owner || '---';
-
-      const nextDateElem = document.getElementById('dt_next_date');
-      if (c.next_date) {
-        nextDateElem.innerHTML = `<i class="fa-regular fa-calendar-check"></i> Ngày hẹn: <strong>${c.next_date}</strong>`;
-      } else {
-        nextDateElem.innerHTML = `Chưa lên lịch hẹn`;
-      }
-
-      document.getElementById('dt_note').innerText = c.note || 'Không có ghi chú thêm.';
+      document.getElementById('dt_next_date').innerText = c.next_date ? `Ngày hẹn: ${c.next_date}` : 'Chưa lên lịch hẹn';
+      document.getElementById('dt_note').innerText = c.note || 'Không có ghi chú.';
 
       const cleanPhone = (c.phone || '').replace(/[^0-9]/g, '');
       const zaloPhone = cleanPhone.startsWith('0') ? '84' + cleanPhone.slice(1) : cleanPhone;
@@ -653,14 +1120,12 @@
       document.getElementById('detailModal').classList.add('hidden');
     }
 
-    // FORM THÊM / SỬA HỒ SƠ
     function openModal(editIdx = null) {
       document.getElementById('customerModal').classList.remove('hidden');
       if (editIdx !== null) {
         const c = customers[editIdx];
         document.getElementById('modalTitle').innerText = 'Chỉnh Sửa Hồ Sơ Khách Hàng';
         document.getElementById('editIndex').value = editIdx;
-        
         document.getElementById('in_name').value = c.name || '';
         document.getElementById('in_phone').value = c.phone || '';
         document.getElementById('in_gender').value = c.gender || 'Nam';
@@ -679,7 +1144,7 @@
         document.getElementById('in_bank_name').value = c.bank_name || '';
         document.getElementById('in_bank_owner').value = c.bank_owner || '';
 
-        document.getElementById('in_car_model').value = c.car_model || 'VF 3';
+        document.getElementById('in_car_model').value = c.car_model || 'VF 6 Eco';
         document.getElementById('in_car_color').value = c.car_color || '';
         document.getElementById('in_car_year').value = c.car_year || '2026';
         document.getElementById('in_plate').value = c.plate || '';
@@ -711,7 +1176,7 @@
     function handleSaveCustomer(e) {
       e.preventDefault();
       const editIdx = document.getElementById('editIndex').value;
-      const customerData = {
+      const data = {
         id: editIdx !== '' ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
         name: document.getElementById('in_name').value,
         phone: document.getElementById('in_phone').value,
@@ -746,36 +1211,35 @@
         note: document.getElementById('in_note').value
       };
 
-      if (editIdx !== '') {
-        customers[editIdx] = customerData;
-      } else {
-        customers.unshift(customerData);
-      }
+      if (editIdx !== '') customers[editIdx] = data;
+      else customers.unshift(data);
+
       saveToStorage();
       closeModal();
     }
 
-    function deleteCustomer(index) {
+    function deleteCustomer(idx) {
       if (confirm('Bạn có chắc muốn xóa hồ sơ khách hàng này?')) {
-        customers.splice(index, 1);
+        customers.splice(idx, 1);
         saveToStorage();
       }
     }
 
     function exportCSV() {
-      let csv = 'Mã KH,Tên Khách,Ngày sinh,Giới tính,SĐT,Email,Số CCCD,Ngày cấp,Ngày hết hạn,Nơi cấp,Địa chỉ thường trú,Địa chỉ tạm trú,Số TK,Ngân hàng,Chủ TK,Số HĐMB,Số VSO,Số khung,Số máy,Loại xe,Màu xe,Năm SX,Biển số,Giai đoạn,Nguồn,Hình thức mua,Lịch hẹn,Ghi chú\n';
+      let csv = 'Mã KH,Tên Khách,Ngày sinh,Giới tính,SĐT,Email,Số CCCD,Địa chỉ thường trú,Số TK,Ngân hàng,Chủ TK,Số HĐMB,Số VSO,Số khung,Số máy,Loại xe,Màu xe,Năm SX,Biển số,Giai đoạn,Nguồn,Hình thức mua,Lịch hẹn,Ghi chú\n';
       customers.forEach(c => {
-        csv += `"${c.id}","${c.name}","${c.dob || ''}","${c.gender || ''}","${c.phone}","${c.email || ''}","${c.cccd || ''}","${c.cccd_date || ''}","${c.cccd_exp || ''}","${c.cccd_place || ''}","${c.address_perm || ''}","${c.address_temp || ''}","${c.bank_acc || ''}","${c.bank_name || ''}","${c.bank_owner || ''}","${c.hdmb || ''}","${c.vso || ''}","${c.vin || ''}","${c.engine || ''}","${c.car_model}","${c.car_color || ''}","${c.car_year || ''}","${c.plate || ''}","${c.stage}","${c.source}","${c.payment}","${c.next_date || ''}","${(c.note || '').replace(/"/g, '""')}"\n`;
+        csv += `"${c.id}","${c.name}","${c.dob || ''}","${c.gender || ''}","${c.phone}","${c.email || ''}","${c.cccd || ''}","${c.address_perm || ''}","${c.bank_acc || ''}","${c.bank_name || ''}","${c.bank_owner || ''}","${c.hdmb || ''}","${c.vso || ''}","${c.vin || ''}","${c.engine || ''}","${c.car_model}","${c.car_color || ''}","${c.car_year || ''}","${c.plate || ''}","${c.stage}","${c.source}","${c.payment}","${c.next_date || ''}","${(c.note || '').replace(/"/g, '""')}"\n`;
       });
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Ho_So_Khach_Hang_O_To_${new Date().toISOString().slice(0,10)}.csv`;
+      a.download = `Danh_Sach_Ho_So_O_To_${new Date().toISOString().slice(0,10)}.csv`;
       a.click();
     }
 
-    // Khởi chạy
+    // Khởi chạy khi tải trang
+    initQuote();
     renderCustomers();
   </script>
 </body>
