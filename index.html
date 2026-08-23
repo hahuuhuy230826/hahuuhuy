@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinFast Sales Portal • Báo Giá & KPI CRM</title>
+  <title>VinFast Sales Portal • Báo Giá & Quy Trình Bán Xe</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -21,39 +21,39 @@
 
   <!-- Header -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs no-print">
-    <div class="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap justify-between items-center gap-3">
       <div class="flex items-center space-x-3">
         <div class="w-8 h-8 bg-blue-700 text-white rounded-lg flex items-center justify-center font-bold text-base shadow-xs">
           V
         </div>
         <div>
-          <h1 class="text-base font-extrabold tracking-tight text-slate-800">VINFAST BÁO GIÁ & KPI CRM</h1>
-          <p class="text-[11px] text-slate-500 font-medium">Bảng tính dự toán & Theo dõi KPI mục tiêu 8 xe/tháng</p>
+          <h1 class="text-base font-extrabold tracking-tight text-slate-800">VINFAST SALES PORTAL</h1>
+          <p class="text-[11px] text-slate-500 font-medium">Báo Giá • Quản Lý Khách Hàng • Quy Trình 10 Bước Bán Xe</p>
         </div>
       </div>
       
-      <!-- Tab điều hướng -->
+      <!-- Tab điều hướng 3 Tab -->
       <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
-        <button id="tabBtnQuote" onclick="switchTab('quote')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5">
+        <button id="tabBtnQuote" onclick="switchTab('quote')" class="px-3 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5">
           <i class="fa-solid fa-calculator"></i> Báo Giá Xe
         </button>
-        <button id="tabBtnCrm" onclick="switchTab('crm')" class="px-3.5 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5">
+        <button id="tabBtnCrm" onclick="switchTab('crm')" class="px-3 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5">
           <i class="fa-solid fa-users"></i> Quản Lý Khách Hàng
+        </button>
+        <button id="tabBtnWorkflow" onclick="switchTab('workflow')" class="px-3 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5">
+          <i class="fa-solid fa-list-check"></i> Quy Trình 10 Bước Bán Xe
         </button>
       </div>
     </div>
   </header>
 
   <!-- ========================================================================= -->
-  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE (ĐÃ XÓA KHUNG ẢNH) -->
+  <!-- TAB 1: BẢNG BÁO GIÁ DÒNG XE -->
   <!-- ========================================================================= -->
   <section id="tabQuote" class="max-w-7xl mx-auto px-4 py-4">
-    <!-- Nút chọn dòng xe -->
     <div class="bg-white rounded-xl p-1.5 shadow-xs border border-slate-200 mb-4 overflow-x-auto flex space-x-1.5 text-xs font-bold no-print" id="carModelNav"></div>
 
     <div id="printArea" class="bg-white rounded-2xl shadow-xs border border-slate-200 p-5 mb-6">
-      
-      <!-- Hàng 1: Tên xe & Nút chọn phiên bản -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-slate-100 gap-2">
         <div>
           <h2 id="q_carName" class="text-2xl font-black text-slate-900">VF 6</h2>
@@ -62,7 +62,6 @@
         <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
 
-      <!-- Hàng 2: Chọn màu ngoại thất trực tiếp (Không có khung ảnh) -->
       <div class="py-3 px-4 bg-slate-50 rounded-xl my-3 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-2">
           <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Màu sắc:</span>
@@ -71,7 +70,6 @@
         <p id="q_colorName" class="text-xs text-blue-700 font-bold bg-white px-3 py-1 rounded-lg border border-slate-200">Màu ngoại thất: Trắng</p>
       </div>
 
-      <!-- Hàng 3: Thông số kỹ thuật nhanh -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
           <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CÔNG SUẤT TỐI ĐA</p>
@@ -87,14 +85,12 @@
         </div>
       </div>
 
-      <!-- Hàng 4: Chương trình ưu đãi & Bảng Dự Toán -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-3 border-t border-slate-200">
         <div class="lg:col-span-7 space-y-2.5 no-print">
           <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <i class="fa-solid fa-tags"></i> Chương Trình Ưu Đãi Áp Dụng
           </h3>
 
-          <!-- Ưu đãi riêng dòng xe (Limo Green / MPV 7) -->
           <div id="box_model_promo" class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between hidden">
             <div class="flex items-center gap-2.5">
               <i class="fa-solid fa-gift text-emerald-600"></i>
@@ -106,7 +102,6 @@
             <span class="text-xs font-bold text-emerald-700" id="val_model_promo">- 0 đ</span>
           </div>
 
-          <!-- VinClub X3 -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
@@ -127,19 +122,26 @@
             </div>
           </div>
 
-          <!-- Mùa hè rực rỡ -->
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <input type="checkbox" id="promo_summer" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
-              <div>
-                <label for="promo_summer" class="font-bold text-xs text-slate-800 cursor-pointer">Mùa Hè Rực Rỡ (Vinfascination)</label>
-                <p class="text-[11px] text-slate-500">Giảm 2% - 3% MSRP quy đổi tiền mặt</p>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" id="promo_vin_old_car" onchange="calculateQuote()" class="w-4 h-4 text-blue-600 rounded">
+                <div>
+                  <label for="promo_vin_old_car" class="font-bold text-xs text-slate-800 cursor-pointer">Khách Hàng Có Xe Xăng Cũ VinFast Chuyển Đổi Xanh</label>
+                  <p class="text-[11px] text-slate-500">Áp dụng cho chủ xe xăng VinFast đổi sang xe điện mới</p>
+                </div>
               </div>
+              <span class="text-xs font-bold text-blue-700" id="val_promo_vin_old_car">- 0 đ</span>
             </div>
-            <span class="text-xs font-bold text-blue-700" id="val_promo_summer">- 0 đ</span>
+            <div id="box_vin_old_car" class="mt-2 pl-6 hidden flex gap-2">
+              <select id="sel_vin_old_car" onchange="calculateQuote()" class="p-1.5 border rounded text-xs bg-white font-medium text-slate-700">
+                <option value="30000000">🚗 Sở hữu Fadil cũ (Giảm 30.000.000 đ)</option>
+                <option value="60000000">🚘 Sở hữu Lux A cũ (Giảm 60.000.000 đ)</option>
+                <option value="80000000">🚙 Sở hữu Lux SA cũ (Giảm 80.000.000 đ)</option>
+              </select>
+            </div>
           </div>
 
-          <!-- Công an / Quân đội (5%) hoặc VNPost (3%) -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
@@ -159,7 +161,6 @@
             </div>
           </div>
 
-          <!-- Chiết khấu Đại lý / TVBH -->
           <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-200">
             <div class="flex items-center justify-between mb-1.5">
               <label class="font-bold text-xs text-blue-900 flex items-center gap-2">
@@ -214,11 +215,11 @@
   <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG & KPI 8 XE -->
   <!-- ========================================================================= -->
   <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
-    <!-- TIẾN ĐỘ KPI MỤC TIÊU 8 XE -->
-    <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-4 rounded-2xl shadow-sm mb-4 border border-blue-800 flex flex-col md:flex-row items-center justify-between gap-4">
+    <!-- KHỐI KPI & THÔNG BÁO EMAIL 9H SÁNG -->
+    <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 text-white p-4 rounded-2xl shadow-sm mb-4 border border-blue-800 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="w-full md:w-1/3">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-amber-400 text-slate-900 flex items-center justify-center font-bold text-sm shadow-xs">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-lg shadow-xs">
             <i class="fa-solid fa-bullseye"></i>
           </div>
           <div>
@@ -233,16 +234,31 @@
           <span>Tiến độ hoàn thành: <span id="kpi-count" class="text-amber-400 text-sm">0 / 8 xe</span></span>
           <span id="kpi-percent" class="text-emerald-400">0%</span>
         </div>
-        <div class="w-full bg-slate-700 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-600">
+        <div class="w-full bg-slate-800 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-700">
           <div id="kpi-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
-        <p id="kpi-remain" class="text-[10px] text-slate-300 mt-1 italic">Còn thiếu 8 xe để đạt mục tiêu tháng này.</p>
+        <p id="kpi-remain" class="text-[10px] text-slate-300 mt-1 italic">Còn thiếu 8 xe để đạt chỉ tiêu tháng này.</p>
       </div>
 
-      <div class="w-full md:w-auto flex gap-2">
-        <button onclick="triggerEmailReminder()" title="Gửi danh sách chăm sóc hôm nay qua Email" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
-          <i class="fa-solid fa-envelope"></i> Báo Cáo 9h Sáng
+      <div class="w-full md:w-auto flex flex-col sm:flex-row gap-2">
+        <button onclick="sendDailyCareEmail()" class="px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 text-xs font-extrabold rounded-xl transition flex items-center justify-center gap-1.5 shadow">
+          <i class="fa-solid fa-paper-plane"></i> Báo Cáo 9h Sáng
         </button>
+        <button onclick="configEmail()" title="Cài đặt Email nhận thông báo" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl transition flex items-center justify-center border border-slate-700">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- KHỐI THEO DÕI NHIỆM VỤ CHĂM SÓC TRONG NGÀY -->
+    <div class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></span>
+        <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Tiến độ chăm sóc khách hàng hôm nay:</span>
+        <span id="care-progress-text" class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">0 / 0 khách</span>
+      </div>
+      <div class="text-[11px] text-slate-500">
+        <i class="fa-solid fa-circle-info text-blue-500 mr-1"></i> Bấm vào nút <strong>"Chưa chăm sóc"</strong> để đánh dấu hoàn thành.
       </div>
     </div>
 
@@ -283,15 +299,10 @@
           <option value="COOL">⚡ Khách COOL (Vàng)</option>
           <option value="LẠNH">❄️ Khách LẠNH (Đỏ)</option>
         </select>
-        <select id="stageFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs">
-          <option value="ALL">Tất cả giai đoạn</option>
-          <option value="Khách mới">Khách mới</option>
-          <option value="Đang tư vấn">Đang tư vấn</option>
-          <option value="Đã lái thử">Đã lái thử</option>
-          <option value="Chờ cọc">Chờ cọc</option>
-          <option value="Đã ký HĐ">Đã ký HĐ</option>
-          <option value="Đã giao xe">Đã giao xe</option>
-          <option value="Tạm ngưng / Hủy">Tạm ngưng / Hủy</option>
+        <select id="careFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs font-semibold text-slate-700">
+          <option value="ALL">Tất cả trạng thái chăm sóc</option>
+          <option value="PENDING">⏳ Chưa chăm sóc hôm nay</option>
+          <option value="DONE">✅ Đã hoàn thành chăm sóc</option>
         </select>
         <button onclick="openModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs">
           <i class="fa-solid fa-user-plus"></i> Thêm Khách Mới
@@ -308,12 +319,13 @@
         <table class="w-full text-left text-xs text-slate-600">
           <thead class="bg-slate-50 border-b text-[10px] uppercase font-bold text-slate-600 tracking-wider">
             <tr>
-              <th class="py-3 px-3">Khách Hàng (Bấm xem hồ sơ)</th>
-              <th class="py-3 px-3 text-center">Độ Nóng / Tiềm Năng</th>
-              <th class="py-3 px-3">Xe / Model</th>
-              <th class="py-3 px-3">HĐMB / Số VSO</th>
+              <th class="py-3 px-3">Khách Hàng (Xem hồ sơ)</th>
+              <th class="py-3 px-3 text-center">Độ Nóng</th>
+              <th class="py-3 px-3">Xe Quan Tâm</th>
               <th class="py-3 px-3">Giai Đoạn</th>
-              <th class="py-3 px-3">Lịch Hẹn Chăm Sóc</th>
+              <th class="py-3 px-3">Lịch Hẹn / Ghi Chú</th>
+              <th class="py-3 px-3 text-center">Nhiệm Vụ Chăm Sóc</th>
+              <th class="py-3 px-3 text-center">Quy Trình 10 Bước</th>
               <th class="py-3 px-3 text-center">Liên Hệ</th>
               <th class="py-3 px-3 text-center">Thao Tác</th>
             </tr>
@@ -325,6 +337,57 @@
         <i class="fa-solid fa-address-book text-3xl mb-1 text-slate-300"></i>
         <p class="text-xs">Chưa có thông tin khách hàng phù hợp.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 3: QUY TRÌNH 10 BƯỚC HOÀN THIỆN HỒ SƠ MUA XE (KHÓA TUẦN TỰ & GHI GIỜ) -->
+  <!-- ========================================================================= -->
+  <section id="tabWorkflow" class="max-w-7xl mx-auto px-4 py-4 hidden">
+    <!-- Thanh chọn khách hàng để theo dõi quy trình -->
+    <div class="bg-white p-4 rounded-2xl shadow-xs border border-slate-200 mb-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-list-check"></i>
+        </div>
+        <div>
+          <h2 class="text-sm font-bold text-slate-900 uppercase">TIẾN ĐỘ 10 BƯỚC HỒ SƠ XE</h2>
+          <p class="text-xs text-slate-500">Bắt buộc xác nhận tuần tự từng bước kèm mốc thời gian</p>
+        </div>
+      </div>
+      <div class="w-full sm:w-auto flex items-center gap-2">
+        <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Chọn Khách Hàng:</label>
+        <select id="wf_select_cust" onchange="loadWorkflowCustomer()" class="p-2 border rounded-xl text-xs font-bold text-blue-800 bg-slate-50 focus:ring-2 focus:ring-blue-500 w-full sm:w-64">
+          <!-- Render danh sách khách hàng -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Khung thông tin nhanh xe đang xử lý -->
+    <div id="wf_customer_summary" class="bg-blue-50/60 p-4 rounded-2xl border border-blue-200 mb-5 flex flex-wrap justify-between items-center gap-3">
+      <div class="flex items-center gap-4">
+        <div>
+          <p class="text-[11px] text-slate-500 font-semibold uppercase">Khách Hàng</p>
+          <p id="wf_cust_name" class="font-bold text-slate-900 text-sm">---</p>
+        </div>
+        <div class="border-l pl-4">
+          <p class="text-[11px] text-slate-500 font-semibold uppercase">Dòng Xe</p>
+          <p id="wf_cust_car" class="font-bold text-blue-700 text-sm">---</p>
+        </div>
+        <div class="border-l pl-4">
+          <p class="text-[11px] text-slate-500 font-semibold uppercase">Số HĐMB / VSO</p>
+          <p id="wf_cust_hdmb" class="font-bold text-slate-800 text-xs font-mono">---</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold text-slate-600">Tiến độ hồ sơ:</span>
+        <span id="wf_progress_badge" class="px-3 py-1 rounded-full text-xs font-black bg-blue-600 text-white">0 / 10 Bước</span>
+      </div>
+    </div>
+
+    <!-- DANH SÁCH 10 BƯỚC TUẦN TỰ -->
+    <div class="space-y-3" id="wf_step_container">
+      <!-- 10 Bước sẽ được render từ JavaScript -->
     </div>
   </section>
 
@@ -423,7 +486,6 @@
       <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-3 text-xs">
         <input type="hidden" id="editIndex">
 
-        <!-- Trạng Thái Độ Nóng Khách Hàng -->
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 mb-2">
           <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1.5">Trạng Thái Độ Nóng / Tiềm Năng Khách Hàng <span class="text-red-500">*</span></label>
           <div class="grid grid-cols-3 gap-3">
@@ -630,26 +692,49 @@
       }
     };
 
+    // 10 BƯỚC HOÀN THIỆN HỒ SƠ CHUẨN
+    const WORKFLOW_STEPS_DEF = [
+      { id: 1, title: 'B.1: Kiểm Tra Duyệt Hồ Sơ Vay Ngân Hàng', desc: 'Xin CCCD 2 mặt của khách hàng rồi kiểm tra ngân hàng xem khách có vay được hay không.' },
+      { id: 2, title: 'B.2: Thu Tiền Cọc 10.000.000đ & Báo Nhóm Zalo', desc: 'Cho khách hàng cọc vào công ty 10.000.000đ. Xin thêm hồ sơ lên HĐMB và nhắn tin lên nhóm Zalo xác nhận.' },
+      { id: 3, title: 'B.3: Lên Cyber & DMS Lấy Mã HĐMB + Số VSO', desc: 'Tạo hồ sơ khách hàng trên Cyber và DMS để lấy mã hợp đồng và số VSO vào kho giữ xe.' },
+      { id: 4, title: 'B.4: Khách Hàng Lên Ngân Hàng Ký Hợp Đồng Tín Dụng', desc: 'Làm thủ tục hồ sơ hướng dẫn cho khách hàng lên ngân hàng ký hợp đồng tín dụng.' },
+      { id: 5, title: 'B.5: Thu Số Tiền Đối Ứng (Trả Trước) Của Khách', desc: 'Cho khách hàng vào số tiền cần phải trả trước để chuẩn bị xuất hóa đơn.' },
+      { id: 6, title: 'B.6: Đề Nghị Xuất Hóa Đơn & Bàn Giao Chị Hạnh', desc: 'Sau khi khách vào tiền đủ thì đề nghị xuất hóa đơn, xuất xong gửi lại hồ sơ cho Chị Hạnh.' },
+      { id: 7, title: 'B.7: Đề Nghị Rút COC & Kéo Xe Về Showroom PDI Gắn Phụ Kiện', desc: 'Đề nghị rút COC để chuẩn bị bấm biển số, song song kiểm tra xe mang về Showroom PDI và gắn phụ kiện.' },
+      { id: 8, title: 'B.8: Tiến Hành Đi Bấm Biển Số Cho Khách', desc: 'Sau khi có COC gốc thì tiến hành mang hồ sơ đi bấm biển số cho khách hàng.' },
+      { id: 9, title: 'B.9: Gửi Cà Vẹt / Giấy Hẹn Cho Ngân Hàng Giải Ngân', desc: 'Có biển số và cà vẹt xe (hoặc giấy hẹn gốc) thì gửi ngay cho ngân hàng để giải ngân vào tài khoản showroom.' },
+      { id: 10, title: 'B.10: Ngân Hàng Giải Ngân & Làm Hồ Sơ Bàn Giao Xe', desc: 'Sau khi tiền giải ngân về tài khoản công ty thì hoàn tất hồ sơ giao xe, hẹn khách ngày nhận xe long trọng.' }
+    ];
+
     let curModel = 'VF 6';
     let curVer = 'Plus';
     let curColorIdx = 0;
+    let selectedWfCustomerIdx = 0;
 
     function formatVND(n) {
       return new Intl.NumberFormat('vi-VN').format(Math.round(n)) + ' đ';
     }
 
     function switchTab(tab) {
+      document.getElementById('tabQuote').classList.add('hidden');
+      document.getElementById('tabCrm').classList.add('hidden');
+      document.getElementById('tabWorkflow').classList.add('hidden');
+
+      document.getElementById('tabBtnQuote').className = 'px-3 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5';
+      document.getElementById('tabBtnCrm').className = 'px-3 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5';
+      document.getElementById('tabBtnWorkflow').className = 'px-3 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5';
+
       if (tab === 'quote') {
         document.getElementById('tabQuote').classList.remove('hidden');
-        document.getElementById('tabCrm').classList.add('hidden');
-        document.getElementById('tabBtnQuote').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5';
-        document.getElementById('tabBtnCrm').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5';
-      } else {
-        document.getElementById('tabQuote').classList.add('hidden');
+        document.getElementById('tabBtnQuote').className = 'px-3 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5';
+      } else if (tab === 'crm') {
         document.getElementById('tabCrm').classList.remove('hidden');
-        document.getElementById('tabBtnCrm').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5';
-        document.getElementById('tabBtnQuote').className = 'px-3.5 py-1.5 rounded-lg font-bold text-xs transition text-slate-600 hover:text-blue-700 flex items-center gap-1.5';
+        document.getElementById('tabBtnCrm').className = 'px-3 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5';
         renderCustomers();
+      } else if (tab === 'workflow') {
+        document.getElementById('tabWorkflow').classList.remove('hidden');
+        document.getElementById('tabBtnWorkflow').className = 'px-3 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5';
+        initWorkflowTab();
       }
     }
 
@@ -735,6 +820,7 @@
         invoiceDiscount += c.promoDirect;
       }
 
+      // 1. VinClub Nhân 3
       const vinclubChecked = document.getElementById('promo_vinclub').checked;
       const vinclubBox = document.getElementById('box_vinclub_tier');
       if (vinclubChecked) {
@@ -748,19 +834,20 @@
         document.getElementById('val_promo_vinclub').innerText = '- 0 đ';
       }
 
-      const summerChecked = document.getElementById('promo_summer').checked;
-      if (summerChecked) {
-        let summerRate = 0.02;
-        if (['VF 5', 'Limo Green', 'VF MPV 7', 'VF 3'].includes(curModel)) {
-          summerRate = 0.03;
-        }
-        const summerVal = basePrice * summerRate;
-        document.getElementById('val_promo_summer').innerText = '- ' + formatVND(summerVal);
-        invoiceDiscount += summerVal;
+      // 2. KH CÓ XE XĂNG CŨ VINFAST CHUYỂN ĐỔI XANH
+      const vinOldCarChecked = document.getElementById('promo_vin_old_car').checked;
+      const vinOldCarBox = document.getElementById('box_vin_old_car');
+      if (vinOldCarChecked) {
+        vinOldCarBox.classList.remove('hidden');
+        const oldVal = parseFloat(document.getElementById('sel_vin_old_car').value);
+        document.getElementById('val_promo_vin_old_car').innerText = '- ' + formatVND(oldVal);
+        invoiceDiscount += oldVal;
       } else {
-        document.getElementById('val_promo_summer').innerText = '- 0 đ';
+        vinOldCarBox.classList.add('hidden');
+        document.getElementById('val_promo_vin_old_car').innerText = '- 0 đ';
       }
 
+      // 3. Công an / Quân đội (5%) hoặc VNPost (3%)
       const govChecked = document.getElementById('promo_gov').checked;
       const govBox = document.getElementById('box_gov_tier');
       if (govChecked) {
@@ -774,6 +861,7 @@
         document.getElementById('val_promo_gov').innerText = '- 0 đ';
       }
 
+      // 4. Chiết khấu Đại lý / TVBH
       let dealerVal = Number(document.getElementById('promo_dealer').value) || 0;
       actualDiscount += dealerVal;
 
@@ -809,9 +897,17 @@
     }
 
     // =========================================================================
-    // CRM CODE QUẢN LÝ KHÁCH HÀNG
+    // CRM CODE QUẢN LÝ KHÁCH HÀNG & 10 BƯỚC BÁN XE
     // =========================================================================
-    let customers = JSON.parse(localStorage.getItem('my_sales_customers_v4')) || [
+    const TODAY_STR = new Date().toISOString().split('T')[0];
+
+    function getNowFormatted() {
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} - ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+    }
+
+    let customers = JSON.parse(localStorage.getItem('my_sales_customers_v6')) || [
       {
         id: 'KH-101', name: 'Nguyễn Văn An', temperature: 'HOT', dob: '1990-05-15', gender: 'Nam', phone: '0908123456', email: 'an.nguyen@gmail.com',
         cccd: '079090001234', cccd_date: '2021-06-10', cccd_exp: '2030-05-15', cccd_place: 'Cục CS QLHC về TTXH',
@@ -819,34 +915,62 @@
         bank_acc: '1012345678', bank_name: 'Vietcombank', bank_owner: 'NGUYEN VAN AN',
         hdmb: 'HDMB-VF-2026-089', vso: 'VSO-88992', vin: 'VF88992026VIN01', engine: 'ENG-20268899',
         car_model: 'VF 6 Plus', car_color: 'Trắng', car_year: '2026', plate: '51K-999.88',
-        source: 'Live TikTok', payment: 'Trả thẳng', stage: 'Đã có VSO / Xe', next_date: '2026-08-25',
-        note: 'Đã chốt báo giá, hẹn ngày bàn giao xe.'
+        source: 'Live TikTok', payment: 'Vay ngân hàng (Trả góp)', stage: 'Đã có VSO / Xe', next_date: TODAY_STR,
+        last_cared_date: '', note: 'Đã cọc 10tr, đang chuẩn bị rút COC.',
+        workflow: {
+          1: { done: true, time: '09:15:20 - 20/08/2026' },
+          2: { done: true, time: '14:30:10 - 21/08/2026' },
+          3: { done: true, time: '10:05:45 - 22/08/2026' },
+          4: { done: false, time: '' },
+          5: { done: false, time: '' },
+          6: { done: false, time: '' },
+          7: { done: false, time: '' },
+          8: { done: false, time: '' },
+          9: { done: false, time: '' },
+          10: { done: false, time: '' }
+        }
+      },
+      {
+        id: 'KH-102', name: 'Trần Thị Mai', temperature: 'COOL', dob: '1995-10-20', gender: 'Nữ', phone: '0919888999', email: 'mai.tran@gmail.com',
+        cccd: '079195009876', cccd_date: '', cccd_exp: '', cccd_place: '', address_perm: 'Thủ Đức', address_temp: '',
+        bank_acc: '', bank_name: '', bank_owner: '', hdmb: '', vso: '', vin: '', engine: '',
+        car_model: 'VF 3 Plus', car_color: 'Vàng', car_year: '2026', plate: '',
+        source: 'Quảng cáo Facebook', payment: 'Vay ngân hàng (Trả góp)', stage: 'Đang tư vấn', next_date: TODAY_STR,
+        last_cared_date: '', note: 'Đang gửi CCCD check CIC ngân hàng.',
+        workflow: {}
       }
     ];
 
     function saveToStorage() {
-      localStorage.setItem('my_sales_customers_v4', JSON.stringify(customers));
+      localStorage.setItem('my_sales_customers_v6', JSON.stringify(customers));
       renderCustomers();
     }
 
     function renderCustomers() {
       const tbody = document.getElementById('customerTableBody');
       const search = (document.getElementById('searchInput').value || '').toLowerCase();
-      const stageFilter = document.getElementById('stageFilter').value;
       const tempFilter = document.getElementById('tempFilter').value;
+      const careFilter = document.getElementById('careFilter').value;
       tbody.innerHTML = '';
 
       let filtered = customers.filter(c => {
         const temp = c.temperature || 'COOL';
+        const isCaredToday = (c.last_cared_date === TODAY_STR);
+        
         const matchSearch = (c.name && c.name.toLowerCase().includes(search)) || 
                             (c.phone && c.phone.includes(search)) || 
                             (temp.toLowerCase().includes(search)) ||
                             (c.car_model && c.car_model.toLowerCase().includes(search));
-        const matchStage = stageFilter === 'ALL' || c.stage === stageFilter;
         const matchTemp = tempFilter === 'ALL' || temp === tempFilter;
-        return matchSearch && matchStage && matchTemp;
+        
+        let matchCare = true;
+        if (careFilter === 'PENDING') matchCare = !isCaredToday;
+        if (careFilter === 'DONE') matchCare = isCaredToday;
+
+        return matchSearch && matchTemp && matchCare;
       });
 
+      // KPI TÍNH TOÁN (8 XE/THÁNG)
       const KPI_TARGET = 8;
       const closedDeals = customers.filter(c => c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe').length;
       const kpiPercent = Math.min(100, Math.round((closedDeals / KPI_TARGET) * 100));
@@ -860,6 +984,12 @@
         ? `Còn thiếu ${remain} xe nữa để cán mốc chỉ tiêu tháng này. Cố lên!` 
         : `🎉 Xuất sắc! Bạn đã hoàn thành vượt chỉ tiêu KPI ${closedDeals}/${KPI_TARGET} xe!`;
 
+      // TIẾN ĐỘ CHĂM SÓC TRONG NGÀY
+      const careList = customers.filter(c => c.stage !== 'Đã giao xe' && c.stage !== 'Tạm ngưng / Hủy');
+      const caredCount = careList.filter(c => c.last_cared_date === TODAY_STR).length;
+      document.getElementById('care-progress-text').innerText = `${caredCount} / ${careList.length} khách đã hoàn thành`;
+
+      // Cập nhật thống kê
       document.getElementById('stat-total').innerText = customers.length;
       document.getElementById('stat-hot').innerText = customers.filter(c => (c.temperature || 'COOL') === 'HOT').length;
       document.getElementById('stat-cool').innerText = customers.filter(c => (c.temperature || 'COOL') === 'COOL').length;
@@ -876,11 +1006,11 @@
         const temp = cust.temperature || 'COOL';
         let tempTag = '';
         if (temp === 'HOT') {
-          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>🔥 HOT</span>';
+          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>🔥 HOT</span>';
         } else if (temp === 'COOL') {
-          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-800 border border-amber-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-amber-500"></span>⚡ COOL</span>';
+          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-amber-100 text-amber-800 border border-amber-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-amber-500"></span>⚡ COOL</span>';
         } else {
-          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-rose-500"></span>❄️ LẠNH</span>';
+          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-rose-500"></span>❄️ LẠNH</span>';
         }
 
         let stageBadge = `<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">${cust.stage}</span>`;
@@ -888,11 +1018,20 @@
         else if (cust.stage === 'Đã có VSO / Xe' || cust.stage === 'Đã ký HĐ') stageBadge = '<span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã có VSO/Ký HĐ</span>';
         else if (cust.stage === 'Đã giao xe') stageBadge = '<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã giao xe</span>';
 
+        const isCaredToday = (cust.last_cared_date === TODAY_STR);
+        const careButton = isCaredToday 
+          ? `<button onclick="toggleCareStatus(${index})" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[11px] flex items-center gap-1 hover:bg-emerald-100 transition"><i class="fa-solid fa-circle-check text-emerald-600"></i> Đã Chăm Sóc</button>`
+          : `<button onclick="toggleCareStatus(${index})" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 border border-slate-300 font-semibold text-[11px] flex items-center gap-1 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 transition"><i class="fa-regular fa-circle"></i> Chưa Chăm Sóc</button>`;
+
+        // Tính số bước workflow đã hoàn thành
+        const wf = cust.workflow || {};
+        const completedWfSteps = Object.values(wf).filter(s => s && s.done).length;
+
         const cleanPhone = (cust.phone || '').replace(/[^0-9]/g, '');
         const zaloPhone = cleanPhone.startsWith('0') ? '84' + cleanPhone.slice(1) : cleanPhone;
 
         const tr = document.createElement('tr');
-        tr.className = 'hover:bg-blue-50/40 transition border-b group';
+        tr.className = `hover:bg-blue-50/40 transition border-b group ${isCaredToday ? 'bg-emerald-50/20' : ''}`;
         tr.innerHTML = `
           <td class="py-2.5 px-3 cursor-pointer" onclick="viewDetail(${index})">
             <div class="font-bold text-blue-700 group-hover:underline flex items-center gap-1">
@@ -905,13 +1044,18 @@
             <div class="font-bold text-slate-800">${cust.car_model || '---'}</div>
             <div class="text-[11px] text-slate-500">${cust.car_color || 'Chưa chọn'}</div>
           </td>
-          <td class="py-2.5 px-3 font-mono text-[11px]">
-            <div class="text-slate-700">${cust.hdmb ? 'HĐ: ' + cust.hdmb : '---'}</div>
-            <div class="text-purple-700 font-semibold">${cust.vso ? 'VSO: ' + cust.vso : ''}</div>
-          </td>
           <td class="py-2.5 px-3">${stageBadge}</td>
           <td class="py-2.5 px-3">
-            ${cust.next_date ? `<div class="text-[11px] font-bold text-rose-600"><i class="fa-regular fa-calendar-check mr-1"></i>${cust.next_date}</div>` : '<span class="text-slate-400 text-[10px]">Chưa hẹn</span>'}
+            ${cust.next_date ? `<div class="text-[11px] font-bold text-rose-600"><i class="fa-regular fa-calendar-check mr-1"></i>Hẹn: ${cust.next_date}</div>` : ''}
+            <div class="text-[11px] text-slate-500 truncate max-w-[140px]" title="${cust.note || ''}">${cust.note || '---'}</div>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <div class="flex justify-center">${careButton}</div>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <button onclick="goToWorkflowForCustomer(${index})" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 font-bold text-[11px] hover:bg-blue-600 hover:text-white transition flex items-center gap-1 mx-auto">
+              <i class="fa-solid fa-tasks"></i> ${completedWfSteps}/10 Bước
+            </button>
           </td>
           <td class="py-2.5 px-3 text-center">
             <div class="flex justify-center space-x-1">
@@ -926,6 +1070,201 @@
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    function toggleCareStatus(idx) {
+      if (customers[idx].last_cared_date === TODAY_STR) {
+        customers[idx].last_cared_date = '';
+      } else {
+        customers[idx].last_cared_date = TODAY_STR;
+      }
+      saveToStorage();
+    }
+
+    // =========================================================================
+    // XỬ LÝ QUY TRÌNH 10 BƯỚC BÁN XE (TUẦN TỰ & GHI GIỜ)
+    // =========================================================================
+    function initWorkflowTab() {
+      const sel = document.getElementById('wf_select_cust');
+      sel.innerHTML = '';
+      customers.forEach((c, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.innerText = `${c.name} - ${c.car_model || 'Xe chưa chọn'} (${c.phone})`;
+        sel.appendChild(opt);
+      });
+
+      if (customers.length > 0) {
+        sel.value = selectedWfCustomerIdx;
+        loadWorkflowCustomer();
+      }
+    }
+
+    function goToWorkflowForCustomer(idx) {
+      selectedWfCustomerIdx = idx;
+      switchTab('workflow');
+    }
+
+    function loadWorkflowCustomer() {
+      const idx = document.getElementById('wf_select_cust').value;
+      selectedWfCustomerIdx = idx;
+      const c = customers[idx];
+      if (!c) return;
+
+      if (!c.workflow) {
+        c.workflow = {};
+      }
+
+      document.getElementById('wf_cust_name').innerText = c.name;
+      document.getElementById('wf_cust_car').innerText = `${c.car_model || 'Chưa chọn'} (${c.car_color || '---'})`;
+      document.getElementById('wf_cust_hdmb').innerText = c.hdmb ? `HĐ: ${c.hdmb} | VSO: ${c.vso || '---'}` : 'Chưa có HĐMB';
+
+      const container = document.getElementById('wf_step_container');
+      container.innerHTML = '';
+
+      let completedCount = 0;
+
+      WORKFLOW_STEPS_DEF.forEach((step, sIdx) => {
+        const stepNum = step.id;
+        const stepData = c.workflow[stepNum] || { done: false, time: '' };
+        if (stepData.done) completedCount++;
+
+        // Kiểm tra điều kiện mở khóa tuần tự:
+        // Bước 1 luôn mở. Các bước sau chỉ mở khi bước trước đó đã hoàn thành (done === true)
+        const isUnlocked = (stepNum === 1) || (c.workflow[stepNum - 1] && c.workflow[stepNum - 1].done);
+
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl border transition shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-3.5 ${
+          stepData.done 
+            ? 'bg-emerald-50/60 border-emerald-200' 
+            : isUnlocked 
+              ? 'bg-white border-blue-200 ring-1 ring-blue-100' 
+              : 'bg-slate-50/70 border-slate-200 opacity-60'
+        }`;
+
+        let actionBtn = '';
+        if (stepData.done) {
+          actionBtn = `
+            <div class="text-right flex flex-col items-end gap-1">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs shadow-xs">
+                <i class="fa-solid fa-check"></i> ĐÃ XÁC NHẬN
+              </span>
+              <span class="text-[11px] font-mono text-emerald-800 font-semibold bg-emerald-100/80 px-2 py-0.5 rounded-md">
+                <i class="fa-regular fa-clock"></i> ${stepData.time}
+              </span>
+              <button onclick="undoWorkflowStep(${idx}, ${stepNum})" class="text-[10px] text-slate-400 hover:text-rose-600 underline mt-0.5">Hủy xác nhận bước này</button>
+            </div>
+          `;
+        } else if (isUnlocked) {
+          actionBtn = `
+            <button onclick="confirmWorkflowStep(${idx}, ${stepNum})" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow transition flex items-center gap-1.5">
+              <i class="fa-solid fa-check-to-slot"></i> BẤM XÁC NHẬN BƯỚC NÀY
+            </button>
+          `;
+        } else {
+          actionBtn = `
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs cursor-not-allowed">
+              <i class="fa-solid fa-lock"></i> Chưa mở khóa (Chờ B.${stepNum-1})
+            </span>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-sm shrink-0 ${
+              stepData.done ? 'bg-emerald-600 text-white' : isUnlocked ? 'bg-blue-600 text-white' : 'bg-slate-300 text-slate-600'
+            }">
+              ${stepNum}
+            </div>
+            <div>
+              <h3 class="font-bold text-xs sm:text-sm text-slate-900">${step.title}</h3>
+              <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">${step.desc}</p>
+            </div>
+          </div>
+          <div class="w-full md:w-auto flex justify-end shrink-0">${actionBtn}</div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      document.getElementById('wf_progress_badge').innerText = `${completedCount} / 10 Bước Hoàn Thành`;
+    }
+
+    function confirmWorkflowStep(custIdx, stepNum) {
+      if (!customers[custIdx].workflow) customers[custIdx].workflow = {};
+      
+      const timeNow = getNowFormatted();
+      customers[custIdx].workflow[stepNum] = {
+        done: true,
+        time: timeNow
+      };
+
+      // Tự động cập nhật giai đoạn phù hợp với quy trình
+      if (stepNum === 2) customers[custIdx].stage = 'Chờ cọc';
+      if (stepNum === 3) customers[custIdx].stage = 'Đã có VSO / Xe';
+      if (stepNum === 4) customers[custIdx].stage = 'Đã ký HĐ';
+      if (stepNum === 10) customers[custIdx].stage = 'Đã giao xe';
+
+      saveToStorage();
+      loadWorkflowCustomer();
+    }
+
+    function undoWorkflowStep(custIdx, stepNum) {
+      if (confirm(`Bạn có chắc muốn hủy xác nhận Bước ${stepNum}? Các bước phía sau cũng sẽ bị khóa lại.`)) {
+        // Hủy bước này và tất cả các bước sau nó để đảm bảo tính tuần tự
+        for (let i = stepNum; i <= 10; i++) {
+          if (customers[custIdx].workflow[i]) {
+            customers[custIdx].workflow[i] = { done: false, time: '' };
+          }
+        }
+        saveToStorage();
+        loadWorkflowCustomer();
+      }
+    }
+
+    function sendDailyCareEmail() {
+      const userEmail = localStorage.getItem('user_notification_email') || prompt("Nhập địa chỉ Email nhận thông báo nhắc việc mỗi sáng của bạn:", "");
+      if (!userEmail) return;
+      localStorage.setItem('user_notification_email', userEmail);
+
+      const pendingCool = customers.filter(c => (c.temperature === 'COOL') && c.last_cared_date !== TODAY_STR);
+      const pendingCold = customers.filter(c => (c.temperature === 'LẠNH') && c.last_cared_date !== TODAY_STR);
+      const pendingHot = customers.filter(c => (c.temperature === 'HOT') && c.last_cared_date !== TODAY_STR);
+
+      let content = `BÁO CÁO NHẮC VIỆC CHĂM SÓC KHÁCH HÀNG (9H SÁNG)\n`;
+      content += `Mục tiêu KPI: 8 xe/tháng | Đã đạt: ${document.getElementById('kpi-count').innerText}\n`;
+      content += `==================================================\n\n`;
+
+      content += `🔥 KHÁCH HÀNG TIỀM NĂNG (HOT) CẦN CHỐT (${pendingHot.length} khách):\n`;
+      pendingHot.forEach((c, i) => {
+        content += `${i + 1}. ${c.name} - ${c.phone} | Xe: ${c.car_model} | Ghi chú: ${c.note || '---'}\n`;
+      });
+
+      content += `\n⚡ KHÁCH HÀNG VÀNG (COOL) CẦN CHĂM SÓC LẠI (${pendingCool.length} khách):\n`;
+      pendingCool.forEach((c, i) => {
+        content += `${i + 1}. ${c.name} - ${c.phone} | Xe: ${c.car_model} | Ghi chú: ${c.note || '---'}\n`;
+      });
+
+      content += `\n❄️ KHÁCH HÀNG ĐỎ (LẠNH) CẦN HỎI THĂM (${pendingCold.length} khách):\n`;
+      pendingCold.forEach((c, i) => {
+        content += `${i + 1}. ${c.name} - ${c.phone} | Xe: ${c.car_model} | Ghi chú: ${c.note || '---'}\n`;
+      });
+
+      content += `\n==================================================\n`;
+      content += `👉 Truy cập Portal để theo dõi quy trình 10 bước & bấm "ĐÃ CHĂM SÓC": https://hahuuhuy230826.github.io/hahuuhuy/`;
+
+      const subject = encodeURIComponent(`[9H SÁNG] Danh Sách Khách Hàng Cần Chăm Sóc Hôm Nay (${TODAY_STR})`);
+      const body = encodeURIComponent(content);
+      window.open(`mailto:${userEmail}?subject=${subject}&body=${body}`, '_blank');
+    }
+
+    function configEmail() {
+      const cur = localStorage.getItem('user_notification_email') || "";
+      const email = prompt("Cập nhật địa chỉ Email nhận báo cáo nhắc việc:", cur);
+      if (email !== null) {
+        localStorage.setItem('user_notification_email', email);
+        alert("Đã lưu địa chỉ Email nhận thông báo thành công!");
+      }
     }
 
     function viewDetail(idx) {
@@ -1088,6 +1427,8 @@
         stage: document.getElementById('in_stage').value,
         payment: document.getElementById('in_payment').value,
         next_date: document.getElementById('in_next_date').value,
+        last_cared_date: editIdx !== '' ? customers[editIdx].last_cared_date : '',
+        workflow: editIdx !== '' && customers[editIdx].workflow ? customers[editIdx].workflow : {},
         note: document.getElementById('in_note').value
       };
 
@@ -1102,34 +1443,6 @@
       if (confirm('Bạn có chắc muốn xóa hồ sơ khách hàng này?')) {
         customers.splice(idx, 1);
         saveToStorage();
-      }
-    }
-
-    function triggerEmailReminder() {
-      const today = new Date().toISOString().split('T')[0];
-      const hotList = customers.filter(c => (c.temperature || 'COOL') === 'HOT');
-      const dueList = customers.filter(c => c.next_date && c.next_date <= today);
-
-      let summary = `📋 BÁO CÁO NHẮC VIỆC CHĂM SÓC KHÁCH HÀNG (9H SÁNG)\n` +
-                    `• Mục tiêu KPI tháng: 8 xe (Đã đạt: ${document.getElementById('kpi-count').innerText})\n` +
-                    `--------------------------------------------------\n` +
-                    `🔥 KHÁCH HÀNG HOT CẦN CHỐT NGAY (${hotList.length} khách):\n`;
-
-      hotList.forEach((c, i) => {
-        summary += `${i + 1}. ${c.name} - ${c.phone} | Xe: ${c.car_model} | Ghi chú: ${c.note || '---'}\n`;
-      });
-
-      summary += `\n⏰ KHÁCH CÓ LỊCH HẸN HÔM NAY / QUÁ HẠN (${dueList.length} khách):\n`;
-      dueList.forEach((c, i) => {
-        summary += `${i + 1}. ${c.name} - ${c.phone} | Hẹn ngày: ${c.next_date} | Nhu cầu: ${c.car_model}\n`;
-      });
-
-      const userEmail = prompt("Nhập Email của bạn để nhận báo cáo nhắc việc:", localStorage.getItem('user_email') || "");
-      if (userEmail) {
-        localStorage.setItem('user_email', userEmail);
-        const subject = encodeURIComponent(`[VINFAST KPI CRM] Danh Sách Khách Hàng Cần Chăm Sóc Hôm Nay`);
-        const body = encodeURIComponent(summary);
-        window.open(`mailto:${userEmail}?subject=${subject}&body=${body}`, '_blank');
       }
     }
 
