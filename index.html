@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinFast Sales Portal • Báo Giá & KPI CRM</title>
+  <title>VinFast Sales Portal • Phễu Chuyển Đổi % & KPI 100 Khách</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -62,7 +62,6 @@
         <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
 
-      <!-- Chọn màu ngoại thất -->
       <div class="py-3 px-4 bg-slate-50 rounded-xl my-3 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-2">
           <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Màu sắc:</span>
@@ -71,7 +70,6 @@
         <p id="q_colorName" class="text-xs text-blue-700 font-bold bg-white px-3 py-1 rounded-lg border border-slate-200">Màu ngoại thất: Trắng</p>
       </div>
 
-      <!-- Thông số kỹ thuật -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
           <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CÔNG SUẤT TỐI ĐA</p>
@@ -87,7 +85,6 @@
         </div>
       </div>
 
-      <!-- Chương trình ưu đãi & Bảng Dự Toán -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-3 border-t border-slate-200">
         <div class="lg:col-span-7 space-y-2.5 no-print">
           <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
@@ -215,7 +212,7 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG & PHỄU CHUYỂN ĐỔI -->
+  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG, KPI & PHỄU CHUYỂN ĐỔI (CLICK TO FILTER) -->
   <!-- ========================================================================= -->
   <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
     
@@ -260,8 +257,9 @@
       </div>
     </div>
 
-    <!-- KHỐI PHỄU CHUYỂN ĐỔI TỶ LỆ % -->
+    <!-- KHỐI PHỄU CHUYỂN ĐỔI TỶ LỆ % (BẤM VÀO TỪNG THẺ ĐỂ XEM KHÁCH HÀNG TƯƠNG ỨNG) -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 mb-4">
+      <!-- 1. Thẻ TỔNG KHÁCH KIẾM (Click xem tất cả) -->
       <div id="card-filter-all" onclick="filterByCard('ALL')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-blue-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-slate-500 font-bold uppercase group-hover:text-blue-600">TỔNG KHÁCH KIẾM</p>
@@ -271,6 +269,7 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm để xem tất cả</p>
       </div>
 
+      <!-- 2. Thẻ KHÁCH HOT (Click xem khách Hot) -->
       <div id="card-filter-hot" onclick="filterByCard('HOT')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500 flex flex-col justify-between cursor-pointer hover:border-emerald-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-emerald-700 font-bold uppercase">🔥 KHÁCH HOT</p>
@@ -280,6 +279,7 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách HOT</p>
       </div>
 
+      <!-- 3. Thẻ KHÁCH COOL (Click xem khách Cool) -->
       <div id="card-filter-cool" onclick="filterByCard('COOL')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500 flex flex-col justify-between cursor-pointer hover:border-amber-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-amber-700 font-bold uppercase">⚡ KHÁCH COOL</p>
@@ -289,6 +289,7 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách COOL</p>
       </div>
 
+      <!-- 4. Thẻ KHÁCH LẠNH (Click xem khách Rớt Deal) -->
       <div id="card-filter-cold" onclick="filterByCard('LẠNH')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-rose-500 flex flex-col justify-between cursor-pointer hover:border-rose-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-rose-700 font-bold uppercase">❄️ KHÁCH LẠNH</p>
@@ -298,6 +299,7 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách LẠNH</p>
       </div>
 
+      <!-- 5. Thẻ ĐÃ CHỐT HĐ / XE (Click xem khách Đã Chốt) -->
       <div id="card-filter-closed" onclick="filterByCard('CLOSED')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-600 flex flex-col justify-between cursor-pointer hover:border-blue-600 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CHỐT HĐ / XE</p>
@@ -308,7 +310,7 @@
       </div>
     </div>
 
-    <!-- TIẾN ĐỘ CHĂM SÓC TRONG NGÀY -->
+    <!-- KHỐI THEO DÕI NHIỆM VỤ CHĂM SÓC TRONG NGÀY -->
     <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col sm:flex-row justify-between items-center gap-3">
       <div class="flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></span>
@@ -333,6 +335,13 @@
           <option value="COOL">⚡ Khách COOL (Vàng)</option>
           <option value="LẠNH">❄️ Khách LẠNH (Đỏ - Rớt deal)</option>
           <option value="CLOSED">🚗 Khách đã chốt HĐ / Nhận xe</option>
+        </select>
+        <select id="coldReasonFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs text-slate-700">
+          <option value="ALL">Tất cả lý do rớt deal</option>
+          <option value="Nợ xấu ngân hàng (CIC)">Nợ xấu ngân hàng (CIC)</option>
+          <option value="Giá chưa tốt / So sánh giá">Giá chưa tốt / So sánh giá</option>
+          <option value="Tài chính chưa đủ">Tài chính chưa đủ</option>
+          <option value="Đổi kế hoạch / Mua hãng khác">Đổi kế hoạch / Mua hãng khác</option>
         </select>
         <button onclick="openModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs">
           <i class="fa-solid fa-user-plus"></i> Thêm Khách Mới
@@ -371,7 +380,7 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- TAB 3: QUY TRÌNH 10 BƯỚC HOÀN THIỆN HỒ SƠ MUA XE (CÓ NÚT XÓA KHÁCH HÀNG) -->
+  <!-- TAB 3: QUY TRÌNH 10 BƯỚC HOÀN THIỆN HỒ SƠ MUA XE -->
   <!-- ========================================================================= -->
   <section id="tabWorkflow" class="max-w-7xl mx-auto px-4 py-4 hidden">
     <div class="bg-white p-4 rounded-2xl shadow-xs border border-slate-200 mb-5 flex flex-col sm:flex-row justify-between items-center gap-3">
@@ -384,15 +393,10 @@
           <p class="text-xs text-slate-500">Bắt buộc xác nhận tuần tự từng bước kèm mốc thời gian</p>
         </div>
       </div>
-      
-      <!-- Thanh chọn khách và Nút Xóa khách ngay tại tab này -->
       <div class="w-full sm:w-auto flex items-center gap-2">
         <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Chọn Khách Hàng:</label>
         <select id="wf_select_cust" onchange="loadWorkflowCustomer()" class="p-2 border rounded-xl text-xs font-bold text-blue-800 bg-slate-50 focus:ring-2 focus:ring-blue-500 w-full sm:w-64">
         </select>
-        <button onclick="deleteCurrentWorkflowCustomer()" title="Xóa hồ sơ khách hàng đang chọn" class="px-3 py-2 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white border border-rose-200 transition font-bold text-xs flex items-center gap-1 shrink-0">
-          <i class="fa-solid fa-trash"></i> Xóa Khách Này
-        </button>
       </div>
     </div>
 
@@ -438,6 +442,7 @@
       </div>
 
       <div class="space-y-4 pt-3 text-xs">
+        <!-- Khối lý do rớt deal nếu là khách lạnh -->
         <div id="dt_box_cold_reason" class="p-3 bg-rose-50 rounded-xl border border-rose-200 hidden">
           <h3 class="text-[11px] font-bold text-rose-800 uppercase mb-1 flex items-center gap-1.5">
             <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> Lý Do Khách Lạnh (Chưa Chốt Được)
@@ -513,12 +518,12 @@
     </div>
   </div>
 
-  <!-- MODAL: FORM THÊM & SỬA HỒ SƠ KHÁCH HÀNG (ĐÃ SỬA NÚT LƯU 100% HOẠT ĐỘNG) -->
+  <!-- MODAL: FORM THÊM & SỬA HỒ SƠ KHÁCH HÀNG -->
   <div id="customerModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-4xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-3 border-b mb-3">
         <h2 id="modalTitle" class="text-base font-bold text-slate-800">Thêm Hồ Sơ Khách Hàng Mới</h2>
-        <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-3 text-xs">
@@ -544,7 +549,7 @@
 
           <!-- Ô Phân Loại Lý Do Dành Cho Khách Lạnh -->
           <div id="form_cold_reason_box" class="mt-3 pt-3 border-t border-rose-200 hidden">
-            <label class="block font-bold text-rose-800 uppercase mb-1">Lý Do Khách Lạnh / Không Chốt Được</label>
+            <label class="block font-bold text-rose-800 uppercase mb-1">Lý Do Khách Lạnh / Không Chốt Được <span class="text-red-500">*</span></label>
             <select id="in_cold_reason" class="w-full p-2 border border-rose-300 rounded-lg bg-rose-50/50 font-bold text-rose-900">
               <option value="Nợ xấu ngân hàng (CIC)">🚫 Nợ xấu ngân hàng (Dính CIC nhóm 2 trở lên không vay được)</option>
               <option value="Giá chưa tốt / So sánh giá">💰 Giá chưa tốt / Khách so sánh giá showroom khác</option>
@@ -663,7 +668,7 @@
 
         <div class="flex justify-end space-x-2 pt-2.5 border-t">
           <button type="button" onclick="closeModal()" class="px-4 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">Hủy</button>
-          <button type="submit" class="px-5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs">Lưu Hồ Sơ</button>
+          <button type="submit" class="px-5 py-1.5 rounded-lg bg-blue-600 text-white font-semibold shadow-xs">Lưu Hồ Sơ</button>
         </div>
       </form>
     </div>
@@ -873,6 +878,7 @@
         invoiceDiscount += c.promoDirect;
       }
 
+      // 1. VinClub Nhân 3
       const vinclubChecked = document.getElementById('promo_vinclub').checked;
       const vinclubBox = document.getElementById('box_vinclub_tier');
       if (vinclubChecked) {
@@ -886,6 +892,7 @@
         document.getElementById('val_promo_vinclub').innerText = '- 0 đ';
       }
 
+      // 2. KH CÓ XE XĂNG CŨ VINFAST CHUYỂN ĐỔI XANH
       const vinOldCarChecked = document.getElementById('promo_vin_old_car').checked;
       const vinOldCarBox = document.getElementById('box_vin_old_car');
       if (vinOldCarChecked) {
@@ -898,6 +905,7 @@
         document.getElementById('val_promo_vin_old_car').innerText = '- 0 đ';
       }
 
+      // 3. Công an / Quân đội (5%) hoặc VNPost (3%)
       const govChecked = document.getElementById('promo_gov').checked;
       const govBox = document.getElementById('box_gov_tier');
       if (govChecked) {
@@ -911,6 +919,7 @@
         document.getElementById('val_promo_gov').innerText = '- 0 đ';
       }
 
+      // 4. Chiết khấu Đại lý / TVBH
       let dealerVal = Number(document.getElementById('promo_dealer').value) || 0;
       actualDiscount += dealerVal;
 
@@ -946,16 +955,18 @@
     }
 
     // =========================================================================
-    // TƯƠNG TÁC CLICK TO FILTER TRÊN CÁC THẺ PHỄU
+    // TƯƠNG TÁC CLICK TO FILTER TRỰC TIẾP TRÊN CÁC THẺ PHỄU
     // =========================================================================
     function filterByCard(filterType) {
       document.getElementById('tempFilter').value = filterType;
       
+      // Xóa viền active của tất cả các thẻ
       ['all', 'hot', 'cool', 'cold', 'closed'].forEach(id => {
         const elem = document.getElementById(`card-filter-${id}`);
         if (elem) elem.classList.remove('ring-2', 'ring-blue-600', 'ring-emerald-600', 'ring-amber-500', 'ring-rose-600');
       });
 
+      // Thêm viền active cho thẻ đang chọn
       if (filterType === 'ALL') document.getElementById('card-filter-all').classList.add('ring-2', 'ring-blue-600');
       if (filterType === 'HOT') document.getElementById('card-filter-hot').classList.add('ring-2', 'ring-emerald-600');
       if (filterType === 'COOL') document.getElementById('card-filter-cool').classList.add('ring-2', 'ring-amber-500');
@@ -966,8 +977,7 @@
     }
 
     function toggleColdReasonBox() {
-      const checkedRadio = document.querySelector("input[name='in_temperature']:checked");
-      const selectedTemp = checkedRadio ? checkedRadio.value : 'HOT';
+      const selectedTemp = document.querySelector("input[name='in_temperature']:checked").value;
       const box = document.getElementById('form_cold_reason_box');
       if (selectedTemp === 'LẠNH') {
         box.classList.remove('hidden');
@@ -997,7 +1007,7 @@
     }
 
     // =========================================================================
-    // XỬ LÝ QUY TRÌNH 10 BƯỚC BÁN XE & XÓA KHÁCH TẠI TAB 3
+    // XỬ LÝ QUY TRÌNH 10 BƯỚC BÁN XE
     // =========================================================================
     function initWorkflowTab() {
       const sel = document.getElementById('wf_select_cust');
@@ -1010,14 +1020,8 @@
       });
 
       if (customers.length > 0) {
-        if (selectedWfCustomerIdx >= customers.length) selectedWfCustomerIdx = 0;
         sel.value = selectedWfCustomerIdx;
         loadWorkflowCustomer();
-      } else {
-        document.getElementById('wf_cust_name').innerText = 'Chưa có khách hàng';
-        document.getElementById('wf_cust_car').innerText = '---';
-        document.getElementById('wf_cust_hdmb').innerText = '---';
-        document.getElementById('wf_step_container').innerHTML = '<div class="p-8 text-center text-slate-400">Vui lòng thêm khách hàng mới để theo dõi tiến độ 10 bước.</div>';
       }
     }
 
@@ -1027,9 +1031,7 @@
     }
 
     function loadWorkflowCustomer() {
-      const sel = document.getElementById('wf_select_cust');
-      if (!sel || customers.length === 0) return;
-      const idx = sel.value;
+      const idx = document.getElementById('wf_select_cust').value;
       selectedWfCustomerIdx = idx;
       const c = customers[idx];
       if (!c) return;
@@ -1141,19 +1143,6 @@
       }
     }
 
-    // XÓA KHÁCH HÀNG TRỰC TIẾP TẠI TAB 10 BƯỚC
-    function deleteCurrentWorkflowCustomer() {
-      if (customers.length === 0) return;
-      const idx = document.getElementById('wf_select_cust').value;
-      const name = customers[idx] ? customers[idx].name : '';
-      if (confirm(`Bạn có chắc chắn muốn xóa toàn bộ hồ sơ và quy trình của khách hàng [${name}]?`)) {
-        customers.splice(idx, 1);
-        selectedWfCustomerIdx = 0;
-        saveToStorage();
-        initWorkflowTab();
-      }
-    }
-
     function sendDailyCareEmail() {
       const userEmail = localStorage.getItem('user_notification_email') || prompt("Nhập địa chỉ Email nhận thông báo nhắc việc mỗi sáng của bạn:", "");
       if (!userEmail) return;
@@ -1189,6 +1178,15 @@
       const subject = encodeURIComponent(`[9H SÁNG] Danh Sách Khách Hàng Cần Chăm Sóc (${TODAY_STR})`);
       const body = encodeURIComponent(content);
       window.open(`mailto:${userEmail}?subject=${subject}&body=${body}`, '_blank');
+    }
+
+    function configEmail() {
+      const cur = localStorage.getItem('user_notification_email') || "";
+      const email = prompt("Cập nhật địa chỉ Email nhận báo cáo nhắc việc:", cur);
+      if (email !== null) {
+        localStorage.setItem('user_notification_email', email);
+        alert("Đã lưu địa chỉ Email nhận thông báo thành công!");
+      }
     }
 
     function viewDetail(idx) {
@@ -1326,12 +1324,11 @@
     function handleSaveCustomer(e) {
       e.preventDefault();
       const editIdx = document.getElementById('editIndex').value;
-      const checkedRadio = document.querySelector("input[name='in_temperature']:checked");
-      const selectedTemp = checkedRadio ? checkedRadio.value : 'HOT';
+      const selectedTemp = document.querySelector("input[name='in_temperature']:checked").value;
       const coldReasonVal = (selectedTemp === 'LẠNH') ? document.getElementById('in_cold_reason').value : '';
 
       const data = {
-        id: (editIdx !== '' && customers[editIdx]) ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
+        id: editIdx !== '' ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
         name: document.getElementById('in_name').value,
         temperature: selectedTemp,
         cold_reason: coldReasonVal,
@@ -1364,16 +1361,13 @@
         stage: document.getElementById('in_stage').value,
         payment: document.getElementById('in_payment').value,
         next_date: document.getElementById('in_next_date').value,
-        last_cared_date: (editIdx !== '' && customers[editIdx]) ? customers[editIdx].last_cared_date : '',
-        workflow: (editIdx !== '' && customers[editIdx] && customers[editIdx].workflow) ? customers[editIdx].workflow : {},
+        last_cared_date: editIdx !== '' ? customers[editIdx].last_cared_date : '',
+        workflow: editIdx !== '' && customers[editIdx].workflow ? customers[editIdx].workflow : {},
         note: document.getElementById('in_note').value
       };
 
-      if (editIdx !== '' && customers[editIdx]) {
-        customers[editIdx] = data;
-      } else {
-        customers.unshift(data);
-      }
+      if (editIdx !== '') customers[editIdx] = data;
+      else customers.unshift(data);
 
       saveToStorage();
       closeModal();
