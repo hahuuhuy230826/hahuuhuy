@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinFast Sales Portal • Báo Giá & KPI CRM</title>
+  <title>VinFast Sales Portal • Phễu Chuyển Đổi % & KPI Bán Xe</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -28,7 +28,7 @@
         </div>
         <div>
           <h1 class="text-base font-extrabold tracking-tight text-slate-800">VINFAST SALES PORTAL</h1>
-          <p class="text-[11px] text-slate-500 font-medium">Báo Giá • Phễu Chuyển Đổi (100 Khách → 8 Xe) • Quy Trình 10 Bước</p>
+          <p class="text-[11px] text-slate-500 font-medium">Báo Giá • Phễu Chuyển Đổi Từng Bước (100 Khách → 8 Xe Giao) • 10 Bước</p>
         </div>
       </div>
       
@@ -215,11 +215,11 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG, KPI & PHỄU CHUYỂN ĐỔI -->
+  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG, KPI GIAO XE & PHỄU CHUYỂN ĐỔI % TỪNG BƯỚC -->
   <!-- ========================================================================= -->
   <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
     
-    <!-- KHỐI KPI: CHIA ĐỀU 30 NGÀY & CỘNG DỒN NỢ THÁNG TRƯỚC -->
+    <!-- KHỐI KPI GIAO XE: TÍNH TRÊN SỐ XE ĐÃ GIAO THỰC TẾ & CHIA 30 NGÀY -->
     <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 text-white p-4 sm:p-5 rounded-2xl shadow-sm mb-4 border border-blue-800 flex flex-col lg:flex-row items-center justify-between gap-4">
       <div class="w-full lg:w-1/3">
         <div class="flex items-center gap-3">
@@ -228,18 +228,18 @@
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h2 class="text-sm font-bold tracking-tight text-white uppercase">MỤC TIÊU KPI THÁNG</h2>
+              <h2 class="text-sm font-bold tracking-tight text-white uppercase">MỤC TIÊU KPI GIAO XE</h2>
               <span id="kpi-rollover-badge" class="hidden px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500 text-white">Nợ cũ: +0 xe</span>
             </div>
-            <p class="text-[11px] text-blue-200 mt-0.5">Tổng chỉ tiêu: <strong id="kpi-total-target" class="text-amber-300">8 xe/tháng</strong> (8 xe cơ bản + nợ cũ)</p>
+            <p class="text-[11px] text-blue-200 mt-0.5">Chỉ tiêu bàn giao: <strong id="kpi-total-target" class="text-amber-300">8 xe giao/tháng</strong> (8 xe cơ bản + nợ cũ)</p>
           </div>
         </div>
       </div>
 
       <div class="w-full lg:w-5/12">
         <div class="flex justify-between text-xs font-bold mb-1">
-          <span>Tiến độ giao xe thực tế: <span id="kpi-count" class="text-amber-400 text-sm">0 / 8 xe</span></span>
-          <span id="kpi-percent" class="text-emerald-400">0%</span>
+          <span>Tiến độ xe đã giao: <span id="kpi-count" class="text-amber-400 text-sm">0 / 8 xe</span></span>
+          <span id="kpi-percent" class="text-emerald-400">0% Hoàn thành</span>
         </div>
         <div class="w-full bg-slate-800 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-700">
           <div id="kpi-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
@@ -260,60 +260,66 @@
       </div>
     </div>
 
-    <!-- KHỐI PHỄU CHUYỂN ĐỔI: TÁCH RIÊNG "ĐÃ CỌC" VÀ "ĐÃ GIAO XE" -->
+    <!-- KHỐI PHỄU CHUYỂN ĐỔI TỪNG TẦNG (%) -->
     <div class="grid grid-cols-2 md:grid-cols-6 gap-2.5 mb-4">
+      <!-- 1. Tầng Thu Khách (Mục tiêu 100 khách kiếm được) -->
       <div id="card-filter-all" onclick="filterByCard('ALL')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-blue-500 transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-slate-500 font-bold uppercase group-hover:text-blue-600">TỔNG KHÁCH</p>
-          <span id="funnel-total-percent" class="text-[10px] font-black text-blue-700 bg-blue-50 px-1 py-0.5 rounded">0%</span>
+          <p class="text-[10px] text-slate-500 font-bold uppercase group-hover:text-blue-600">1. TỔNG KHÁCH</p>
+          <span id="funnel-total-percent" title="% đạt mục tiêu 100 khách" class="text-[10px] font-black text-blue-700 bg-blue-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-total" class="text-lg font-extrabold text-slate-900 mt-1">0 / 100</p>
-        <p class="text-[9px] text-slate-400">👉 Xem tất cả</p>
+        <p id="stat-total" class="text-base sm:text-lg font-extrabold text-slate-900 mt-1">0 / 100</p>
+        <p class="text-[9px] text-slate-400">Tiến độ tìm kiếm</p>
       </div>
 
+      <!-- 2. Tầng Chăm Sóc Sang HOT (% trên tổng khách kiếm) -->
       <div id="card-filter-hot" onclick="filterByCard('HOT')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500 flex flex-col justify-between cursor-pointer hover:border-emerald-500 transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-emerald-700 font-bold uppercase">🔥 HOT</p>
-          <span id="funnel-hot-percent" class="text-[10px] font-black text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">0%</span>
+          <p class="text-[10px] text-emerald-700 font-bold uppercase">2. 🔥 KHÁCH HOT</p>
+          <span id="funnel-hot-percent" title="% khách Hot từ tổng khách" class="text-[10px] font-black text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-hot" class="text-lg font-extrabold text-emerald-600 mt-1">0 khách</p>
-        <p class="text-[9px] text-slate-400">👉 Xem khách HOT</p>
+        <p id="stat-hot" class="text-base sm:text-lg font-extrabold text-emerald-600 mt-1">0 khách</p>
+        <p class="text-[9px] text-slate-400">% Khách nét</p>
       </div>
 
+      <!-- 3. Tầng Chăm Sóc Sang CỌC (% từ khách Hot chuyển sang Cọc) -->
+      <div id="card-filter-deposited" onclick="filterByCard('DEPOSITED')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-500 flex flex-col justify-between cursor-pointer hover:border-blue-500 transition group">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-blue-700 font-bold uppercase">3. 🚗 ĐÃ CỌC XE</p>
+          <span id="funnel-deposit-percent" title="% chuyển từ Hot sang Cọc" class="text-[10px] font-black text-blue-800 bg-blue-50 px-1 py-0.5 rounded">0%</span>
+        </div>
+        <p id="stat-deposited" class="text-base sm:text-lg font-extrabold text-blue-600 mt-1">0 xe</p>
+        <p class="text-[9px] text-slate-400">% Chốt từ Hot</p>
+      </div>
+
+      <!-- 4. Tầng Giao Xe Hoàn Tất (% từ Cọc sang Giao Xe Thành Công) -->
+      <div id="card-filter-delivered" onclick="filterByCard('DELIVERED')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-teal-600 flex flex-col justify-between cursor-pointer hover:border-teal-600 transition group">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-teal-800 font-bold uppercase">4. 🏆 ĐÃ GIAO XE</p>
+          <span id="funnel-conversion-rate" title="% Giao xe từ số xe đã cọc" class="text-[10px] font-black text-teal-900 bg-teal-50 px-1 py-0.5 rounded">0%</span>
+        </div>
+        <p id="stat-delivered" class="text-base sm:text-lg font-extrabold text-teal-700 mt-1">0 xe</p>
+        <p class="text-[9px] text-slate-400">% Giao từ Cọc</p>
+      </div>
+
+      <!-- 5. Khách Đang Nuôi Dưỡng (COOL) -->
       <div id="card-filter-cool" onclick="filterByCard('COOL')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500 flex flex-col justify-between cursor-pointer hover:border-amber-500 transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-amber-700 font-bold uppercase">⚡ COOL</p>
-          <span id="funnel-cool-percent" class="text-[10px] font-black text-amber-800 bg-amber-50 px-1 py-0.5 rounded">0%</span>
+          <span id="funnel-cool-percent" title="% khách Cool trên tổng khách" class="text-[10px] font-black text-amber-800 bg-amber-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-cool" class="text-lg font-extrabold text-amber-600 mt-1">0 khách</p>
-        <p class="text-[9px] text-slate-400">👉 Xem khách COOL</p>
+        <p id="stat-cool" class="text-base sm:text-lg font-extrabold text-amber-600 mt-1">0 khách</p>
+        <p class="text-[9px] text-slate-400">Đang tư vấn</p>
       </div>
 
+      <!-- 6. Khách Rớt Deal (LẠNH - Nợ xấu, Giá) -->
       <div id="card-filter-cold" onclick="filterByCard('LẠNH')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-rose-500 flex flex-col justify-between cursor-pointer hover:border-rose-500 transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-rose-700 font-bold uppercase">❄️ LẠNH</p>
-          <span id="funnel-cold-percent" class="text-[10px] font-black text-rose-800 bg-rose-50 px-1 py-0.5 rounded">0%</span>
+          <span id="funnel-cold-percent" title="% khách Lạnh rớt deal" class="text-[10px] font-black text-rose-800 bg-rose-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-cold" class="text-lg font-extrabold text-rose-600 mt-1">0 khách</p>
-        <p class="text-[9px] text-slate-400">👉 Xem rớt deal</p>
-      </div>
-
-      <div id="card-filter-deposited" onclick="filterByCard('DEPOSITED')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-500 flex flex-col justify-between cursor-pointer hover:border-blue-500 transition group">
-        <div class="flex justify-between items-center">
-          <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CỌC XE</p>
-          <span id="funnel-deposit-percent" class="text-[10px] font-black text-blue-800 bg-blue-50 px-1 py-0.5 rounded">0%</span>
-        </div>
-        <p id="stat-deposited" class="text-lg font-extrabold text-blue-600 mt-1">0 xe</p>
-        <p class="text-[9px] text-slate-400">👉 Đang làm hồ sơ</p>
-      </div>
-
-      <div id="card-filter-delivered" onclick="filterByCard('DELIVERED')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-teal-600 flex flex-col justify-between cursor-pointer hover:border-teal-600 transition group">
-        <div class="flex justify-between items-center">
-          <p class="text-[10px] text-teal-800 font-bold uppercase">🏆 ĐÃ GIAO XE</p>
-          <span id="funnel-conversion-rate" class="text-[10px] font-black text-teal-900 bg-teal-50 px-1 py-0.5 rounded">0% CR</span>
-        </div>
-        <p id="stat-delivered" class="text-lg font-extrabold text-teal-700 mt-1">0 xe</p>
-        <p class="text-[9px] text-slate-400">👉 Bàn giao hoàn tất</p>
+        <p id="stat-cold" class="text-base sm:text-lg font-extrabold text-rose-600 mt-1">0 khách</p>
+        <p class="text-[9px] text-slate-400">Rớt deal / Nợ xấu</p>
       </div>
     </div>
 
@@ -353,13 +359,13 @@
       </div>
     </div>
 
-    <!-- Bảng danh sách CRM (HIỂN THỊ THÊM NGÀY GIỜ TẠO HỒ SƠ) -->
+    <!-- Bảng danh sách CRM -->
     <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs text-slate-600">
           <thead class="bg-slate-50 border-b text-[10px] uppercase font-bold text-slate-600 tracking-wider">
             <tr>
-              <th class="py-3 px-3">Khách Hàng (Xem hồ sơ & Ngày tạo)</th>
+              <th class="py-3 px-3">Khách Hàng (Xem hồ sơ)</th>
               <th class="py-3 px-3 text-center">Độ Nóng</th>
               <th class="py-3 px-3">Xe Quan Tâm</th>
               <th class="py-3 px-3">Giai Đoạn (Bấm đổi nhanh)</th>
@@ -431,7 +437,7 @@
     <div class="space-y-3" id="wf_step_container"></div>
   </section>
 
-  <!-- MODAL: XEM CHI TIẾT HỒ SƠ KHÁCH HÀNG (HIỂN THỊ NGÀY GIỜ TẠO) -->
+  <!-- MODAL: XEM CHI TIẾT HỒ SƠ KHÁCH HÀNG -->
   <div id="detailModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-4xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-start pb-3 border-b border-slate-200">
@@ -976,7 +982,7 @@
         return matchSearch && matchTemp;
       });
 
-      // 1. TÍNH TOÁN KPI
+      // 1. TÍNH TOÁN KPI GIAO XE THỰC TẾ
       const BASE_MONTHLY_KPI = 8;
       const rolloverDebt = Number(localStorage.getItem('kpi_rollover_debt')) || 0;
       const TOTAL_MONTHLY_KPI = BASE_MONTHLY_KPI + rolloverDebt;
@@ -995,7 +1001,7 @@
 
       document.getElementById('kpi-total-target').innerText = `${TOTAL_MONTHLY_KPI} xe/tháng`;
       document.getElementById('kpi-count').innerText = `${deliveredCount} / ${TOTAL_MONTHLY_KPI} xe`;
-      document.getElementById('kpi-percent').innerText = `${kpiPercent}%`;
+      document.getElementById('kpi-percent').innerText = `${kpiPercent}% Hoàn thành`;
       document.getElementById('kpi-bar').style.width = `${kpiPercent}%`;
 
       const expectedTargetToday = Number(((TOTAL_MONTHLY_KPI / 30) * TODAY_DAY_NUM).toFixed(1));
@@ -1009,7 +1015,7 @@
         kpiStatusElem.innerHTML = `<span class="text-amber-400 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Chậm tiến độ (${diff.toFixed(1)} xe)</span>`;
       }
 
-      // 2. PHỄU CHUYỂN ĐỔI %
+      // 2. PHỄU CHUYỂN ĐỔI % TỪNG TẦNG CHUẨN XÁC
       const TOTAL_LEADS_TARGET = 100;
       const totalCustCount = customers.length;
       const totalLeadPercent = Math.min(100, Math.round((totalCustCount / TOTAL_LEADS_TARGET) * 100));
@@ -1018,11 +1024,16 @@
       const coolCount = customers.filter(c => (c.temperature || 'COOL') === 'COOL').length;
       const coldCount = customers.filter(c => (c.temperature || 'COOL') === 'LẠNH').length;
 
+      // Tầng 2: % Khách Hot trên tổng khách tìm kiếm
       const hotPercent = totalCustCount > 0 ? Math.round((hotCount / totalCustCount) * 100) : 0;
+      // Tầng 3: % Chuyển từ Khách Hot sang Đã Cọc
+      const totalDealsUnderway = depositedCount + deliveredCount;
+      const depositFromHotPercent = hotCount > 0 ? Math.round((totalDealsUnderway / hotCount) * 100) : (totalDealsUnderway > 0 ? 100 : 0);
+      // Tầng 4: % Bàn Giao Xe Thành Công từ Tổng số xe đã cọc
+      const deliveryFromDepositPercent = totalDealsUnderway > 0 ? Math.round((deliveredCount / totalDealsUnderway) * 100) : 0;
+      // Tỷ lệ Cool & Rớt deal (Lạnh)
       const coolPercent = totalCustCount > 0 ? Math.round((coolCount / totalCustCount) * 100) : 0;
       const coldPercent = totalCustCount > 0 ? Math.round((coldCount / totalCustCount) * 100) : 0;
-      const depositPercent = totalCustCount > 0 ? Math.round((depositedCount / totalCustCount) * 100) : 0;
-      const conversionRate = totalCustCount > 0 ? Math.round((deliveredCount / totalCustCount) * 100) : 0;
 
       document.getElementById('stat-total').innerText = `${totalCustCount} / ${TOTAL_LEADS_TARGET}`;
       document.getElementById('funnel-total-percent').innerText = `${totalLeadPercent}%`;
@@ -1030,17 +1041,17 @@
       document.getElementById('stat-hot').innerText = `${hotCount} khách`;
       document.getElementById('funnel-hot-percent').innerText = `${hotPercent}%`;
 
+      document.getElementById('stat-deposited').innerText = `${depositedCount} xe`;
+      document.getElementById('funnel-deposit-percent').innerText = `${depositFromHotPercent}% Chốt`;
+
+      document.getElementById('stat-delivered').innerText = `${deliveredCount} xe`;
+      document.getElementById('funnel-conversion-rate').innerText = `${deliveryFromDepositPercent}% Giao`;
+
       document.getElementById('stat-cool').innerText = `${coolCount} khách`;
       document.getElementById('funnel-cool-percent').innerText = `${coolPercent}%`;
 
       document.getElementById('stat-cold').innerText = `${coldCount} khách`;
       document.getElementById('funnel-cold-percent').innerText = `${coldPercent}%`;
-
-      document.getElementById('stat-deposited').innerText = `${depositedCount} xe`;
-      document.getElementById('funnel-deposit-percent').innerText = `${depositPercent}%`;
-
-      document.getElementById('stat-delivered').innerText = `${deliveredCount} xe`;
-      document.getElementById('funnel-conversion-rate').innerText = `${conversionRate}% CR`;
 
       // Tiến độ chăm sóc
       const careList = customers.filter(c => c.stage !== 'Đã giao xe' && c.stage !== 'Tạm ngưng / Hủy');
@@ -1369,8 +1380,8 @@
       const pendingHot = customers.filter(c => (c.temperature === 'HOT') && c.last_cared_date !== TODAY_STR);
 
       let content = `BÁO CÁO NHẮC VIỆC CHĂM SÓC KHÁCH HÀNG (9H SÁNG)\n`;
-      content += `Tiến độ giao xe: ${document.getElementById('kpi-count').innerText} (Đến ngày ${TODAY_DAY_NUM}/30: ${document.getElementById('kpi-status-text').innerText})\n`;
-      content += `Phễu khách hàng: ${document.getElementById('stat-total').innerText} (${document.getElementById('funnel-conversion-rate').innerText})\n`;
+      content += `Tiến độ giao xe thực tế: ${document.getElementById('kpi-count').innerText} (Đến ngày ${TODAY_DAY_NUM}/30: ${document.getElementById('kpi-status-text').innerText})\n`;
+      content += `Phễu chuyển đổi: ${document.getElementById('stat-total').innerText} | Đã cọc: ${document.getElementById('stat-deposited').innerText} | Đã giao: ${document.getElementById('stat-delivered').innerText}\n`;
       content += `==================================================\n\n`;
 
       content += `🔥 KHÁCH HÀNG TIỀM NĂNG (HOT) CẦN CHỐT (${pendingHot.length} khách):\n`;
