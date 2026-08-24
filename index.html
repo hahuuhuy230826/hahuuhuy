@@ -215,7 +215,7 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG & PHỄU CHUYỂN ĐỔI -->
+  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG, KPI & PHỄU CHUYỂN ĐỔI -->
   <!-- ========================================================================= -->
   <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
     
@@ -300,11 +300,11 @@
 
       <div id="card-filter-closed" onclick="filterByCard('CLOSED')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-600 flex flex-col justify-between cursor-pointer hover:border-blue-600 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CHỐT HĐ / XE</p>
+          <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CỌC / XE</p>
           <span id="funnel-conversion-rate" class="text-[11px] font-black text-blue-800 bg-blue-50 px-1.5 py-0.5 rounded">0% CR</span>
         </div>
         <p id="stat-delivered" class="text-xl font-extrabold text-blue-700 mt-1">0 xe</p>
-        <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách ĐÃ CHỐT</p>
+        <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách ĐÃ CỌC</p>
       </div>
     </div>
 
@@ -332,7 +332,7 @@
           <option value="HOT">🔥 Khách HOT (Xanh lá)</option>
           <option value="COOL">⚡ Khách COOL (Vàng)</option>
           <option value="LẠNH">❄️ Khách LẠNH (Đỏ - Rớt deal)</option>
-          <option value="CLOSED">🚗 Khách đã chốt HĐ / Nhận xe</option>
+          <option value="CLOSED">🎉 Khách Đã Cọc / Chốt Xe</option>
         </select>
         <button onclick="openModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
           <i class="fa-solid fa-user-plus"></i> + Thêm Nhanh Khách Tiềm Năng
@@ -343,7 +343,7 @@
       </div>
     </div>
 
-    <!-- Bảng danh sách CRM -->
+    <!-- Bảng danh sách CRM (CÓ MENU CHỌN GIAI ĐOẠN ĐÃ CỌC THÀNH CÔNG) -->
     <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs text-slate-600">
@@ -352,7 +352,7 @@
               <th class="py-3 px-3">Khách Hàng (Xem hồ sơ)</th>
               <th class="py-3 px-3 text-center">Độ Nóng</th>
               <th class="py-3 px-3">Xe Quan Tâm</th>
-              <th class="py-3 px-3">Giai Đoạn</th>
+              <th class="py-3 px-3">Giai Đoạn (Bấm đổi nhanh)</th>
               <th class="py-3 px-3">Lý Do Rớt Deal / Ghi Chú</th>
               <th class="py-3 px-3 text-center">Nhiệm Vụ Chăm Sóc</th>
               <th class="py-3 px-3 text-center">Quy Trình 10 Bước</th>
@@ -491,7 +491,7 @@
     </div>
   </div>
 
-  <!-- MODAL: FORM THÊM NHANH KHÁCH HÀNG (CHỈ CẦN TÊN + SĐT LÀ LƯU ĐƯỢC NGAY) -->
+  <!-- MODAL: FORM THÊM NHANH KHÁCH HÀNG -->
   <div id="customerModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-2xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-3 border-b mb-3">
@@ -502,7 +502,7 @@
       <div class="space-y-3.5 text-xs">
         <input type="hidden" id="editIndex">
 
-        <!-- 1. Trạng Thái Độ Nóng Khách Hàng -->
+        <!-- Phân Loại Khách Hàng -->
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
           <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1.5">Phân Loại Khách Hàng</label>
           <div class="grid grid-cols-3 gap-2.5">
@@ -533,7 +533,7 @@
           </div>
         </div>
 
-        <!-- 2. THÔNG TIN BẮT BUỘC: CHỈ CẦN TÊN + SĐT -->
+        <!-- THÔNG TIN BẮT BUỘC: CHỈ CẦN TÊN + SĐT -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-200">
           <div>
             <label class="block font-bold text-blue-950 mb-1">Tên khách hàng <span class="text-red-500">*</span></label>
@@ -545,7 +545,7 @@
           </div>
         </div>
 
-        <!-- 3. Dòng xe & Ghi chú nhanh -->
+        <!-- Dòng xe & Ghi chú nhanh -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Dòng xe quan tâm</label>
@@ -576,7 +576,7 @@
           <textarea id="in_note" rows="2" placeholder="Ghi chú nhanh nhu cầu của khách..." class="w-full p-2 border rounded-lg"></textarea>
         </div>
 
-        <!-- Nút mở rộng thông tin chi tiết (CCCD, Ngân hàng, HĐMB...) khi cần -->
+        <!-- Nút mở rộng thông tin chi tiết -->
         <div class="border-t pt-2">
           <button type="button" onclick="toggleExtraFields()" class="text-blue-600 hover:text-blue-800 font-bold flex items-center gap-1">
             <i id="extra_icon" class="fa-solid fa-chevron-down"></i> <span id="extra_text">+ Mở rộng thêm CCCD, Ngân hàng, HĐMB, Số khung (Tùy chọn)</span>
@@ -904,12 +904,29 @@
       return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} - ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
     }
 
-    // Khởi tạo danh sách khách hàng từ localStorage
     let customers = JSON.parse(localStorage.getItem('my_sales_customers_final')) || [];
 
     function saveToStorage() {
       localStorage.setItem('my_sales_customers_final', JSON.stringify(customers));
       renderCustomers();
+    }
+
+    // HÀM ĐỔI NHANH TRẠNG THÁI GIAI ĐOẠN NGAY TRÊN BẢNG
+    function updateCustomerStage(idx, newStage) {
+      customers[idx].stage = newStage;
+
+      // Nếu chuyển sang Đã cọc thành công -> tự động hoàn thành Bước 2 trong Workflow
+      if (newStage === 'Đã cọc thành công' || newStage === 'Đã ký HĐ' || newStage === 'Đã có VSO / Xe' || newStage === 'Đã giao xe') {
+        if (!customers[idx].workflow) customers[idx].workflow = {};
+        if (!customers[idx].workflow[1] || !customers[idx].workflow[1].done) {
+          customers[idx].workflow[1] = { done: true, time: getNowFormatted() };
+        }
+        if (!customers[idx].workflow[2] || !customers[idx].workflow[2].done) {
+          customers[idx].workflow[2] = { done: true, time: getNowFormatted() };
+        }
+      }
+
+      saveToStorage();
     }
 
     function renderCustomers() {
@@ -931,7 +948,7 @@
         if (tempFilter === 'HOT') matchTemp = (temp === 'HOT');
         else if (tempFilter === 'COOL') matchTemp = (temp === 'COOL');
         else if (tempFilter === 'LẠNH') matchTemp = (temp === 'LẠNH');
-        else if (tempFilter === 'CLOSED') matchTemp = (c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe');
+        else if (tempFilter === 'CLOSED') matchTemp = (c.stage === 'Đã cọc thành công' || c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe');
 
         return matchSearch && matchTemp;
       });
@@ -941,7 +958,8 @@
       const rolloverDebt = Number(localStorage.getItem('kpi_rollover_debt')) || 0;
       const TOTAL_MONTHLY_KPI = BASE_MONTHLY_KPI + rolloverDebt;
 
-      const closedDeals = customers.filter(c => c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe').length;
+      // Đếm các deal đã cọc thành công trở lên
+      const closedDeals = customers.filter(c => c.stage === 'Đã cọc thành công' || c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe').length;
       const kpiPercent = Math.min(100, Math.round((closedDeals / TOTAL_MONTHLY_KPI) * 100));
 
       const badgeRollover = document.getElementById('kpi-rollover-badge');
@@ -1019,10 +1037,21 @@
           tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-rose-500"></span>❄️ LẠNH</span>';
         }
 
-        let stageBadge = `<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">${cust.stage}</span>`;
-        if (cust.stage === 'Đang tư vấn') stageBadge = '<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đang tư vấn</span>';
-        else if (cust.stage === 'Đã có VSO / Xe' || cust.stage === 'Đã ký HĐ') stageBadge = '<span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã có VSO/Ký HĐ</span>';
-        else if (cust.stage === 'Đã giao xe') stageBadge = '<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã giao xe</span>';
+        // MENU CHỌN NHANH GIAI ĐOẠN NGAY TRÊN DÒNG
+        const curStage = cust.stage || 'Khách mới';
+        const isClosedStage = (curStage === 'Đã cọc thành công' || curStage === 'Đã ký HĐ' || curStage === 'Đã có VSO / Xe' || curStage === 'Đã giao xe');
+        
+        const stageDropdown = `
+          <select onchange="updateCustomerStage(${index}, this.value)" class="p-1.5 rounded-lg text-xs font-bold border ${isClosedStage ? 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-200' : 'bg-white text-slate-700 border-slate-300'}">
+            <option value="Khách mới" ${curStage === 'Khách mới' ? 'selected' : ''}>Khách mới</option>
+            <option value="Đang tư vấn" ${curStage === 'Đang tư vấn' ? 'selected' : ''}>Đang tư vấn</option>
+            <option value="Đã lái thử" ${curStage === 'Đã lái thử' ? 'selected' : ''}>Đã lái thử</option>
+            <option value="Đã cọc thành công" ${curStage === 'Đã cọc thành công' ? 'selected' : ''}>🎉 Đã cọc thành công</option>
+            <option value="Đã có VSO / Xe" ${curStage === 'Đã có VSO / Xe' ? 'selected' : ''}>🚗 Đã có VSO / Xe</option>
+            <option value="Đã giao xe" ${curStage === 'Đã giao xe' ? 'selected' : ''}>🏆 Đã giao xe</option>
+            <option value="Tạm ngưng / Hủy" ${curStage === 'Tạm ngưng / Hủy' ? 'selected' : ''}>Tạm ngưng / Hủy</option>
+          </select>
+        `;
 
         const isCaredToday = (cust.last_cared_date === TODAY_STR);
         const careButton = isCaredToday 
@@ -1048,7 +1077,7 @@
           <td class="py-2.5 px-3">
             <div class="font-bold text-slate-800">${cust.car_model || '---'}</div>
           </td>
-          <td class="py-2.5 px-3">${stageBadge}</td>
+          <td class="py-2.5 px-3">${stageDropdown}</td>
           <td class="py-2.5 px-3 max-w-[190px]">
             ${cust.cold_reason ? `<div class="text-[10px] font-bold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200 inline-block mb-1"><i class="fa-solid fa-triangle-exclamation"></i> ${cust.cold_reason}</div>` : ''}
             <div class="text-[11px] text-slate-500 truncate" title="${cust.note || ''}">${cust.note || '---'}</div>
@@ -1263,7 +1292,7 @@
         time: timeNow
       };
 
-      if (stepNum === 2) customers[custIdx].stage = 'Chờ cọc';
+      if (stepNum === 2) customers[custIdx].stage = 'Đã cọc thành công';
       if (stepNum === 3) customers[custIdx].stage = 'Đã có VSO / Xe';
       if (stepNum === 4) customers[custIdx].stage = 'Đã ký HĐ';
       if (stepNum === 10) customers[custIdx].stage = 'Đã giao xe';
@@ -1338,7 +1367,7 @@
       document.getElementById('dt_name').innerText = c.name || '---';
       document.getElementById('dt_id').innerText = c.id || '---';
       document.getElementById('dt_source').innerText = c.source || '---';
-      document.getElementById('dt_gender').innerText = c.gender || '---';
+      document.getElementById('dt_gender').innerText = c.gender || 'Nam';
       document.getElementById('dt_dob').innerText = c.dob || '---';
       document.getElementById('dt_phone').innerText = c.phone || '---';
       document.getElementById('dt_email').innerText = c.email || '---';
@@ -1371,7 +1400,7 @@
 
       document.getElementById('dt_car_model').innerText = c.car_model || '---';
       document.getElementById('dt_car_color').innerText = c.car_color || '---';
-      document.getElementById('dt_car_year').innerText = c.car_year || '---';
+      document.getElementById('dt_car_year').innerText = c.car_year || '2026';
       document.getElementById('dt_plate').innerText = c.plate || 'Chưa bấm biển';
       document.getElementById('dt_hdmb').innerText = c.hdmb || '---';
       document.getElementById('dt_vso').innerText = c.vso || '---';
@@ -1454,7 +1483,7 @@
       openModal(idx);
     }
 
-    // HÀM LƯU NHANH TRỰC TIẾP (CHỈ CẦN TÊN HOẶC SĐT LÀ LƯU THÀNH CÔNG)
+    // LƯU KHÁCH HÀNG TIỀM NĂNG TRỰC TIẾP
     function manualSaveCustomer() {
       const nameVal = (document.getElementById('in_name').value || '').trim();
       const phoneVal = (document.getElementById('in_phone').value || '').trim();
@@ -1472,7 +1501,7 @@
 
       const data = {
         id: (editIdx !== '' && customers[editIdx]) ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
-        name: nameVal || 'Khách Tiềm Năng Mới',
+        name: nameVal || 'Khách Tiềm Năng',
         temperature: selectedTemp,
         cold_reason: coldReasonVal,
         phone: phoneVal || '---',
@@ -1504,7 +1533,6 @@
 
       saveToStorage();
       closeModal();
-      alert('Đã lưu thành công khách hàng tiềm năng vào hệ thống!');
     }
 
     function deleteCustomer(idx) {
