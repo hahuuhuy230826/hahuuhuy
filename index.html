@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinFast Sales Portal • Phễu Chuyển Đổi % & KPI 100 Khách</title>
+  <title>VinFast Sales Portal • Báo Giá & KPI CRM</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -32,7 +32,7 @@
         </div>
       </div>
       
-      <!-- Tab điều hướng 3 Tab -->
+      <!-- Tab điều hướng -->
       <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
         <button id="tabBtnQuote" onclick="switchTab('quote')" class="px-3 py-1.5 rounded-lg font-bold text-xs transition bg-white text-blue-700 shadow-xs flex items-center gap-1.5">
           <i class="fa-solid fa-calculator"></i> Báo Giá Xe
@@ -62,6 +62,7 @@
         <div id="q_versionButtons" class="flex flex-wrap gap-1.5 no-print"></div>
       </div>
 
+      <!-- Chọn màu ngoại thất -->
       <div class="py-3 px-4 bg-slate-50 rounded-xl my-3 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-2">
           <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Màu sắc:</span>
@@ -70,6 +71,7 @@
         <p id="q_colorName" class="text-xs text-blue-700 font-bold bg-white px-3 py-1 rounded-lg border border-slate-200">Màu ngoại thất: Trắng</p>
       </div>
 
+      <!-- Thông số kỹ thuật -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-5 text-center">
         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
           <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CÔNG SUẤT TỐI ĐA</p>
@@ -85,6 +87,7 @@
         </div>
       </div>
 
+      <!-- Chương trình ưu đãi & Bảng Dự Toán -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-3 border-t border-slate-200">
         <div class="lg:col-span-7 space-y-2.5 no-print">
           <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
@@ -212,7 +215,7 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG, KPI & PHỄU CHUYỂN ĐỔI (CLICK TO FILTER) -->
+  <!-- TAB 2: QUẢN LÝ KHÁCH HÀNG & PHỄU CHUYỂN ĐỔI -->
   <!-- ========================================================================= -->
   <section id="tabCrm" class="max-w-7xl mx-auto px-4 py-4 hidden">
     
@@ -257,9 +260,8 @@
       </div>
     </div>
 
-    <!-- KHỐI PHỄU CHUYỂN ĐỔI TỶ LỆ % (BẤM VÀO TỪNG THẺ ĐỂ XEM KHÁCH HÀNG TƯƠNG ỨNG) -->
+    <!-- KHỐI PHỄU CHUYỂN ĐỔI TỶ LỆ % -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 mb-4">
-      <!-- 1. Thẻ TỔNG KHÁCH KIẾM (Click xem tất cả) -->
       <div id="card-filter-all" onclick="filterByCard('ALL')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-blue-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-slate-500 font-bold uppercase group-hover:text-blue-600">TỔNG KHÁCH KIẾM</p>
@@ -269,7 +271,6 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm để xem tất cả</p>
       </div>
 
-      <!-- 2. Thẻ KHÁCH HOT (Click xem khách Hot) -->
       <div id="card-filter-hot" onclick="filterByCard('HOT')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500 flex flex-col justify-between cursor-pointer hover:border-emerald-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-emerald-700 font-bold uppercase">🔥 KHÁCH HOT</p>
@@ -279,7 +280,6 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách HOT</p>
       </div>
 
-      <!-- 3. Thẻ KHÁCH COOL (Click xem khách Cool) -->
       <div id="card-filter-cool" onclick="filterByCard('COOL')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500 flex flex-col justify-between cursor-pointer hover:border-amber-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-amber-700 font-bold uppercase">⚡ KHÁCH COOL</p>
@@ -289,7 +289,6 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách COOL</p>
       </div>
 
-      <!-- 4. Thẻ KHÁCH LẠNH (Click xem khách Rớt Deal) -->
       <div id="card-filter-cold" onclick="filterByCard('LẠNH')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-rose-500 flex flex-col justify-between cursor-pointer hover:border-rose-500 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-rose-700 font-bold uppercase">❄️ KHÁCH LẠNH</p>
@@ -299,7 +298,6 @@
         <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách LẠNH</p>
       </div>
 
-      <!-- 5. Thẻ ĐÃ CHỐT HĐ / XE (Click xem khách Đã Chốt) -->
       <div id="card-filter-closed" onclick="filterByCard('CLOSED')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-600 flex flex-col justify-between cursor-pointer hover:border-blue-600 hover:shadow-sm transition group">
         <div class="flex justify-between items-center">
           <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CHỐT HĐ / XE</p>
@@ -310,7 +308,7 @@
       </div>
     </div>
 
-    <!-- KHỐI THEO DÕI NHIỆM VỤ CHĂM SÓC TRONG NGÀY -->
+    <!-- TIẾN ĐỘ CHĂM SÓC TRONG NGÀY -->
     <div class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 mb-4 flex flex-col sm:flex-row justify-between items-center gap-3">
       <div class="flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></span>
@@ -336,17 +334,10 @@
           <option value="LẠNH">❄️ Khách LẠNH (Đỏ - Rớt deal)</option>
           <option value="CLOSED">🚗 Khách đã chốt HĐ / Nhận xe</option>
         </select>
-        <select id="coldReasonFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs text-slate-700">
-          <option value="ALL">Tất cả lý do rớt deal</option>
-          <option value="Nợ xấu ngân hàng (CIC)">Nợ xấu ngân hàng (CIC)</option>
-          <option value="Giá chưa tốt / So sánh giá">Giá chưa tốt / So sánh giá</option>
-          <option value="Tài chính chưa đủ">Tài chính chưa đủ</option>
-          <option value="Đổi kế hoạch / Mua hãng khác">Đổi kế hoạch / Mua hãng khác</option>
-        </select>
-        <button onclick="openModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs">
-          <i class="fa-solid fa-user-plus"></i> Thêm Khách Mới
+        <button onclick="openModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-user-plus"></i> + Thêm Nhanh Khách Tiềm Năng
         </button>
-        <button onclick="exportCSV()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs">
+        <button onclick="exportCSV()" class="px-3.5 py-2 bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition flex items-center gap-1.5 shadow-xs">
           <i class="fa-solid fa-file-excel"></i> Xuất Excel
         </button>
       </div>
@@ -374,7 +365,7 @@
       </div>
       <div id="emptyState" class="hidden p-8 text-center text-slate-400">
         <i class="fa-solid fa-address-book text-3xl mb-1 text-slate-300"></i>
-        <p class="text-xs">Chưa có thông tin khách hàng phù hợp.</p>
+        <p class="text-xs">Chưa có thông tin khách hàng phù hợp. Hãy bấm nút xanh để thêm khách mới.</p>
       </div>
     </div>
   </section>
@@ -393,10 +384,15 @@
           <p class="text-xs text-slate-500">Bắt buộc xác nhận tuần tự từng bước kèm mốc thời gian</p>
         </div>
       </div>
+      
+      <!-- Thanh chọn khách và Nút Xóa khách ngay tại tab này -->
       <div class="w-full sm:w-auto flex items-center gap-2">
         <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Chọn Khách Hàng:</label>
         <select id="wf_select_cust" onchange="loadWorkflowCustomer()" class="p-2 border rounded-xl text-xs font-bold text-blue-800 bg-slate-50 focus:ring-2 focus:ring-blue-500 w-full sm:w-64">
         </select>
+        <button onclick="deleteCurrentWorkflowCustomer()" title="Xóa hồ sơ khách hàng đang chọn" class="px-3 py-2 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white border border-rose-200 transition font-bold text-xs flex items-center gap-1 shrink-0">
+          <i class="fa-solid fa-trash"></i> Xóa Khách Này
+        </button>
       </div>
     </div>
 
@@ -442,7 +438,6 @@
       </div>
 
       <div class="space-y-4 pt-3 text-xs">
-        <!-- Khối lý do rớt deal nếu là khách lạnh -->
         <div id="dt_box_cold_reason" class="p-3 bg-rose-50 rounded-xl border border-rose-200 hidden">
           <h3 class="text-[11px] font-bold text-rose-800 uppercase mb-1 flex items-center gap-1.5">
             <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> Lý Do Khách Lạnh (Chưa Chốt Được)
@@ -483,30 +478,8 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-            <h3 class="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5"><i class="fa-solid fa-building-columns text-slate-600"></i> 3. Tài Khoản Ngân Hàng</h3>
-            <div class="space-y-1 text-xs">
-              <div><span class="text-slate-500">Số tài khoản:</span> <span id="dt_bank_acc" class="font-bold text-slate-800 font-mono">---</span></div>
-              <div><span class="text-slate-500">Tên ngân hàng:</span> <span id="dt_bank_name" class="font-semibold text-slate-800">---</span></div>
-              <div><span class="text-slate-500">Chủ tài khoản:</span> <span id="dt_bank_owner" class="font-bold text-slate-800 uppercase">---</span></div>
-            </div>
-          </div>
-
-          <div class="bg-rose-50/50 p-3.5 rounded-xl border border-rose-200 flex flex-col justify-between">
-            <div>
-              <h3 class="text-[11px] font-bold text-rose-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5"><i class="fa-regular fa-calendar-check text-rose-600"></i> 4. Lịch Hẹn Chăm Sóc</h3>
-              <p id="dt_next_date" class="font-semibold text-rose-700 text-xs">Chưa có lịch hẹn</p>
-            </div>
-            <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-rose-200/60">
-              <a id="dt_btn_call" href="#" class="py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-center text-xs flex items-center justify-center gap-1 shadow-xs"><i class="fa-solid fa-phone"></i> Gọi Điện</a>
-              <a id="dt_btn_zalo" href="#" target="_blank" class="py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-center text-xs flex items-center justify-center gap-1 shadow-xs"><i class="fa-solid fa-comment-dots"></i> Nhắn Zalo</a>
-            </div>
-          </div>
-        </div>
-
         <div>
-          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Ghi Chú Chi Tiết & Kế Hoạch Chăm Sóc Lại Sau Này</label>
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Ghi Chú Chi Tiết & Kế Hoạch Chăm Sóc Lại</label>
           <div id="dt_note" class="p-2.5 bg-slate-50 border rounded-xl text-slate-700 text-xs whitespace-pre-wrap min-h-[50px]">Chưa có ghi chú.</div>
         </div>
       </div>
@@ -518,39 +491,39 @@
     </div>
   </div>
 
-  <!-- MODAL: FORM THÊM & SỬA HỒ SƠ KHÁCH HÀNG -->
+  <!-- MODAL: FORM THÊM NHANH KHÁCH HÀNG (CHỈ CẦN TÊN + SĐT LÀ LƯU ĐƯỢC NGAY) -->
   <div id="customerModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
-    <div class="bg-white rounded-2xl max-w-4xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-3 border-b mb-3">
-        <h2 id="modalTitle" class="text-base font-bold text-slate-800">Thêm Hồ Sơ Khách Hàng Mới</h2>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <h2 id="modalTitle" class="text-base font-bold text-slate-800">Thêm Khách Hàng Tiềm Năng Mới</h2>
+        <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
-      <form id="customerForm" onsubmit="handleSaveCustomer(event)" class="space-y-3 text-xs">
+      <div class="space-y-3.5 text-xs">
         <input type="hidden" id="editIndex">
 
-        <!-- Trạng Thái Độ Nóng Khách Hàng -->
-        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 mb-2">
-          <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1.5">Trạng Thái Độ Nóng / Tiềm Năng Khách Hàng <span class="text-red-500">*</span></label>
-          <div class="grid grid-cols-3 gap-3">
+        <!-- 1. Trạng Thái Độ Nóng Khách Hàng -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <label class="block font-bold text-slate-700 uppercase tracking-wider mb-1.5">Phân Loại Khách Hàng</label>
+          <div class="grid grid-cols-3 gap-2.5">
             <label class="flex items-center gap-2 p-2 border rounded-lg bg-emerald-50 border-emerald-300 cursor-pointer">
               <input type="radio" name="in_temperature" value="HOT" checked onchange="toggleColdReasonBox()" class="text-emerald-600">
               <span class="font-bold text-emerald-800">🔥 HOT (Xanh lá)</span>
             </label>
             <label class="flex items-center gap-2 p-2 border rounded-lg bg-amber-50 border-amber-300 cursor-pointer">
               <input type="radio" name="in_temperature" value="COOL" onchange="toggleColdReasonBox()" class="text-amber-600">
-              <span class="font-bold text-amber-800">⚡ COOL (Màu vàng)</span>
+              <span class="font-bold text-amber-800">⚡ COOL (Vàng)</span>
             </label>
             <label class="flex items-center gap-2 p-2 border rounded-lg bg-rose-50 border-rose-300 cursor-pointer">
               <input type="radio" name="in_temperature" value="LẠNH" onchange="toggleColdReasonBox()" class="text-rose-600">
-              <span class="font-bold text-rose-800">❄️ LẠNH (Rớt deal - Màu đỏ)</span>
+              <span class="font-bold text-rose-800">❄️ LẠNH (Rớt deal)</span>
             </label>
           </div>
 
-          <!-- Ô Phân Loại Lý Do Dành Cho Khách Lạnh -->
-          <div id="form_cold_reason_box" class="mt-3 pt-3 border-t border-rose-200 hidden">
-            <label class="block font-bold text-rose-800 uppercase mb-1">Lý Do Khách Lạnh / Không Chốt Được <span class="text-red-500">*</span></label>
-            <select id="in_cold_reason" class="w-full p-2 border border-rose-300 rounded-lg bg-rose-50/50 font-bold text-rose-900">
+          <!-- Lý do khách lạnh -->
+          <div id="form_cold_reason_box" class="mt-2.5 pt-2.5 border-t border-rose-200 hidden">
+            <label class="block font-bold text-rose-800 uppercase mb-1">Lý Do Khách Lạnh (Chưa chốt được)</label>
+            <select id="in_cold_reason" class="w-full p-2 border border-rose-300 rounded-lg bg-white font-bold text-rose-900">
               <option value="Nợ xấu ngân hàng (CIC)">🚫 Nợ xấu ngân hàng (Dính CIC nhóm 2 trở lên không vay được)</option>
               <option value="Giá chưa tốt / So sánh giá">💰 Giá chưa tốt / Khách so sánh giá showroom khác</option>
               <option value="Tài chính chưa đủ">💵 Tài chính chưa đủ (Thiếu tiền đối ứng trả trước)</option>
@@ -560,33 +533,32 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5">
-          <div class="md:col-span-2">
-            <label class="block font-semibold text-slate-600 mb-1">Tên khách hàng <span class="text-red-500">*</span></label>
-            <input type="text" id="in_name" required placeholder="Họ và tên..." class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+        <!-- 2. THÔNG TIN BẮT BUỘC: CHỈ CẦN TÊN + SĐT -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-200">
+          <div>
+            <label class="block font-bold text-blue-950 mb-1">Tên khách hàng <span class="text-red-500">*</span></label>
+            <input type="text" id="in_name" placeholder="Nhập tên khách hàng..." class="w-full p-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-bold bg-white text-sm">
           </div>
           <div>
-            <label class="block font-semibold text-slate-600 mb-1">Số điện thoại <span class="text-red-500">*</span></label>
-            <input type="tel" id="in_phone" required placeholder="09xxxxxxx" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            <label class="block font-bold text-blue-950 mb-1">Số điện thoại <span class="text-red-500">*</span></label>
+            <input type="tel" id="in_phone" placeholder="Nhập số điện thoại (09xxx)..." class="w-full p-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-bold bg-white text-sm">
           </div>
+        </div>
+
+        <!-- 3. Dòng xe & Ghi chú nhanh -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold text-slate-600 mb-1">Giới tính</label>
-            <select id="in_gender" class="w-full p-2 border rounded-lg bg-white">
-              <option value="Nam">Nam</option>
-              <option value="Nữ">Nữ</option>
-              <option value="Khác">Khác</option>
+            <label class="block font-semibold text-slate-700 mb-1">Dòng xe quan tâm</label>
+            <select id="in_car_model" class="w-full p-2 border rounded-lg bg-white font-bold text-blue-700">
+              <option value="VF 3">VF 3</option>
+              <option value="VF 5 Plus">VF 5 Plus</option>
+              <option value="VF 6">VF 6</option>
+              <option value="VF MPV 7">VF MPV 7</option>
+              <option value="Limo Green">Limo Green</option>
             </select>
           </div>
           <div>
-            <label class="block font-semibold text-slate-600 mb-1">Ngày sinh</label>
-            <input type="date" id="in_dob" class="w-full p-2 border rounded-lg">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Email</label>
-            <input type="email" id="in_email" placeholder="email@gmail.com" class="w-full p-2 border rounded-lg">
-          </div>
-          <div class="md:col-span-2">
-            <label class="block font-semibold text-slate-600 mb-1">Nguồn tiếp cận</label>
+            <label class="block font-semibold text-slate-700 mb-1">Nguồn tiếp cận</label>
             <select id="in_source" class="w-full p-2 border rounded-lg bg-white font-medium text-indigo-700">
               <option value="Live TikTok">📱 Live TikTok</option>
               <option value="Video TikTok">🎬 Video TikTok</option>
@@ -599,78 +571,43 @@
           </div>
         </div>
 
-        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-4 gap-2.5">
-          <div><label class="block font-semibold text-slate-600 mb-1">Số CCCD</label><input type="text" id="in_cccd" placeholder="12 số CCCD" class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Nơi cấp</label><input type="text" id="in_cccd_place" placeholder="Nơi cấp..." class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Ngày cấp</label><input type="date" id="in_cccd_date" class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Ngày hết hạn</label><input type="date" id="in_cccd_exp" class="w-full p-2 border rounded-lg"></div>
-          <div class="md:col-span-2"><label class="block font-semibold text-slate-600 mb-1">Địa chỉ thường trú</label><input type="text" id="in_address_perm" placeholder="Thường trú theo CCCD..." class="w-full p-2 border rounded-lg"></div>
-          <div class="md:col-span-2"><label class="block font-semibold text-slate-600 mb-1">Địa chỉ tạm trú</label><input type="text" id="in_address_temp" placeholder="Tạm trú..." class="w-full p-2 border rounded-lg"></div>
-        </div>
-
-        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-3 gap-2.5">
-          <div><label class="block font-semibold text-slate-600 mb-1">Số tài khoản ngân hàng</label><input type="text" id="in_bank_acc" placeholder="Số TK" class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Tên ngân hàng</label><input type="text" id="in_bank_name" placeholder="VD: Vietcombank..." class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Chủ tài khoản</label><input type="text" id="in_bank_owner" placeholder="NGUYEN VAN A" class="w-full p-2 border rounded-lg uppercase"></div>
-        </div>
-
-        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-4 gap-2.5">
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Loại xe / Model</label>
-            <select id="in_car_model" class="w-full p-2 border rounded-lg bg-white font-bold text-blue-700">
-              <option value="VF 3 Eco">VF 3 Eco</option>
-              <option value="VF 3 Plus">VF 3 Plus</option>
-              <option value="VF 5 Plus">VF 5 Plus</option>
-              <option value="VF 6 Eco">VF 6 Eco</option>
-              <option value="VF 6 Plus">VF 6 Plus</option>
-              <option value="VF MPV 7">VF MPV 7</option>
-              <option value="Limo Green">Limo Green</option>
-            </select>
-          </div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Màu xe</label><input type="text" id="in_car_color" placeholder="Trắng, Vàng..." class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Năm sản xuất</label><input type="text" id="in_car_year" value="2026" class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Biển số xe</label><input type="text" id="in_plate" placeholder="51K-xxxx" class="w-full p-2 border rounded-lg"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Số HĐMB</label><input type="text" id="in_hdmb" placeholder="HDMB-xxxxx" class="w-full p-2 border rounded-lg font-mono"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Số VSO</label><input type="text" id="in_vso" placeholder="VSO-xxxxx" class="w-full p-2 border rounded-lg font-mono"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Số khung (VIN)</label><input type="text" id="in_vin" placeholder="17 ký tự VIN" class="w-full p-2 border rounded-lg font-mono"></div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Số máy</label><input type="text" id="in_engine" placeholder="Số máy..." class="w-full p-2 border rounded-lg font-mono"></div>
-        </div>
-
-        <div class="border-t pt-2.5 grid grid-cols-1 md:grid-cols-3 gap-2.5">
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Giai đoạn</label>
-            <select id="in_stage" class="w-full p-2 border rounded-lg bg-white font-semibold">
-              <option value="Khách mới">Khách mới</option>
-              <option value="Đang tư vấn">Đang tư vấn</option>
-              <option value="Đã lái thử">Đã lái thử</option>
-              <option value="Chờ cọc">Chờ cọc</option>
-              <option value="Đã ký HĐ">Đã ký HĐ</option>
-              <option value="Đã có VSO / Xe">Đã có VSO / Xe</option>
-              <option value="Đã giao xe">Đã giao xe</option>
-              <option value="Tạm ngưng / Hủy">Tạm ngưng / Hủy</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-600 mb-1">Hình thức thanh toán</label>
-            <select id="in_payment" class="w-full p-2 border rounded-lg bg-white">
-              <option value="Trả thẳng">Trả thẳng (100%)</option>
-              <option value="Vay ngân hàng (Trả góp)">Vay ngân hàng (Trả góp)</option>
-              <option value="Chưa quyết định">Chưa quyết định</option>
-            </select>
-          </div>
-          <div><label class="block font-semibold text-slate-600 mb-1">Lịch hẹn chăm sóc lại</label><input type="date" id="in_next_date" class="w-full p-2 border rounded-lg"></div>
-        </div>
-
         <div>
-          <label class="block font-semibold text-slate-600 mb-1">Ghi chú chi tiết & Kế hoạch chăm sóc lại sau này</label>
-          <textarea id="in_note" rows="2" placeholder="Ghi chú chi tiết lý do rớt deal, ngày nợ xấu hết hạn, khi nào có khuyến mại mới thì gọi lại..." class="w-full p-2 border rounded-lg"></textarea>
+          <label class="block font-semibold text-slate-700 mb-1">Ghi chú nhu cầu / Kế hoạch chăm sóc</label>
+          <textarea id="in_note" rows="2" placeholder="Ghi chú nhanh nhu cầu của khách..." class="w-full p-2 border rounded-lg"></textarea>
         </div>
 
-        <div class="flex justify-end space-x-2 pt-2.5 border-t">
-          <button type="button" onclick="closeModal()" class="px-4 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">Hủy</button>
-          <button type="submit" class="px-5 py-1.5 rounded-lg bg-blue-600 text-white font-semibold shadow-xs">Lưu Hồ Sơ</button>
+        <!-- Nút mở rộng thông tin chi tiết (CCCD, Ngân hàng, HĐMB...) khi cần -->
+        <div class="border-t pt-2">
+          <button type="button" onclick="toggleExtraFields()" class="text-blue-600 hover:text-blue-800 font-bold flex items-center gap-1">
+            <i id="extra_icon" class="fa-solid fa-chevron-down"></i> <span id="extra_text">+ Mở rộng thêm CCCD, Ngân hàng, HĐMB, Số khung (Tùy chọn)</span>
+          </button>
         </div>
-      </form>
+
+        <!-- Khối mở rộng ẩn ban đầu -->
+        <div id="extra_fields_box" class="space-y-3 pt-2 hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div><label class="block text-slate-500 mb-1">Giới tính</label><select id="in_gender" class="w-full p-2 border rounded-lg bg-white"><option value="Nam">Nam</option><option value="Nữ">Nữ</option></select></div>
+            <div><label class="block text-slate-500 mb-1">Ngày sinh</label><input type="date" id="in_dob" class="w-full p-2 border rounded-lg"></div>
+            <div><label class="block text-slate-500 mb-1">Email</label><input type="email" id="in_email" placeholder="email@gmail.com" class="w-full p-2 border rounded-lg"></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div><label class="block text-slate-500 mb-1">Số CCCD</label><input type="text" id="in_cccd" placeholder="12 số CCCD" class="w-full p-2 border rounded-lg"></div>
+            <div><label class="block text-slate-500 mb-1">Địa chỉ thường trú</label><input type="text" id="in_address_perm" placeholder="Thường trú..." class="w-full p-2 border rounded-lg"></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div><label class="block text-slate-500 mb-1">Số HĐMB</label><input type="text" id="in_hdmb" placeholder="HDMB-xxxxx" class="w-full p-2 border rounded-lg font-mono"></div>
+            <div><label class="block text-slate-500 mb-1">Số VSO</label><input type="text" id="in_vso" placeholder="VSO-xxxxx" class="w-full p-2 border rounded-lg font-mono"></div>
+            <div><label class="block text-slate-500 mb-1">Số khung (VIN)</label><input type="text" id="in_vin" placeholder="17 ký tự VIN" class="w-full p-2 border rounded-lg font-mono"></div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-semibold">Hủy</button>
+          <button type="button" onclick="manualSaveCustomer()" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow transition flex items-center gap-1.5 text-sm">
+            <i class="fa-solid fa-floppy-disk"></i> Lưu Khách Hàng
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -955,18 +892,198 @@
     }
 
     // =========================================================================
-    // TƯƠNG TÁC CLICK TO FILTER TRỰC TIẾP TRÊN CÁC THẺ PHỄU
+    // CRM CODE QUẢN LÝ KHÁCH HÀNG & PHỄU CHUYỂN ĐỔI
     // =========================================================================
+    const TODAY_DATE = new Date();
+    const TODAY_DAY_NUM = Math.min(30, Math.max(1, TODAY_DATE.getDate()));
+    const TODAY_STR = TODAY_DATE.toISOString().split('T')[0];
+
+    function getNowFormatted() {
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} - ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+    }
+
+    // Khởi tạo danh sách khách hàng từ localStorage
+    let customers = JSON.parse(localStorage.getItem('my_sales_customers_final')) || [];
+
+    function saveToStorage() {
+      localStorage.setItem('my_sales_customers_final', JSON.stringify(customers));
+      renderCustomers();
+    }
+
+    function renderCustomers() {
+      const tbody = document.getElementById('customerTableBody');
+      const search = (document.getElementById('searchInput').value || '').toLowerCase();
+      const tempFilter = document.getElementById('tempFilter').value;
+      tbody.innerHTML = '';
+
+      let filtered = customers.filter(c => {
+        const temp = c.temperature || 'COOL';
+        const reason = c.cold_reason || '';
+        const matchSearch = (c.name && c.name.toLowerCase().includes(search)) || 
+                            (c.phone && c.phone.includes(search)) || 
+                            (temp.toLowerCase().includes(search)) ||
+                            (reason.toLowerCase().includes(search)) ||
+                            (c.car_model && c.car_model.toLowerCase().includes(search));
+        
+        let matchTemp = true;
+        if (tempFilter === 'HOT') matchTemp = (temp === 'HOT');
+        else if (tempFilter === 'COOL') matchTemp = (temp === 'COOL');
+        else if (tempFilter === 'LẠNH') matchTemp = (temp === 'LẠNH');
+        else if (tempFilter === 'CLOSED') matchTemp = (c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe');
+
+        return matchSearch && matchTemp;
+      });
+
+      // 1. TÍNH TOÁN KPI
+      const BASE_MONTHLY_KPI = 8;
+      const rolloverDebt = Number(localStorage.getItem('kpi_rollover_debt')) || 0;
+      const TOTAL_MONTHLY_KPI = BASE_MONTHLY_KPI + rolloverDebt;
+
+      const closedDeals = customers.filter(c => c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe').length;
+      const kpiPercent = Math.min(100, Math.round((closedDeals / TOTAL_MONTHLY_KPI) * 100));
+
+      const badgeRollover = document.getElementById('kpi-rollover-badge');
+      if (rolloverDebt > 0) {
+        badgeRollover.classList.remove('hidden');
+        badgeRollover.innerText = `Nợ cũ dồn: +${rolloverDebt} xe`;
+      } else {
+        badgeRollover.classList.add('hidden');
+      }
+
+      document.getElementById('kpi-total-target').innerText = `${TOTAL_MONTHLY_KPI} xe/tháng`;
+      document.getElementById('kpi-count').innerText = `${closedDeals} / ${TOTAL_MONTHLY_KPI} xe`;
+      document.getElementById('kpi-percent').innerText = `${kpiPercent}%`;
+      document.getElementById('kpi-bar').style.width = `${kpiPercent}%`;
+
+      const expectedTargetToday = Number(((TOTAL_MONTHLY_KPI / 30) * TODAY_DAY_NUM).toFixed(1));
+      document.getElementById('kpi-daily-target').innerHTML = `<i class="fa-regular fa-calendar"></i> Chỉ tiêu đến ngày ${TODAY_DAY_NUM}/30: <strong>${expectedTargetToday} xe</strong>`;
+
+      const kpiStatusElem = document.getElementById('kpi-status-text');
+      const diff = closedDeals - expectedTargetToday;
+      if (diff >= 0) {
+        kpiStatusElem.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-arrow-trend-up"></i> Vượt tiến độ (+${diff.toFixed(1)} xe)</span>`;
+      } else {
+        kpiStatusElem.innerHTML = `<span class="text-amber-400 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Chậm tiến độ (${diff.toFixed(1)} xe)</span>`;
+      }
+
+      // 2. PHỄU CHUYỂN ĐỔI %
+      const TOTAL_LEADS_TARGET = 100;
+      const totalCustCount = customers.length;
+      const totalLeadPercent = Math.min(100, Math.round((totalCustCount / TOTAL_LEADS_TARGET) * 100));
+
+      const hotCount = customers.filter(c => (c.temperature || 'COOL') === 'HOT').length;
+      const coolCount = customers.filter(c => (c.temperature || 'COOL') === 'COOL').length;
+      const coldCount = customers.filter(c => (c.temperature || 'COOL') === 'LẠNH').length;
+
+      const hotPercent = totalCustCount > 0 ? Math.round((hotCount / totalCustCount) * 100) : 0;
+      const coolPercent = totalCustCount > 0 ? Math.round((coolCount / totalCustCount) * 100) : 0;
+      const coldPercent = totalCustCount > 0 ? Math.round((coldCount / totalCustCount) * 100) : 0;
+      const conversionRate = totalCustCount > 0 ? Math.round((closedDeals / totalCustCount) * 100) : 0;
+
+      document.getElementById('stat-total').innerText = `${totalCustCount} / ${TOTAL_LEADS_TARGET} khách`;
+      document.getElementById('funnel-total-percent').innerText = `${totalLeadPercent}%`;
+
+      document.getElementById('stat-hot').innerText = `${hotCount} khách`;
+      document.getElementById('funnel-hot-percent').innerText = `${hotPercent}%`;
+
+      document.getElementById('stat-cool').innerText = `${coolCount} khách`;
+      document.getElementById('funnel-cool-percent').innerText = `${coolPercent}%`;
+
+      document.getElementById('stat-cold').innerText = `${coldCount} khách`;
+      document.getElementById('funnel-cold-percent').innerText = `${coldPercent}%`;
+
+      document.getElementById('stat-delivered').innerText = `${closedDeals} xe`;
+      document.getElementById('funnel-conversion-rate').innerText = `${conversionRate}% CR`;
+
+      // Tiến độ chăm sóc
+      const careList = customers.filter(c => c.stage !== 'Đã giao xe' && c.stage !== 'Tạm ngưng / Hủy');
+      const caredCount = careList.filter(c => c.last_cared_date === TODAY_STR).length;
+      document.getElementById('care-progress-text').innerText = `${caredCount} / ${careList.length} khách đã hoàn thành`;
+
+      if (filtered.length === 0) {
+        document.getElementById('emptyState').classList.remove('hidden');
+      } else {
+        document.getElementById('emptyState').classList.add('hidden');
+      }
+
+      filtered.forEach((cust, index) => {
+        const temp = cust.temperature || 'COOL';
+        let tempTag = '';
+        if (temp === 'HOT') {
+          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>🔥 HOT</span>';
+        } else if (temp === 'COOL') {
+          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-amber-100 text-amber-800 border border-amber-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-amber-500"></span>⚡ COOL</span>';
+        } else {
+          tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-rose-500"></span>❄️ LẠNH</span>';
+        }
+
+        let stageBadge = `<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">${cust.stage}</span>`;
+        if (cust.stage === 'Đang tư vấn') stageBadge = '<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đang tư vấn</span>';
+        else if (cust.stage === 'Đã có VSO / Xe' || cust.stage === 'Đã ký HĐ') stageBadge = '<span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã có VSO/Ký HĐ</span>';
+        else if (cust.stage === 'Đã giao xe') stageBadge = '<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-semibold">Đã giao xe</span>';
+
+        const isCaredToday = (cust.last_cared_date === TODAY_STR);
+        const careButton = isCaredToday 
+          ? `<button onclick="toggleCareStatus(${index})" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[11px] flex items-center gap-1 hover:bg-emerald-100 transition"><i class="fa-solid fa-circle-check text-emerald-600"></i> Đã Chăm Sóc</button>`
+          : `<button onclick="toggleCareStatus(${index})" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 border border-slate-300 font-semibold text-[11px] flex items-center gap-1 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 transition"><i class="fa-regular fa-circle"></i> Chưa Chăm Sóc</button>`;
+
+        const wf = cust.workflow || {};
+        const completedWfSteps = Object.values(wf).filter(s => s && s.done).length;
+
+        const cleanPhone = (cust.phone || '').replace(/[^0-9]/g, '');
+        const zaloPhone = cleanPhone.startsWith('0') ? '84' + cleanPhone.slice(1) : cleanPhone;
+
+        const tr = document.createElement('tr');
+        tr.className = `hover:bg-blue-50/40 transition border-b group ${isCaredToday ? 'bg-emerald-50/20' : ''}`;
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 cursor-pointer" onclick="viewDetail(${index})">
+            <div class="font-bold text-blue-700 group-hover:underline flex items-center gap-1">
+              ${cust.name} <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-400 group-hover:text-blue-600"></i>
+            </div>
+            <div class="text-[11px] text-slate-500 font-mono">${cust.phone}</div>
+          </td>
+          <td class="py-2.5 px-3 text-center">${tempTag}</td>
+          <td class="py-2.5 px-3">
+            <div class="font-bold text-slate-800">${cust.car_model || '---'}</div>
+          </td>
+          <td class="py-2.5 px-3">${stageBadge}</td>
+          <td class="py-2.5 px-3 max-w-[190px]">
+            ${cust.cold_reason ? `<div class="text-[10px] font-bold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200 inline-block mb-1"><i class="fa-solid fa-triangle-exclamation"></i> ${cust.cold_reason}</div>` : ''}
+            <div class="text-[11px] text-slate-500 truncate" title="${cust.note || ''}">${cust.note || '---'}</div>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <div class="flex justify-center">${careButton}</div>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <button onclick="goToWorkflowForCustomer(${index})" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 font-bold text-[11px] hover:bg-blue-600 hover:text-white transition flex items-center gap-1 mx-auto">
+              <i class="fa-solid fa-tasks"></i> ${completedWfSteps}/10 Bước
+            </button>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <div class="flex justify-center space-x-1">
+              <a href="tel:${cust.phone}" title="Gọi" class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 hover:bg-emerald-200 flex items-center justify-center"><i class="fa-solid fa-phone text-[10px]"></i></a>
+              <a href="https://zalo.me/${zaloPhone}" target="_blank" title="Zalo" class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 flex items-center justify-center font-bold text-[10px]">Z</a>
+            </div>
+          </td>
+          <td class="py-2.5 px-3 text-center space-x-1.5">
+            <button onclick="editCustomer(${index})" class="text-blue-500 hover:text-blue-700"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button onclick="deleteCustomer(${index})" class="text-rose-500 hover:text-rose-700"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
     function filterByCard(filterType) {
       document.getElementById('tempFilter').value = filterType;
       
-      // Xóa viền active của tất cả các thẻ
       ['all', 'hot', 'cool', 'cold', 'closed'].forEach(id => {
         const elem = document.getElementById(`card-filter-${id}`);
         if (elem) elem.classList.remove('ring-2', 'ring-blue-600', 'ring-emerald-600', 'ring-amber-500', 'ring-rose-600');
       });
 
-      // Thêm viền active cho thẻ đang chọn
       if (filterType === 'ALL') document.getElementById('card-filter-all').classList.add('ring-2', 'ring-blue-600');
       if (filterType === 'HOT') document.getElementById('card-filter-hot').classList.add('ring-2', 'ring-emerald-600');
       if (filterType === 'COOL') document.getElementById('card-filter-cool').classList.add('ring-2', 'ring-amber-500');
@@ -977,12 +1094,28 @@
     }
 
     function toggleColdReasonBox() {
-      const selectedTemp = document.querySelector("input[name='in_temperature']:checked").value;
+      const checkedRadio = document.querySelector("input[name='in_temperature']:checked");
+      const selectedTemp = checkedRadio ? checkedRadio.value : 'HOT';
       const box = document.getElementById('form_cold_reason_box');
       if (selectedTemp === 'LẠNH') {
         box.classList.remove('hidden');
       } else {
         box.classList.add('hidden');
+      }
+    }
+
+    function toggleExtraFields() {
+      const box = document.getElementById('extra_fields_box');
+      const icon = document.getElementById('extra_icon');
+      const txt = document.getElementById('extra_text');
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        icon.className = 'fa-solid fa-chevron-up';
+        txt.innerText = '- Thu gọn bớt các ô chi tiết';
+      } else {
+        box.classList.add('hidden');
+        icon.className = 'fa-solid fa-chevron-down';
+        txt.innerText = '+ Mở rộng thêm CCCD, Ngân hàng, HĐMB, Số khung (Tùy chọn)';
       }
     }
 
@@ -1020,8 +1153,14 @@
       });
 
       if (customers.length > 0) {
+        if (selectedWfCustomerIdx >= customers.length) selectedWfCustomerIdx = 0;
         sel.value = selectedWfCustomerIdx;
         loadWorkflowCustomer();
+      } else {
+        document.getElementById('wf_cust_name').innerText = 'Chưa có khách hàng';
+        document.getElementById('wf_cust_car').innerText = '---';
+        document.getElementById('wf_cust_hdmb').innerText = '---';
+        document.getElementById('wf_step_container').innerHTML = '<div class="p-8 text-center text-slate-400">Vui lòng thêm khách hàng mới để theo dõi tiến độ 10 bước.</div>';
       }
     }
 
@@ -1031,7 +1170,9 @@
     }
 
     function loadWorkflowCustomer() {
-      const idx = document.getElementById('wf_select_cust').value;
+      const sel = document.getElementById('wf_select_cust');
+      if (!sel || customers.length === 0) return;
+      const idx = sel.value;
       selectedWfCustomerIdx = idx;
       const c = customers[idx];
       if (!c) return;
@@ -1041,7 +1182,7 @@
       }
 
       document.getElementById('wf_cust_name').innerText = c.name;
-      document.getElementById('wf_cust_car').innerText = `${c.car_model || 'Chưa chọn'} (${c.car_color || '---'})`;
+      document.getElementById('wf_cust_car').innerText = c.car_model || 'Chưa chọn';
       document.getElementById('wf_cust_hdmb').innerText = c.hdmb ? `HĐ: ${c.hdmb} | VSO: ${c.vso || '---'}` : 'Chưa có HĐMB';
 
       const container = document.getElementById('wf_step_container');
@@ -1143,6 +1284,18 @@
       }
     }
 
+    function deleteCurrentWorkflowCustomer() {
+      if (customers.length === 0) return;
+      const idx = document.getElementById('wf_select_cust').value;
+      const name = customers[idx] ? customers[idx].name : '';
+      if (confirm(`Bạn có chắc chắn muốn xóa toàn bộ hồ sơ và quy trình của khách hàng [${name}]?`)) {
+        customers.splice(idx, 1);
+        selectedWfCustomerIdx = 0;
+        saveToStorage();
+        initWorkflowTab();
+      }
+    }
+
     function sendDailyCareEmail() {
       const userEmail = localStorage.getItem('user_notification_email') || prompt("Nhập địa chỉ Email nhận thông báo nhắc việc mỗi sáng của bạn:", "");
       if (!userEmail) return;
@@ -1178,15 +1331,6 @@
       const subject = encodeURIComponent(`[9H SÁNG] Danh Sách Khách Hàng Cần Chăm Sóc (${TODAY_STR})`);
       const body = encodeURIComponent(content);
       window.open(`mailto:${userEmail}?subject=${subject}&body=${body}`, '_blank');
-    }
-
-    function configEmail() {
-      const cur = localStorage.getItem('user_notification_email') || "";
-      const email = prompt("Cập nhật địa chỉ Email nhận báo cáo nhắc việc:", cur);
-      if (email !== null) {
-        localStorage.setItem('user_notification_email', email);
-        alert("Đã lưu địa chỉ Email nhận thông báo thành công!");
-      }
     }
 
     function viewDetail(idx) {
@@ -1233,11 +1377,6 @@
       document.getElementById('dt_vso').innerText = c.vso || '---';
       document.getElementById('dt_vin').innerText = c.vin || '---';
       document.getElementById('dt_engine').innerText = c.engine || '---';
-
-      document.getElementById('dt_bank_acc').innerText = c.bank_acc || '---';
-      document.getElementById('dt_bank_name').innerText = c.bank_name || '---';
-      document.getElementById('dt_bank_owner').innerText = c.bank_owner || '---';
-      document.getElementById('dt_next_date').innerText = c.next_date ? `Ngày hẹn: ${c.next_date}` : 'Chưa lên lịch hẹn';
       document.getElementById('dt_note').innerText = c.note || 'Không có ghi chú.';
 
       const cleanPhone = (c.phone || '').replace(/[^0-9]/g, '');
@@ -1274,42 +1413,36 @@
 
         document.getElementById('in_name').value = c.name || '';
         document.getElementById('in_phone').value = c.phone || '';
+        document.getElementById('in_car_model').value = c.car_model || 'VF 6';
+        document.getElementById('in_source').value = c.source || 'Live TikTok';
+        document.getElementById('in_note').value = c.note || '';
+
         document.getElementById('in_gender').value = c.gender || 'Nam';
         document.getElementById('in_dob').value = c.dob || '';
         document.getElementById('in_email').value = c.email || '';
-        document.getElementById('in_source').value = c.source || 'Live TikTok';
-
         document.getElementById('in_cccd').value = c.cccd || '';
-        document.getElementById('in_cccd_place').value = c.cccd_place || '';
-        document.getElementById('in_cccd_date').value = c.cccd_date || '';
-        document.getElementById('in_cccd_exp').value = c.cccd_exp || '';
         document.getElementById('in_address_perm').value = c.address_perm || '';
-        document.getElementById('in_address_temp').value = c.address_temp || '';
-
-        document.getElementById('in_bank_acc').value = c.bank_acc || '';
-        document.getElementById('in_bank_name').value = c.bank_name || '';
-        document.getElementById('in_bank_owner').value = c.bank_owner || '';
-
-        document.getElementById('in_car_model').value = c.car_model || 'VF 6 Eco';
-        document.getElementById('in_car_color').value = c.car_color || '';
-        document.getElementById('in_car_year').value = c.car_year || '2026';
-        document.getElementById('in_plate').value = c.plate || '';
         document.getElementById('in_hdmb').value = c.hdmb || '';
         document.getElementById('in_vso').value = c.vso || '';
         document.getElementById('in_vin').value = c.vin || '';
-        document.getElementById('in_engine').value = c.engine || '';
-
-        document.getElementById('in_stage').value = c.stage || 'Khách mới';
-        document.getElementById('in_payment').value = c.payment || 'Trả thẳng';
-        document.getElementById('in_next_date').value = c.next_date || '';
-        document.getElementById('in_note').value = c.note || '';
       } else {
-        document.getElementById('modalTitle').innerText = 'Thêm Hồ Sơ Khách Hàng Mới';
-        document.getElementById('customerForm').reset();
+        document.getElementById('modalTitle').innerText = 'Thêm Khách Hàng Tiềm Năng Mới';
         document.getElementById('editIndex').value = '';
+        document.getElementById('in_name').value = '';
+        document.getElementById('in_phone').value = '';
+        document.getElementById('in_note').value = '';
+        document.getElementById('in_dob').value = '';
+        document.getElementById('in_email').value = '';
+        document.getElementById('in_cccd').value = '';
+        document.getElementById('in_address_perm').value = '';
+        document.getElementById('in_hdmb').value = '';
+        document.getElementById('in_vso').value = '';
+        document.getElementById('in_vin').value = '';
         document.querySelector("input[name='in_temperature'][value='HOT']").checked = true;
         toggleColdReasonBox();
-        document.getElementById('in_car_year').value = '2026';
+        document.getElementById('extra_fields_box').classList.add('hidden');
+        document.getElementById('extra_icon').className = 'fa-solid fa-chevron-down';
+        document.getElementById('extra_text').innerText = '+ Mở rộng thêm CCCD, Ngân hàng, HĐMB, Số khung (Tùy chọn)';
       }
     }
 
@@ -1321,56 +1454,57 @@
       openModal(idx);
     }
 
-    function handleSaveCustomer(e) {
-      e.preventDefault();
+    // HÀM LƯU NHANH TRỰC TIẾP (CHỈ CẦN TÊN HOẶC SĐT LÀ LƯU THÀNH CÔNG)
+    function manualSaveCustomer() {
+      const nameVal = (document.getElementById('in_name').value || '').trim();
+      const phoneVal = (document.getElementById('in_phone').value || '').trim();
+
+      if (!nameVal && !phoneVal) {
+        alert('Vui lòng nhập Tên hoặc Số điện thoại để lưu khách hàng!');
+        document.getElementById('in_name').focus();
+        return;
+      }
+
       const editIdx = document.getElementById('editIndex').value;
-      const selectedTemp = document.querySelector("input[name='in_temperature']:checked").value;
+      const checkedRadio = document.querySelector("input[name='in_temperature']:checked");
+      const selectedTemp = checkedRadio ? checkedRadio.value : 'HOT';
       const coldReasonVal = (selectedTemp === 'LẠNH') ? document.getElementById('in_cold_reason').value : '';
 
       const data = {
-        id: editIdx !== '' ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
-        name: document.getElementById('in_name').value,
+        id: (editIdx !== '' && customers[editIdx]) ? customers[editIdx].id : 'KH-' + Math.floor(100 + Math.random() * 900),
+        name: nameVal || 'Khách Tiềm Năng Mới',
         temperature: selectedTemp,
         cold_reason: coldReasonVal,
-        phone: document.getElementById('in_phone').value,
-        gender: document.getElementById('in_gender').value,
-        dob: document.getElementById('in_dob').value,
-        email: document.getElementById('in_email').value,
-        source: document.getElementById('in_source').value,
+        phone: phoneVal || '---',
+        car_model: document.getElementById('in_car_model').value || 'VF 6',
+        source: document.getElementById('in_source').value || 'Live TikTok',
+        note: document.getElementById('in_note').value || '',
 
-        cccd: document.getElementById('in_cccd').value,
-        cccd_place: document.getElementById('in_cccd_place').value,
-        cccd_date: document.getElementById('in_cccd_date').value,
-        cccd_exp: document.getElementById('in_cccd_exp').value,
-        address_perm: document.getElementById('in_address_perm').value,
-        address_temp: document.getElementById('in_address_temp').value,
+        gender: document.getElementById('in_gender').value || 'Nam',
+        dob: document.getElementById('in_dob').value || '',
+        email: document.getElementById('in_email').value || '',
+        cccd: document.getElementById('in_cccd').value || '',
+        address_perm: document.getElementById('in_address_perm').value || '',
+        hdmb: document.getElementById('in_hdmb').value || '',
+        vso: document.getElementById('in_vso').value || '',
+        vin: document.getElementById('in_vin').value || '',
 
-        bank_acc: document.getElementById('in_bank_acc').value,
-        bank_name: document.getElementById('in_bank_name').value,
-        bank_owner: document.getElementById('in_bank_owner').value,
-
-        car_model: document.getElementById('in_car_model').value,
-        car_color: document.getElementById('in_car_color').value,
-        car_year: document.getElementById('in_car_year').value,
-        plate: document.getElementById('in_plate').value,
-        hdmb: document.getElementById('in_hdmb').value,
-        vso: document.getElementById('in_vso').value,
-        vin: document.getElementById('in_vin').value,
-        engine: document.getElementById('in_engine').value,
-
-        stage: document.getElementById('in_stage').value,
-        payment: document.getElementById('in_payment').value,
-        next_date: document.getElementById('in_next_date').value,
-        last_cared_date: editIdx !== '' ? customers[editIdx].last_cared_date : '',
-        workflow: editIdx !== '' && customers[editIdx].workflow ? customers[editIdx].workflow : {},
-        note: document.getElementById('in_note').value
+        stage: (editIdx !== '' && customers[editIdx]) ? customers[editIdx].stage : 'Khách mới',
+        payment: 'Trả thẳng',
+        next_date: TODAY_STR,
+        last_cared_date: (editIdx !== '' && customers[editIdx]) ? customers[editIdx].last_cared_date : '',
+        workflow: (editIdx !== '' && customers[editIdx] && customers[editIdx].workflow) ? customers[editIdx].workflow : {}
       };
 
-      if (editIdx !== '') customers[editIdx] = data;
-      else customers.unshift(data);
+      if (editIdx !== '' && customers[editIdx]) {
+        customers[editIdx] = data;
+      } else {
+        customers.unshift(data);
+      }
 
       saveToStorage();
       closeModal();
+      alert('Đã lưu thành công khách hàng tiềm năng vào hệ thống!');
     }
 
     function deleteCustomer(idx) {
@@ -1381,19 +1515,19 @@
     }
 
     function exportCSV() {
-      let csv = 'Mã KH,Độ Nóng,Lý Do Rớt Deal,Tên Khách,Ngày sinh,Giới tính,SĐT,Email,Số CCCD,Địa chỉ thường trú,Số TK,Ngân hàng,Chủ TK,Số HĐMB,Số VSO,Số khung,Số máy,Loại xe,Màu xe,Năm SX,Biển số,Giai đoạn,Nguồn,Hình thức mua,Lịch hẹn,Ghi chú\n';
+      let csv = 'Mã KH,Độ Nóng,Lý Do Rớt Deal,Tên Khách,SĐT,Dòng Xe,Nguồn,Giai đoạn,Ghi chú\n';
       customers.forEach(c => {
-        csv += `"${c.id}","${c.temperature || 'COOL'}","${c.cold_reason || ''}","${c.name}","${c.dob || ''}","${c.gender || ''}","${c.phone}","${c.email || ''}","${c.cccd || ''}","${c.address_perm || ''}","${c.bank_acc || ''}","${c.bank_name || ''}","${c.bank_owner || ''}","${c.hdmb || ''}","${c.vso || ''}","${c.vin || ''}","${c.engine || ''}","${c.car_model}","${c.car_color || ''}","${c.car_year || ''}","${c.plate || ''}","${c.stage}","${c.source}","${c.payment}","${c.next_date || ''}","${(c.note || '').replace(/"/g, '""')}"\n`;
+        csv += `"${c.id}","${c.temperature || 'COOL'}","${c.cold_reason || ''}","${c.name}","${c.phone}","${c.car_model}","${c.source}","${c.stage}","${(c.note || '').replace(/"/g, '""')}"\n`;
       });
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Ho_So_Khach_Hang_KPI_${new Date().toISOString().slice(0,10)}.csv`;
+      a.download = `Danh_Sach_Khach_Hang_KPI_${new Date().toISOString().slice(0,10)}.csv`;
       a.click();
     }
 
-    // Khởi chạy
+    // Khởi chạy khi load trang
     initQuote();
     renderCustomers();
   </script>
