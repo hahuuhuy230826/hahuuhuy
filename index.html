@@ -238,7 +238,7 @@
 
       <div class="w-full lg:w-5/12">
         <div class="flex justify-between text-xs font-bold mb-1">
-          <span>Đã hoàn thành: <span id="kpi-count" class="text-amber-400 text-sm">0 / 8 xe</span></span>
+          <span>Tiến độ giao xe thực tế: <span id="kpi-count" class="text-amber-400 text-sm">0 / 8 xe</span></span>
           <span id="kpi-percent" class="text-emerald-400">0%</span>
         </div>
         <div class="w-full bg-slate-800 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-700">
@@ -260,51 +260,60 @@
       </div>
     </div>
 
-    <!-- KHỐI PHỄU CHUYỂN ĐỔI TỶ LỆ % -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 mb-4">
-      <div id="card-filter-all" onclick="filterByCard('ALL')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-blue-500 hover:shadow-sm transition group">
+    <!-- KHỐI PHỄU CHUYỂN ĐỔI: TÁCH RIÊNG "ĐÃ CỌC" VÀ "ĐÃ GIAO XE" -->
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-2.5 mb-4">
+      <div id="card-filter-all" onclick="filterByCard('ALL')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-blue-500 transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-slate-500 font-bold uppercase group-hover:text-blue-600">TỔNG KHÁCH KIẾM</p>
-          <span id="funnel-total-percent" class="text-[11px] font-black text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">0%</span>
+          <p class="text-[10px] text-slate-500 font-bold uppercase group-hover:text-blue-600">TỔNG KHÁCH</p>
+          <span id="funnel-total-percent" class="text-[10px] font-black text-blue-700 bg-blue-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-total" class="text-xl font-extrabold text-slate-900 mt-1">0 / 100 khách</p>
-        <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm để xem tất cả</p>
+        <p id="stat-total" class="text-lg font-extrabold text-slate-900 mt-1">0 / 100</p>
+        <p class="text-[9px] text-slate-400">👉 Xem tất cả</p>
       </div>
 
-      <div id="card-filter-hot" onclick="filterByCard('HOT')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500 flex flex-col justify-between cursor-pointer hover:border-emerald-500 hover:shadow-sm transition group">
+      <div id="card-filter-hot" onclick="filterByCard('HOT')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-500 flex flex-col justify-between cursor-pointer hover:border-emerald-500 transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-emerald-700 font-bold uppercase">🔥 KHÁCH HOT</p>
-          <span id="funnel-hot-percent" class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">0%</span>
+          <p class="text-[10px] text-emerald-700 font-bold uppercase">🔥 HOT</p>
+          <span id="funnel-hot-percent" class="text-[10px] font-black text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-hot" class="text-xl font-extrabold text-emerald-600 mt-1">0 khách</p>
-        <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách HOT</p>
+        <p id="stat-hot" class="text-lg font-extrabold text-emerald-600 mt-1">0 khách</p>
+        <p class="text-[9px] text-slate-400">👉 Xem khách HOT</p>
       </div>
 
-      <div id="card-filter-cool" onclick="filterByCard('COOL')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500 flex flex-col justify-between cursor-pointer hover:border-amber-500 hover:shadow-sm transition group">
+      <div id="card-filter-cool" onclick="filterByCard('COOL')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-amber-500 flex flex-col justify-between cursor-pointer hover:border-amber-500 transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-amber-700 font-bold uppercase">⚡ KHÁCH COOL</p>
-          <span id="funnel-cool-percent" class="text-[11px] font-black text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded">0%</span>
+          <p class="text-[10px] text-amber-700 font-bold uppercase">⚡ COOL</p>
+          <span id="funnel-cool-percent" class="text-[10px] font-black text-amber-800 bg-amber-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-cool" class="text-xl font-extrabold text-amber-600 mt-1">0 khách</p>
-        <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách COOL</p>
+        <p id="stat-cool" class="text-lg font-extrabold text-amber-600 mt-1">0 khách</p>
+        <p class="text-[9px] text-slate-400">👉 Xem khách COOL</p>
       </div>
 
-      <div id="card-filter-cold" onclick="filterByCard('LẠNH')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-rose-500 flex flex-col justify-between cursor-pointer hover:border-rose-500 hover:shadow-sm transition group">
+      <div id="card-filter-cold" onclick="filterByCard('LẠNH')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-rose-500 flex flex-col justify-between cursor-pointer hover:border-rose-500 transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-rose-700 font-bold uppercase">❄️ KHÁCH LẠNH</p>
-          <span id="funnel-cold-percent" class="text-[11px] font-black text-rose-800 bg-rose-50 px-1.5 py-0.5 rounded">0%</span>
+          <p class="text-[10px] text-rose-700 font-bold uppercase">❄️ LẠNH</p>
+          <span id="funnel-cold-percent" class="text-[10px] font-black text-rose-800 bg-rose-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-cold" class="text-xl font-extrabold text-rose-600 mt-1">0 khách</p>
-        <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách LẠNH</p>
+        <p id="stat-cold" class="text-lg font-extrabold text-rose-600 mt-1">0 khách</p>
+        <p class="text-[9px] text-slate-400">👉 Xem rớt deal</p>
       </div>
 
-      <div id="card-filter-closed" onclick="filterByCard('CLOSED')" class="bg-white p-3.5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-600 flex flex-col justify-between cursor-pointer hover:border-blue-600 hover:shadow-sm transition group">
+      <div id="card-filter-deposited" onclick="filterByCard('DEPOSITED')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-500 flex flex-col justify-between cursor-pointer hover:border-blue-500 transition group">
         <div class="flex justify-between items-center">
-          <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CỌC / XE</p>
-          <span id="funnel-conversion-rate" class="text-[11px] font-black text-blue-800 bg-blue-50 px-1.5 py-0.5 rounded">0% CR</span>
+          <p class="text-[10px] text-blue-700 font-bold uppercase">🚗 ĐÃ CỌC XE</p>
+          <span id="funnel-deposit-percent" class="text-[10px] font-black text-blue-800 bg-blue-50 px-1 py-0.5 rounded">0%</span>
         </div>
-        <p id="stat-delivered" class="text-xl font-extrabold text-blue-700 mt-1">0 xe</p>
-        <p class="text-[10px] text-slate-400 mt-0.5">👉 Bấm xem khách ĐÃ CỌC</p>
+        <p id="stat-deposited" class="text-lg font-extrabold text-blue-600 mt-1">0 xe</p>
+        <p class="text-[9px] text-slate-400">👉 Đang làm hồ sơ</p>
+      </div>
+
+      <div id="card-filter-delivered" onclick="filterByCard('DELIVERED')" class="bg-white p-3 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-teal-600 flex flex-col justify-between cursor-pointer hover:border-teal-600 transition group">
+        <div class="flex justify-between items-center">
+          <p class="text-[10px] text-teal-800 font-bold uppercase">🏆 ĐÃ GIAO XE</p>
+          <span id="funnel-conversion-rate" class="text-[10px] font-black text-teal-900 bg-teal-50 px-1 py-0.5 rounded">0% CR</span>
+        </div>
+        <p id="stat-delivered" class="text-lg font-extrabold text-teal-700 mt-1">0 xe</p>
+        <p class="text-[9px] text-slate-400">👉 Bàn giao hoàn tất</p>
       </div>
     </div>
 
@@ -328,11 +337,12 @@
       </div>
       <div class="w-full md:w-auto flex flex-wrap gap-2">
         <select id="tempFilter" onchange="renderCustomers()" class="px-2.5 py-1.5 border rounded-lg bg-white text-xs font-bold text-slate-700">
-          <option value="ALL">Tất cả nhiệt độ khách</option>
+          <option value="ALL">Tất cả khách hàng</option>
           <option value="HOT">🔥 Khách HOT (Xanh lá)</option>
           <option value="COOL">⚡ Khách COOL (Vàng)</option>
           <option value="LẠNH">❄️ Khách LẠNH (Đỏ - Rớt deal)</option>
-          <option value="CLOSED">🎉 Khách Đã Cọc / Chốt Xe</option>
+          <option value="DEPOSITED">🚗 Khách Đã Cọc / Làm Hồ Sơ</option>
+          <option value="DELIVERED">🏆 Khách Đã Giao Xe Thành Công</option>
         </select>
         <button onclick="openModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
           <i class="fa-solid fa-user-plus"></i> + Thêm Nhanh Khách Tiềm Năng
@@ -343,13 +353,13 @@
       </div>
     </div>
 
-    <!-- Bảng danh sách CRM (CÓ MENU CHỌN GIAI ĐOẠN ĐÃ CỌC THÀNH CÔNG) -->
+    <!-- Bảng danh sách CRM (HIỂN THỊ THÊM NGÀY GIỜ TẠO HỒ SƠ) -->
     <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs text-slate-600">
           <thead class="bg-slate-50 border-b text-[10px] uppercase font-bold text-slate-600 tracking-wider">
             <tr>
-              <th class="py-3 px-3">Khách Hàng (Xem hồ sơ)</th>
+              <th class="py-3 px-3">Khách Hàng (Xem hồ sơ & Ngày tạo)</th>
               <th class="py-3 px-3 text-center">Độ Nóng</th>
               <th class="py-3 px-3">Xe Quan Tâm</th>
               <th class="py-3 px-3">Giai Đoạn (Bấm đổi nhanh)</th>
@@ -385,7 +395,6 @@
         </div>
       </div>
       
-      <!-- Thanh chọn khách và Nút Xóa khách ngay tại tab này -->
       <div class="w-full sm:w-auto flex items-center gap-2">
         <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Chọn Khách Hàng:</label>
         <select id="wf_select_cust" onchange="loadWorkflowCustomer()" class="p-2 border rounded-xl text-xs font-bold text-blue-800 bg-slate-50 focus:ring-2 focus:ring-blue-500 w-full sm:w-64">
@@ -422,7 +431,7 @@
     <div class="space-y-3" id="wf_step_container"></div>
   </section>
 
-  <!-- MODAL: XEM CHI TIẾT HỒ SƠ KHÁCH HÀNG -->
+  <!-- MODAL: XEM CHI TIẾT HỒ SƠ KHÁCH HÀNG (HIỂN THỊ NGÀY GIỜ TẠO) -->
   <div id="detailModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-4xl w-full p-5 shadow-2xl relative my-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-start pb-3 border-b border-slate-200">
@@ -432,7 +441,13 @@
             <span id="dt_temp_badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold">HOT</span>
             <span id="dt_stage_badge" class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 text-blue-800">Giai đoạn</span>
           </div>
-          <p class="text-[11px] text-slate-500 mt-0.5">Mã hồ sơ: <span id="dt_id" class="font-mono text-blue-600 font-bold">---</span> | Nguồn: <span id="dt_source" class="font-medium text-slate-700">---</span></p>
+          <p class="text-[11px] text-slate-500 mt-1">
+            Mã hồ sơ: <span id="dt_id" class="font-mono text-blue-600 font-bold">---</span> | 
+            Nguồn: <span id="dt_source" class="font-medium text-slate-700">---</span> | 
+            <span class="text-blue-700 font-semibold bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+              <i class="fa-regular fa-clock"></i> Ngày giờ tạo: <strong id="dt_created_at">---</strong>
+            </span>
+          </p>
         </div>
         <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
@@ -911,18 +926,25 @@
       renderCustomers();
     }
 
-    // HÀM ĐỔI NHANH TRẠNG THÁI GIAI ĐOẠN NGAY TRÊN BẢNG
     function updateCustomerStage(idx, newStage) {
       customers[idx].stage = newStage;
 
-      // Nếu chuyển sang Đã cọc thành công -> tự động hoàn thành Bước 2 trong Workflow
+      if (!customers[idx].workflow) customers[idx].workflow = {};
+
       if (newStage === 'Đã cọc thành công' || newStage === 'Đã ký HĐ' || newStage === 'Đã có VSO / Xe' || newStage === 'Đã giao xe') {
-        if (!customers[idx].workflow) customers[idx].workflow = {};
         if (!customers[idx].workflow[1] || !customers[idx].workflow[1].done) {
           customers[idx].workflow[1] = { done: true, time: getNowFormatted() };
         }
         if (!customers[idx].workflow[2] || !customers[idx].workflow[2].done) {
           customers[idx].workflow[2] = { done: true, time: getNowFormatted() };
+        }
+      }
+
+      if (newStage === 'Đã giao xe') {
+        for (let s = 1; s <= 10; s++) {
+          if (!customers[idx].workflow[s] || !customers[idx].workflow[s].done) {
+            customers[idx].workflow[s] = { done: true, time: getNowFormatted() };
+          }
         }
       }
 
@@ -948,7 +970,8 @@
         if (tempFilter === 'HOT') matchTemp = (temp === 'HOT');
         else if (tempFilter === 'COOL') matchTemp = (temp === 'COOL');
         else if (tempFilter === 'LẠNH') matchTemp = (temp === 'LẠNH');
-        else if (tempFilter === 'CLOSED') matchTemp = (c.stage === 'Đã cọc thành công' || c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe');
+        else if (tempFilter === 'DEPOSITED') matchTemp = (c.stage === 'Đã cọc thành công' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã ký HĐ');
+        else if (tempFilter === 'DELIVERED') matchTemp = (c.stage === 'Đã giao xe');
 
         return matchSearch && matchTemp;
       });
@@ -958,9 +981,9 @@
       const rolloverDebt = Number(localStorage.getItem('kpi_rollover_debt')) || 0;
       const TOTAL_MONTHLY_KPI = BASE_MONTHLY_KPI + rolloverDebt;
 
-      // Đếm các deal đã cọc thành công trở lên
-      const closedDeals = customers.filter(c => c.stage === 'Đã cọc thành công' || c.stage === 'Đã ký HĐ' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã giao xe').length;
-      const kpiPercent = Math.min(100, Math.round((closedDeals / TOTAL_MONTHLY_KPI) * 100));
+      const deliveredCount = customers.filter(c => c.stage === 'Đã giao xe').length;
+      const depositedCount = customers.filter(c => c.stage === 'Đã cọc thành công' || c.stage === 'Đã có VSO / Xe' || c.stage === 'Đã ký HĐ').length;
+      const kpiPercent = Math.min(100, Math.round((deliveredCount / TOTAL_MONTHLY_KPI) * 100));
 
       const badgeRollover = document.getElementById('kpi-rollover-badge');
       if (rolloverDebt > 0) {
@@ -971,7 +994,7 @@
       }
 
       document.getElementById('kpi-total-target').innerText = `${TOTAL_MONTHLY_KPI} xe/tháng`;
-      document.getElementById('kpi-count').innerText = `${closedDeals} / ${TOTAL_MONTHLY_KPI} xe`;
+      document.getElementById('kpi-count').innerText = `${deliveredCount} / ${TOTAL_MONTHLY_KPI} xe`;
       document.getElementById('kpi-percent').innerText = `${kpiPercent}%`;
       document.getElementById('kpi-bar').style.width = `${kpiPercent}%`;
 
@@ -979,7 +1002,7 @@
       document.getElementById('kpi-daily-target').innerHTML = `<i class="fa-regular fa-calendar"></i> Chỉ tiêu đến ngày ${TODAY_DAY_NUM}/30: <strong>${expectedTargetToday} xe</strong>`;
 
       const kpiStatusElem = document.getElementById('kpi-status-text');
-      const diff = closedDeals - expectedTargetToday;
+      const diff = deliveredCount - expectedTargetToday;
       if (diff >= 0) {
         kpiStatusElem.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-arrow-trend-up"></i> Vượt tiến độ (+${diff.toFixed(1)} xe)</span>`;
       } else {
@@ -998,9 +1021,10 @@
       const hotPercent = totalCustCount > 0 ? Math.round((hotCount / totalCustCount) * 100) : 0;
       const coolPercent = totalCustCount > 0 ? Math.round((coolCount / totalCustCount) * 100) : 0;
       const coldPercent = totalCustCount > 0 ? Math.round((coldCount / totalCustCount) * 100) : 0;
-      const conversionRate = totalCustCount > 0 ? Math.round((closedDeals / totalCustCount) * 100) : 0;
+      const depositPercent = totalCustCount > 0 ? Math.round((depositedCount / totalCustCount) * 100) : 0;
+      const conversionRate = totalCustCount > 0 ? Math.round((deliveredCount / totalCustCount) * 100) : 0;
 
-      document.getElementById('stat-total').innerText = `${totalCustCount} / ${TOTAL_LEADS_TARGET} khách`;
+      document.getElementById('stat-total').innerText = `${totalCustCount} / ${TOTAL_LEADS_TARGET}`;
       document.getElementById('funnel-total-percent').innerText = `${totalLeadPercent}%`;
 
       document.getElementById('stat-hot').innerText = `${hotCount} khách`;
@@ -1012,7 +1036,10 @@
       document.getElementById('stat-cold').innerText = `${coldCount} khách`;
       document.getElementById('funnel-cold-percent').innerText = `${coldPercent}%`;
 
-      document.getElementById('stat-delivered').innerText = `${closedDeals} xe`;
+      document.getElementById('stat-deposited').innerText = `${depositedCount} xe`;
+      document.getElementById('funnel-deposit-percent').innerText = `${depositPercent}%`;
+
+      document.getElementById('stat-delivered').innerText = `${deliveredCount} xe`;
       document.getElementById('funnel-conversion-rate').innerText = `${conversionRate}% CR`;
 
       // Tiến độ chăm sóc
@@ -1037,18 +1064,18 @@
           tempTag = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-xs"><span class="w-2 h-2 rounded-full bg-rose-500"></span>❄️ LẠNH</span>';
         }
 
-        // MENU CHỌN NHANH GIAI ĐOẠN NGAY TRÊN DÒNG
         const curStage = cust.stage || 'Khách mới';
-        const isClosedStage = (curStage === 'Đã cọc thành công' || curStage === 'Đã ký HĐ' || curStage === 'Đã có VSO / Xe' || curStage === 'Đã giao xe');
-        
+        const isDelivered = (curStage === 'Đã giao xe');
+        const isDeposited = (curStage === 'Đã cọc thành công' || curStage === 'Đã ký HĐ' || curStage === 'Đã có VSO / Xe');
+
         const stageDropdown = `
-          <select onchange="updateCustomerStage(${index}, this.value)" class="p-1.5 rounded-lg text-xs font-bold border ${isClosedStage ? 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-200' : 'bg-white text-slate-700 border-slate-300'}">
+          <select onchange="updateCustomerStage(${index}, this.value)" class="p-1.5 rounded-lg text-xs font-bold border ${isDelivered ? 'bg-teal-50 text-teal-900 border-teal-400 ring-1 ring-teal-300' : isDeposited ? 'bg-blue-50 text-blue-800 border-blue-300 ring-1 ring-blue-200' : 'bg-white text-slate-700 border-slate-300'}">
             <option value="Khách mới" ${curStage === 'Khách mới' ? 'selected' : ''}>Khách mới</option>
             <option value="Đang tư vấn" ${curStage === 'Đang tư vấn' ? 'selected' : ''}>Đang tư vấn</option>
             <option value="Đã lái thử" ${curStage === 'Đã lái thử' ? 'selected' : ''}>Đã lái thử</option>
-            <option value="Đã cọc thành công" ${curStage === 'Đã cọc thành công' ? 'selected' : ''}>🎉 Đã cọc thành công</option>
-            <option value="Đã có VSO / Xe" ${curStage === 'Đã có VSO / Xe' ? 'selected' : ''}>🚗 Đã có VSO / Xe</option>
-            <option value="Đã giao xe" ${curStage === 'Đã giao xe' ? 'selected' : ''}>🏆 Đã giao xe</option>
+            <option value="Đã cọc thành công" ${curStage === 'Đã cọc thành công' ? 'selected' : ''}>🚗 Đã cọc thành công</option>
+            <option value="Đã có VSO / Xe" ${curStage === 'Đã có VSO / Xe' ? 'selected' : ''}>📋 Đã có VSO / Xe</option>
+            <option value="Đã giao xe" ${curStage === 'Đã giao xe' ? 'selected' : ''}>🏆 Đã giao xe (Hoàn tất)</option>
             <option value="Tạm ngưng / Hủy" ${curStage === 'Tạm ngưng / Hủy' ? 'selected' : ''}>Tạm ngưng / Hủy</option>
           </select>
         `;
@@ -1072,6 +1099,7 @@
               ${cust.name} <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-400 group-hover:text-blue-600"></i>
             </div>
             <div class="text-[11px] text-slate-500 font-mono">${cust.phone}</div>
+            <div class="text-[10px] text-slate-400 mt-0.5"><i class="fa-regular fa-clock text-[9px]"></i> Tạo: ${cust.created_at || '---'}</div>
           </td>
           <td class="py-2.5 px-3 text-center">${tempTag}</td>
           <td class="py-2.5 px-3">
@@ -1086,7 +1114,7 @@
             <div class="flex justify-center">${careButton}</div>
           </td>
           <td class="py-2.5 px-3 text-center">
-            <button onclick="goToWorkflowForCustomer(${index})" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 font-bold text-[11px] hover:bg-blue-600 hover:text-white transition flex items-center gap-1 mx-auto">
+            <button onclick="goToWorkflowForCustomer(${index})" class="px-2.5 py-1 rounded-lg ${completedWfSteps === 10 ? 'bg-teal-600 text-white font-black' : 'bg-blue-50 text-blue-700 border border-blue-200 font-bold'} text-[11px] hover:bg-blue-700 hover:text-white transition flex items-center gap-1 mx-auto shadow-xs">
               <i class="fa-solid fa-tasks"></i> ${completedWfSteps}/10 Bước
             </button>
           </td>
@@ -1108,16 +1136,17 @@
     function filterByCard(filterType) {
       document.getElementById('tempFilter').value = filterType;
       
-      ['all', 'hot', 'cool', 'cold', 'closed'].forEach(id => {
+      ['all', 'hot', 'cool', 'cold', 'deposited', 'delivered'].forEach(id => {
         const elem = document.getElementById(`card-filter-${id}`);
-        if (elem) elem.classList.remove('ring-2', 'ring-blue-600', 'ring-emerald-600', 'ring-amber-500', 'ring-rose-600');
+        if (elem) elem.classList.remove('ring-2', 'ring-blue-600', 'ring-emerald-600', 'ring-amber-500', 'ring-rose-600', 'ring-teal-600');
       });
 
       if (filterType === 'ALL') document.getElementById('card-filter-all').classList.add('ring-2', 'ring-blue-600');
       if (filterType === 'HOT') document.getElementById('card-filter-hot').classList.add('ring-2', 'ring-emerald-600');
       if (filterType === 'COOL') document.getElementById('card-filter-cool').classList.add('ring-2', 'ring-amber-500');
       if (filterType === 'LẠNH') document.getElementById('card-filter-cold').classList.add('ring-2', 'ring-rose-600');
-      if (filterType === 'CLOSED') document.getElementById('card-filter-closed').classList.add('ring-2', 'ring-blue-600');
+      if (filterType === 'DEPOSITED') document.getElementById('card-filter-deposited').classList.add('ring-2', 'ring-blue-600');
+      if (filterType === 'DELIVERED') document.getElementById('card-filter-delivered').classList.add('ring-2', 'ring-teal-600');
 
       renderCustomers();
     }
@@ -1294,8 +1323,10 @@
 
       if (stepNum === 2) customers[custIdx].stage = 'Đã cọc thành công';
       if (stepNum === 3) customers[custIdx].stage = 'Đã có VSO / Xe';
-      if (stepNum === 4) customers[custIdx].stage = 'Đã ký HĐ';
-      if (stepNum === 10) customers[custIdx].stage = 'Đã giao xe';
+      if (stepNum === 10) {
+        customers[custIdx].stage = 'Đã giao xe';
+        alert(`🎉 Chúc mừng! Khách hàng [${customers[custIdx].name}] đã hoàn thành 10/10 bước và bàn giao xe thành công!`);
+      }
 
       saveToStorage();
       loadWorkflowCustomer();
@@ -1307,6 +1338,9 @@
           if (customers[custIdx].workflow[i]) {
             customers[custIdx].workflow[i] = { done: false, time: '' };
           }
+        }
+        if (stepNum <= 10 && customers[custIdx].stage === 'Đã giao xe') {
+          customers[custIdx].stage = 'Đã có VSO / Xe';
         }
         saveToStorage();
         loadWorkflowCustomer();
@@ -1335,7 +1369,7 @@
       const pendingHot = customers.filter(c => (c.temperature === 'HOT') && c.last_cared_date !== TODAY_STR);
 
       let content = `BÁO CÁO NHẮC VIỆC CHĂM SÓC KHÁCH HÀNG (9H SÁNG)\n`;
-      content += `Tiến độ KPI: ${document.getElementById('kpi-count').innerText} (Đến ngày ${TODAY_DAY_NUM}/30: ${document.getElementById('kpi-status-text').innerText})\n`;
+      content += `Tiến độ giao xe: ${document.getElementById('kpi-count').innerText} (Đến ngày ${TODAY_DAY_NUM}/30: ${document.getElementById('kpi-status-text').innerText})\n`;
       content += `Phễu khách hàng: ${document.getElementById('stat-total').innerText} (${document.getElementById('funnel-conversion-rate').innerText})\n`;
       content += `==================================================\n\n`;
 
@@ -1367,6 +1401,7 @@
       document.getElementById('dt_name').innerText = c.name || '---';
       document.getElementById('dt_id').innerText = c.id || '---';
       document.getElementById('dt_source').innerText = c.source || '---';
+      document.getElementById('dt_created_at').innerText = c.created_at || '---';
       document.getElementById('dt_gender').innerText = c.gender || 'Nam';
       document.getElementById('dt_dob').innerText = c.dob || '---';
       document.getElementById('dt_phone').innerText = c.phone || '---';
@@ -1483,7 +1518,6 @@
       openModal(idx);
     }
 
-    // LƯU KHÁCH HÀNG TIỀM NĂNG TRỰC TIẾP
     function manualSaveCustomer() {
       const nameVal = (document.getElementById('in_name').value || '').trim();
       const phoneVal = (document.getElementById('in_phone').value || '').trim();
@@ -1507,6 +1541,7 @@
         phone: phoneVal || '---',
         car_model: document.getElementById('in_car_model').value || 'VF 6',
         source: document.getElementById('in_source').value || 'Live TikTok',
+        created_at: (editIdx !== '' && customers[editIdx] && customers[editIdx].created_at) ? customers[editIdx].created_at : getNowFormatted(),
         note: document.getElementById('in_note').value || '',
 
         gender: document.getElementById('in_gender').value || 'Nam',
@@ -1543,9 +1578,9 @@
     }
 
     function exportCSV() {
-      let csv = 'Mã KH,Độ Nóng,Lý Do Rớt Deal,Tên Khách,SĐT,Dòng Xe,Nguồn,Giai đoạn,Ghi chú\n';
+      let csv = 'Mã KH,Ngày Tạo,Độ Nóng,Lý Do Rớt Deal,Tên Khách,SĐT,Dòng Xe,Nguồn,Giai đoạn,Ghi chú\n';
       customers.forEach(c => {
-        csv += `"${c.id}","${c.temperature || 'COOL'}","${c.cold_reason || ''}","${c.name}","${c.phone}","${c.car_model}","${c.source}","${c.stage}","${(c.note || '').replace(/"/g, '""')}"\n`;
+        csv += `"${c.id}","${c.created_at || ''}","${c.temperature || 'COOL'}","${c.cold_reason || ''}","${c.name}","${c.phone}","${c.car_model}","${c.source}","${c.stage}","${(c.note || '').replace(/"/g, '""')}"\n`;
       });
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
@@ -1555,7 +1590,7 @@
       a.click();
     }
 
-    // Khởi chạy khi load trang
+    // Khởi chạy
     initQuote();
     renderCustomers();
   </script>
