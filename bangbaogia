@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Báo Giá Xe VinFast Limo Green - VinFast Minh Đạo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1255a8;
+      --secondary: #e67e22;
+      --accent-green: #27ae60;
+      --accent-red: #c0392b;
+      --light-bg: #f4f7fa;
+      --card-bg: #ffffff;
+      --text-color: #2c3e50;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      padding: 20px 12px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-color);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0e4488, #1976d2);
+      color: white;
+      text-align: center;
+      padding: 24px 16px;
+    }
+
+    .header h1 {
+      font-size: 1.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .section {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title-yellow {
+      background: #fef9c3;
+      color: #854d0e;
+      border-left: 4px solid #eab308;
+    }
+
+    .title-green {
+      background: #dcfce7;
+      color: #166534;
+      border-left: 4px solid #22c55e;
+    }
+
+    .title-blue {
+      background: #e0f2fe;
+      color: #075985;
+      border-left: 4px solid #0284c7;
+    }
+
+    .table-list {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table-list tr td {
+      padding: 8px 6px;
+      font-size: 0.92rem;
+      border-bottom: 1px dashed #f1f5f9;
+    }
+
+    .table-list tr:last-child td {
+      border-bottom: none;
+    }
+
+    .table-list td.price {
+      text-align: right;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .row-highlight {
+      font-weight: 700 !important;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    .total-box {
+      background: #15803d;
+      color: white;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .installment-box {
+      background: #b91c1c;
+      color: white;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .gift-box {
+      background: #fffbeb;
+      border: 1px dashed #f59e0b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #92400e;
+    }
+
+    .contact-card {
+      background: #f8fafc;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .contact-card .name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .contact-card .branch {
+      font-size: 0.92rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .btn-call {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 24px;
+      background-color: #0284c7;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      transition: background 0.2s ease;
+    }
+
+    .btn-call:hover {
+      background-color: #0369a1;
+    }
+
+    @media (max-width: 480px) {
+      .header h1 { font-size: 1.15rem; }
+      .section-title { font-size: 0.92rem; }
+      .total-box, .installment-box { font-size: 0.95rem; flex-direction: column; gap: 4px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Bảng Báo Giá Xe VinFast Limo Green</h1>
+      <p>Kính gửi Quý Khách Hàng</p>
+    </div>
+
+    <!-- I. Giá xe & Ưu đãi -->
+    <div class="section">
+      <div class="section-title title-yellow">
+        <span>I. GIÁ XE NIÊM YẾT</span>
+        <span>699.000.000 đ</span>
+      </div>
+      <table class="table-list">
+        <tr>
+          <td>1. Chương trình khuyến mại tháng 9</td>
+          <td class="price">- 62.910.000 đ</td>
+        </tr>
+        <tr>
+          <td>2. Chiết khấu ưu đãi từ Đại lý</td>
+          <td class="price">- 30.000.000 đ</td>
+        </tr>
+        <tr class="row-highlight">
+          <td>👉 Tổng cộng giá xe sau giảm</td>
+          <td class="price" style="color: #0284c7;">606.090.000 đ</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- II. Chi phí đăng ký lăn bánh -->
+    <div class="section">
+      <div class="section-title title-yellow">
+        <span>II. CHI PHÍ ĐĂNG KÝ BẤM BIỂN SỐ</span>
+        <span>16.075.260 đ</span>
+      </div>
+      <table class="table-list">
+        <tr>
+          <td>1. Thuế trước bạ (Ưu đãi xe điện 100%)</td>
+          <td class="price">0 đ</td>
+        </tr>
+        <tr>
+          <td>2. Phí cấp biển số xe</td>
+          <td class="price">140.000 đ</td>
+        </tr>
+        <tr>
+          <td>3. Phí kiểm định an toàn kỹ thuật</td>
+          <td class="price">90.000 đ</td>
+        </tr>
+        <tr>
+          <td>4. Phí bảo trì đường bộ (12 tháng)</td>
+          <td class="price">2.160.000 đ</td>
+        </tr>
+        <tr>
+          <td>5. Bảo hiểm TNDS bắt buộc</td>
+          <td class="price">1.200.000 đ</td>
+        </tr>
+        <tr>
+          <td>6. Bảo hiểm thân vỏ xe</td>
+          <td class="price">8.485.260 đ</td>
+        </tr>
+        <tr>
+          <td>7. Dịch vụ đăng ký trọn gói</td>
+          <td class="price">4.000.000 đ</td>
+        </tr>
+      </table>
+
+      <!-- III. Tổng lăn bánh -->
+      <div class="total-box">
+        <span>III. TỔNG GIÁ LĂN BÁNH (I + II)</span>
+        <span>622.165.260 đ</span>
+      </div>
+    </div>
+
+    <!-- IV. Phương án Trả góp -->
+    <div class="section">
+      <div class="section-title title-blue">
+        <span>IV. PHƯƠNG ÁN HỖ TRỢ TRẢ GÓP</span>
+        <span>Ngân hàng</span>
+      </div>
+      <table class="table-list">
+        <tr>
+          <td>Khách hàng thanh toán tiền xe (15%)</td>
+          <td class="price">90.913.500 đ</td>
+        </tr>
+        <tr>
+          <td>Ngân hàng hỗ trợ vay tối đa (85%)</td>
+          <td class="price">515.176.500 đ</td>
+        </tr>
+        <tr>
+          <td>Lãi suất ưu đãi tạm tính</td>
+          <td class="price">10,9% / năm</td>
+        </tr>
+        <tr>
+          <td>Thời gian vay linh hoạt</td>
+          <td class="price">96 tháng (8 năm)</td>
+        </tr>
+        <tr class="row-highlight">
+          <td>Số tiền dự kiến trả mỗi tháng (Gốc + Lãi)</td>
+          <td class="price" style="color: #b91c1c;">~ 10.045.942 đ</td>
+        </tr>
+      </table>
+
+      <div class="installment-box">
+        <span>TỔNG TIỀN TRẢ TRƯỚC NHẬN XE:</span>
+        <span>106.988.760 đ</span>
+      </div>
+      <p style="font-size: 0.8rem; color: #64748b; margin-top: 6px; font-style: italic;">
+        * Bao gồm 15% đối ứng xe + Toàn bộ chi phí đăng ký lăn bánh ra biển số.
+      </p>
+    </div>
+
+    <!-- Quà tặng & Chân trang -->
+    <div class="section" style="border-bottom: none;">
+      <div class="gift-box">
+        🎁 <strong>Quà tặng kèm theo xe:</strong> Dán phim cách nhiệt cao cấp, Lót sàn, Camera hành trình, Bọc biển số mạ crom và Dán thẻ thu phí tự động VETC.
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <div class="name">Hà Hữu Huy - Tư Vấn Bán Hàng</div>
+      <div class="branch">VinFast Minh Đạo Thuận An</div>
+      <a href="tel:0969903604" class="btn-call">📞 Hotline: 0969.903.604</a>
+    </div>
+  </div>
+
+</body>
+</html>
