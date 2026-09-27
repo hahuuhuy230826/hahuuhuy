@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hồ sơ khách hàng – Hữu Huy | VinFast</title>
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Các thư viện xử lý tài liệu -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div>
+        <h1 class="text-lg md:text-xl font-bold tracking-wide">Hồ sơ khách hàng – Hữu Huy</h1>
+        <p class="text-xs text-blue-200">Hỗ trợ tư vấn bán xe VinFast & Chuẩn bị hợp đồng</p>
+      </div>
+      <div class="text-xs bg-blue-800 px-3 py-1.5 rounded-full border border-blue-600 flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="hidden sm:inline">Lưu an toàn trên máy này</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex border-t border-blue-600/60 max-w-6xl mx-auto px-2 overflow-x-auto">
+      <button onclick="switchTab('extract')" id="tab-btn-extract" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-semibold border-b-2 border-white text-white bg-blue-800/40">
+        <i data-lucide="camera" class="w-4 h-4"></i> Trích xuất
+      </button>
+      <button onclick="switchTab('compare')" id="tab-btn-compare" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-medium border-b-2 border-transparent text-blue-100 hover:text-white">
+        <i data-lucide="file-check" class="w-4 h-4"></i> Đối chiếu Word
+      </button>
+      <button onclick="switchTab('customers')" id="tab-btn-customers" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-medium border-b-2 border-transparent text-blue-100 hover:text-white">
+        <i data-lucide="users" class="w-4 h-4"></i> Khách hàng (<span id="cust-count">0</span>)
+      </button>
+      <button onclick="switchTab('backup')" id="tab-btn-backup" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-medium border-b-2 border-transparent text-blue-100 hover:text-white">
+        <i data-lucide="hard-drive-download" class="w-4 h-4"></i> Sao lưu
+      </button>
+    </div>
+  </header>
+
+  <!-- Thông báo lưu trữ -->
+  <div class="bg-amber-50 border-b border-amber-200 text-amber-800 text-xs px-4 py-1.5 text-center flex items-center justify-center gap-1.5">
+    <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0 text-amber-600"></i>
+    <span>Dữ liệu lưu trực tiếp trong trình duyệt máy này. Trước khi xóa lịch sử web, vui lòng vào tab <strong>Sao lưu</strong> để tải file dự phòng.</span>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-3 md:p-6">
+
+    <!-- TAB 1: TRÍCH XUẤT ẢNH -->
+    <section id="tab-extract" class="space-y-6">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <h2 class="text-base font-bold text-blue-900 mb-2 flex items-center gap-2">
+          <i data-lucide="image" class="w-5 h-5 text-blue-600"></i> Tải ảnh giấy tờ (CCCD 2 mặt, Giấy tờ xe, Ngân hàng)
+        </h2>
+        <p class="text-xs text-slate-500 mb-4">Bạn có thể chọn chụp từ điện thoại hoặc tải nhiều ảnh một lúc. Ảnh được xử lý OCR trực tiếp trên máy, không gửi lên máy chủ.</p>
+        
+        <div class="flex flex-wrap items-center gap-3">
+          <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm transition">
+            <i data-lucide="upload" class="w-4 h-4"></i> Chọn hoặc Chụp ảnh
+            <input type="file" id="imageInput" multiple accept="image/*" class="hidden" onchange="handleImageUpload(event)" />
+          </label>
+          <button id="btn-run-ocr" onclick="runOCR()" disabled class="bg-emerald-600 disabled:bg-slate-300 hover:bg-emerald-700 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm transition">
+            <i data-lucide="scan-text" class="w-4 h-4"></i> Đọc thông tin (OCR)
+          </button>
+        </div>
+
+        <!-- Thanh tiến trình -->
+        <div id="ocr-progress-container" class="hidden mt-4">
+          <div class="flex justify-between text-xs text-slate-600 mb-1">
+            <span id="ocr-status-text">Đang chuẩn bị OCR tiếng Việt...</span>
+            <span id="ocr-percentage">0%</span>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-2">
+            <div id="ocr-progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Khung xem trước ảnh -->
+        <div id="image-previews" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4"></div>
+      </div>
+
+      <!-- Form nhập & kiểm tra thông tin khách hàng -->
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-5">
+        <div class="flex flex-wrap justify-between items-center border-b pb-3 gap-2">
+          <h2 class="text-base font-bold text-blue-900 flex items-center gap-2">
+            <i data-lucide="user-check" class="w-5 h-5 text-blue-600"></i> Thông tin khách hàng & Xe
+          </h2>
+          <div class="flex items-center gap-2">
+            <button onclick="clearCurrentForm()" class="text-xs text-slate-500 hover:text-red-600 px-3 py-1.5 border border-slate-200 rounded-md">Làm mới</button>
+            <button onclick="saveCurrentCustomer()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-md shadow flex items-center gap-1.5">
+              <i data-lucide="save" class="w-4 h-4"></i> Lưu khách hàng
+            </button>
+          </div>
+        </div>
+
+        <!-- Nhóm: Thông tin cá nhân -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">1. Thông tin cá nhân & Giấy tờ</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Họ và tên *</label>
+              <div class="relative">
+                <input type="text" id="f_fullName" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 uppercase font-medium focus:ring-2 focus:ring-blue-500" placeholder="NGUYỄN VĂN A" />
+                <button onclick="copyField('f_fullName')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Số CCCD (12 số) *</label>
+              <div class="relative">
+                <input type="text" id="f_idCardNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono focus:ring-2 focus:ring-blue-500" placeholder="079..." />
+                <button onclick="copyField('f_idCardNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Số điện thoại *</label>
+              <div class="relative">
+                <input type="text" id="f_phone" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="090..." />
+                <button onclick="copyField('f_phone')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Ngày sinh (dd/mm/yyyy)</label>
+              <input type="text" id="f_dob" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="01/01/1990" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Email</label>
+              <input type="text" id="f_email" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="khachhang@gmail.com" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Nơi cấp CCCD</label>
+              <input type="text" id="f_idCardIssuePlace" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" value="Cục Cảnh sát QLHC về TTXH" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-medium text-slate-600 mb-1">Địa chỉ thường trú (theo CCCD) *</label>
+              <div class="relative">
+                <input type="text" id="f_permanentAddress" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 pr-8" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/TP" />
+                <button onclick="copyField('f_permanentAddress')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Địa chỉ liên hệ</label>
+              <input type="text" id="f_contactAddress" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Nếu khác thường trú" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Nhóm: Ngân hàng -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">2. Tài khoản Ngân hàng</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Tên ngân hàng</label>
+              <input type="text" id="f_bankName" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Vietcombank, MB, Techcombank..." />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Số tài khoản</label>
+              <div class="relative">
+                <input type="text" id="f_bankAccountNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="Số TK ngân hàng" />
+                <button onclick="copyField('f_bankAccountNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Tên chủ tài khoản</label>
+              <input type="text" id="f_bankAccountHolder" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 uppercase" placeholder="Tên chủ tài khoản" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Nhóm: Thông tin Xe VinFast -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">3. Thông tin xe & Hợp đồng</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Dòng xe VinFast</label>
+              <select id="f_carModel" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5">
+                <option value="VF 3">VF 3</option>
+                <option value="VF 5 Plus">VF 5 Plus</option>
+                <option value="VF 6">VF 6</option>
+                <option value="VF 7">VF 7</option>
+                <option value="VF 8">VF 8</option>
+                <option value="VF 9">VF 9</option>
+                <option value="VF MPV7">VF MPV7</option>
+                <option value="Limo Green">Limo Green</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Phiên bản / Màu sắc</label>
+              <input type="text" id="f_carVersionColor" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Plus / Trắng, Xanh..." />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Số khung (VIN 17 ký tự)</label>
+              <div class="relative">
+                <input type="text" id="f_vinNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono uppercase" placeholder="RLY..." />
+                <button onclick="copyField('f_vinNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Số máy</label>
+              <div class="relative">
+                <input type="text" id="f_engineNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono uppercase" />
+                <button onclick="copyField('f_engineNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Số HĐMB</label>
+              <input type="text" id="f_contractNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="Số hợp đồng" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Mã đơn VSO</label>
+              <input type="text" id="f_vsoCode" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="Mã VSO" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-medium text-slate-600 mb-1">Ghi chú thêm</label>
+              <input type="text" id="f_notes" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Ghi chú khuyến mãi, pin, thời gian giao..." />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: ĐỐI CHIẾU FILE WORD -->
+    <section id="tab-compare" class="hidden space-y-6">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <h2 class="text-base font-bold text-blue-900 mb-2 flex items-center gap-2">
+          <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i> Đọc và đối chiếu với Hợp đồng (.docx)
+        </h2>
+        <p class="text-xs text-slate-500 mb-4">Hệ thống sẽ tự động tìm mục <strong>Bên Mua</strong> trong file Word và so khớp với thông tin giấy tờ.</p>
+        
+        <input type="file" id="wordFileInput" accept=".docx" class="text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" onchange="handleWordFile(event)" />
+
+        <div id="word-error" class="hidden mt-3 text-xs text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200"></div>
+      </div>
+
+      <!-- Bảng đối chiếu -->
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
+        <h3 class="text-sm font-bold text-slate-700 mb-3">Kết quả đối chiếu thông tin</h3>
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-100 text-slate-600 border-b">
+              <th class="p-2.5">Trường thông tin</th>
+              <th class="p-2.5">Từ giấy tờ (OCR/Nhập)</th>
+              <th class="p-2.5">Từ file Word</th>
+              <th class="p-2.5">Kết quả</th>
+              <th class="p-2.5">Thông tin được chọn chốt</th>
+            </tr>
+          </thead>
+          <tbody id="compare-table-body" class="divide-y divide-slate-100">
+            <tr>
+              <td colspan="5" class="p-4 text-center text-slate-400">Chưa tải file Word để đối chiếu</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: DANH SÁCH KHÁCH HÀNG & XUẤT EXCEL -->
+    <section id="tab-customers" class="hidden space-y-6">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-wrap justify-between items-center gap-3">
+          <div class="flex-1 min-w-[240px]">
+            <input type="text" id="searchCustomerInput" oninput="renderCustomerList()" placeholder="Tìm theo tên, SĐT, CCCD, VIN, VSO..." class="w-full text-xs border border-slate-300 rounded-lg px-3 py-2" />
+          </div>
+          <button onclick="exportAllToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 shadow-sm transition">
+            <i data-lucide="sheet" class="w-4 h-4"></i> Xuất Excel (.xlsx)
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 border-b">
+                <th class="p-2.5">Họ tên</th>
+                <th class="p-2.5">CCCD</th>
+                <th class="p-2.5">SĐT</th>
+                <th class="p-2.5">Dòng xe</th>
+                <th class="p-2.5">Số khung (VIN)</th>
+                <th class="p-2.5">Mã VSO / HĐMB</th>
+                <th class="p-2.5 text-center">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="customer-list-body" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: SAO LƯU & KHÔI PHỤC -->
+    <section id="tab-backup" class="hidden space-y-6">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-base font-bold text-blue-900 flex items-center gap-2">
+          <i data-lucide="database" class="w-5 h-5 text-blue-600"></i> Sao lưu và Khôi phục dữ liệu
+        </h2>
+        <p class="text-xs text-slate-500">
+          Xuất toàn bộ danh sách khách hàng ra file JSON an toàn trên máy tính/điện thoại hoặc nạp lại từ bản sao lưu đã có.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-2">
+          <button onclick="downloadBackupFile()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 shadow">
+            <i data-lucide="download" class="w-4 h-4"></i> Tải bản sao lưu về máy
+          </button>
+
+          <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 border border-slate-300">
+            <i data-lucide="upload" class="w-4 h-4"></i> Khôi phục từ file JSON
+            <input type="file" id="restoreFileInput" accept=".json" class="hidden" onchange="handleRestoreFile(event)" />
+          </label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Script xử lý ứng dụng -->
+  <script>
+    // Khởi tạo Lucide Icons
+    lucide.createIcons();
+
+    let uploadedImages = [];
+    let customersDB = JSON.parse(localStorage.getItem('vf_customers') || '[]');
+    let currentEditingId = null;
+
+    // Chuyển Tab
+    function switchTab(tabName) {
+      ['extract', 'compare', 'customers', 'backup'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${t}`);
+        btn.classList.remove('border-white', 'text-white', 'bg-blue-800/40', 'font-semibold');
+        btn.classList.add('border-transparent', 'text-blue-100');
+      });
+
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+      activeBtn.classList.remove('border-transparent', 'text-blue-100');
+      activeBtn.classList.add('border-white', 'text-white', 'bg-blue-800/40', 'font-semibold');
+
+      if (tabName === 'customers') renderCustomerList();
+      lucide.createIcons();
+    }
+
+    // Xử lý upload và xoay ảnh
+    function handleImageUpload(e) {
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          uploadedImages.push({ src: event.target.result, rotation: 0 });
+          renderImagePreviews();
+        };
+        reader.readAsDataURL(file);
+      });
+      document.getElementById('btn-run-ocr').disabled = false;
+    }
+
+    function rotateImage(idx) {
+      uploadedImages[idx].rotation = (uploadedImages[idx].rotation + 90) % 360;
+      renderImagePreviews();
+    }
+
+    function removeImage(idx) {
+      uploadedImages.splice(idx, 1);
+      renderImagePreviews();
+      if (uploadedImages.length === 0) document.getElementById('btn-run-ocr').disabled = true;
+    }
+
+    function renderImagePreviews() {
+      const container = document.getElementById('image-previews');
+      container.innerHTML = uploadedImages.map((img, idx) => `
+        <div class="relative border rounded-lg p-1 bg-slate-50 flex flex-col items-center">
+          <img src="${img.src}" style="transform: rotate(${img.rotation}deg)" class="w-full h-24 object-cover rounded mb-2 transition-transform" />
+          <div class="flex gap-2">
+            <button onclick="rotateImage(${idx})" class="p-1 bg-slate-200 hover:bg-slate-300 rounded text-slate-700" title="Xoay 90°"><i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i></button>
+            <button onclick="removeImage(${idx})" class="p-1 bg-red-100 hover:bg-red-200 rounded text-red-600" title="Xóa"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // OCR Tesseract.js tiếng Việt chạy trên thiết bị
+    async function runOCR() {
+      if (uploadedImages.length === 0) return;
+      const progressBox = document.getElementById('ocr-progress-container');
+      const progressBar = document.getElementById('ocr-progress-bar');
+      const progressText = document.getElementById('ocr-status-text');
+      const progressPercent = document.getElementById('ocr-percentage');
+
+      progressBox.classList.remove('hidden');
+      let combinedText = '';
+
+      for (let i = 0; i < uploadedImages.length; i++) {
+        progressText.innerText = `Đang đọc ảnh ${i + 1}/${uploadedImages.length}...`;
+        const { data: { text } } = await Tesseract.recognize(uploadedImages[i].src, 'vie+eng', {
+          logger: m => {
+            if (m.status === 'recognizing text') {
+              const p = Math.round(m.progress * 100);
+              progressBar.style.width = `${p}%`;
+              progressPercent.innerText = `${p}%`;
+            }
+          }
+        });
+        combinedText += '\n' + text;
+      }
+
+      progressText.innerText = 'Hoàn thành trích xuất!';
+      parseAndFillData(combinedText);
+      setTimeout(() => progressBox.classList.add('hidden'), 2000);
+    }
+
+    // Bóc tách thông tin chính xác, không đoán mò ký tự mờ
+    function parseAndFillData(raw) {
+      const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+      
+      lines.forEach((line, i) => {
+        // Số CCCD
+        const cccd = line.match(/\b\d{12}\b/);
+        if (cccd && !document.getElementById('f_idCardNumber').value) {
+          document.getElementById('f_idCardNumber').value = cccd[0];
+        }
+
+        // Họ tên
+        if (/Họ và tên|Full name/i.test(line)) {
+          const parts = line.split(/Họ và tên|Full name/i);
+          let name = parts[parts.length - 1].replace(/[:]/g, '').trim();
+          if (!name && lines[i + 1]) name = lines[i + 1].trim();
+          if (name && name.length > 2) document.getElementById('f_fullName').value = name.toUpperCase();
+        }
+
+        // Nơi thường trú
+        if (/Nơi thường trú|Place of residence/i.test(line)) {
+          let addr = line.replace(/.*?(Nơi thường trú|Place of residence)[:\s]*/i, '').trim();
+          if (lines[i + 1] && !/Có giá trị|Date/i.test(lines[i + 1])) addr += ' ' + lines[i + 1].trim();
+          document.getElementById('f_permanentAddress').value = addr;
+        }
+
+        // Số khung (VIN 17 ký tự)
+        const vin = line.match(/\b([A-HJ-NPR-Z0-9]{17})\b/i);
+        if (vin && !document.getElementById('f_vinNumber').value) {
+          document.getElementById('f_vinNumber').value = vin[1].toUpperCase();
+        }
+      });
+    }
+
+    // Copy nhanh từng trường
+    function copyField(elementId) {
+      const val = document.getElementById(elementId).value;
+      if (!val) return;
+      navigator.clipboard.writeText(val);
+      alert('Đã sao chép: ' + val);
+    }
+
+    // Lưu hồ sơ vào cơ sở dữ liệu
+    function saveCurrentCustomer() {
+      const fullName = document.getElementById('f_fullName').value.trim();
+      const idCard = document.getElementById('f_idCardNumber').value.trim();
+      const phone = document.getElementById('f_phone').value.trim();
+      const vin = document.getElementById('f_vinNumber').value.trim();
+
+      if (!fullName || !idCard) {
+        alert('Vui lòng điền tối thiểu Họ tên và Số CCCD!');
+        return;
+      }
+
+      // Kiểm tra trùng
+      const dup = customersDB.find(c => c.id !== currentEditingId && (c.idCardNumber === idCard || (vin && c.vinNumber === vin)));
+      if (dup) {
+        if (!confirm(`Phát hiện trùng số CCCD hoặc Số khung với khách hàng "${dup.fullName}". Bạn có chắc chắn muốn tiếp tục lưu không?`)) {
+          return;
+        }
+      }
+
+      const record = {
+        id: currentEditingId || 'vf_' + Date.now(),
+        updatedAt: new Date().toLocaleString('vi-VN'),
+        fullName,
+        idCardNumber: idCard,
+        phone,
+        dob: document.getElementById('f_dob').value.trim(),
+        email: document.getElementById('f_email').value.trim(),
+        idCardIssuePlace: document.getElementById('f_idCardIssuePlace').value.trim(),
+        permanentAddress: document.getElementById('f_permanentAddress').value.trim(),
+        contactAddress: document.getElementById('f_contactAddress').value.trim(),
+        bankName: document.getElementById('f_bankName').value.trim(),
+        bankAccountNumber: document.getElementById('f_bankAccountNumber').value.trim(),
+        bankAccountHolder: document.getElementById('f_bankAccountHolder').value.trim(),
+        carModel: document.getElementById('f_carModel').value,
+        carVersionColor: document.getElementById('f_carVersionColor').value.trim(),
+        vinNumber: vin,
+        engineNumber: document.getElementById('f_engineNumber').value.trim(),
+        contractNumber: document.getElementById('f_contractNumber').value.trim(),
+        vsoCode: document.getElementById('f_vsoCode').value.trim(),
+        notes: document.getElementById('f_notes').value.trim(),
+      };
+
+      if (currentEditingId) {
+        const idx = customersDB.findIndex(c => c.id === currentEditingId);
+        customersDB[idx] = record;
+      } else {
+        customersDB.unshift(record);
+      }
+
+      localStorage.setItem('vf_customers', JSON.stringify(customersDB));
+      alert('Đã lưu hồ sơ khách hàng thành công!');
+      clearCurrentForm();
+      updateCount();
+    }
+
+    function clearCurrentForm() {
+      currentEditingId = null;
+      document.querySelectorAll('#tab-extract input').forEach(i => i.value = '');
+      document.getElementById('f_idCardIssuePlace').value = 'Cục Cảnh sát QLHC về TTXH';
+    }
+
+    function updateCount() {
+      document.getElementById('cust-count').innerText = customersDB.length;
+    }
+    updateCount();
+
+    // Hiển thị danh sách khách hàng
+    function renderCustomerList() {
+      const q = (document.getElementById('searchCustomerInput').value || '').toLowerCase();
+      const filtered = customersDB.filter(c => 
+        (c.fullName && c.fullName.toLowerCase().includes(q)) ||
+        (c.idCardNumber && c.idCardNumber.includes(q)) ||
+        (c.phone && c.phone.includes(q)) ||
+        (c.vinNumber && c.vinNumber.toLowerCase().includes(q)) ||
+        (c.vsoCode && c.vsoCode.toLowerCase().includes(q))
+      );
+
+      const tbody = document.getElementById('customer-list-body');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-400">Không tìm thấy hồ sơ nào</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(c => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-2.5 font-bold text-blue-900">${c.fullName}</td>
+          <td class="p-2.5 font-mono">${c.idCardNumber}</td>
+          <td class="p-2.5 font-mono">${c.phone || '-'}</td>
+          <td class="p-2.5">${c.carModel} (${c.carVersionColor || '-'})</td>
+          <td class="p-2.5 font-mono">${c.vinNumber || '-'}</td>
+          <td class="p-2.5 font-mono">${c.vsoCode || c.contractNumber || '-'}</td>
+          <td class="p-2.5 text-center">
+            <button onclick="editCustomer('${c.id}')" class="text-blue-600 hover:underline mr-2">Sửa</button>
+            <button onclick="deleteCustomer('${c.id}')" class="text-red-600 hover:underline">Xóa</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function editCustomer(id) {
+      const c = customersDB.find(item => item.id === id);
+      if (!c) return;
+      currentEditingId = c.id;
+      document.getElementById('f_fullName').value = c.fullName || '';
+      document.getElementById('f_idCardNumber').value = c.idCardNumber || '';
+      document.getElementById('f_phone').value = c.phone || '';
+      document.getElementById('f_dob').value = c.dob || '';
+      document.getElementById('f_email').value = c.email || '';
+      document.getElementById('f_idCardIssuePlace').value = c.idCardIssuePlace || '';
+      document.getElementById('f_permanentAddress').value = c.permanentAddress || '';
+      document.getElementById('f_contactAddress').value = c.contactAddress || '';
+      document.getElementById('f_bankName').value = c.bankName || '';
+      document.getElementById('f_bankAccountNumber').value = c.bankAccountNumber || '';
+      document.getElementById('f_bankAccountHolder').value = c.bankAccountHolder || '';
+      document.getElementById('f_carModel').value = c.carModel || 'VF 5 Plus';
+      document.getElementById('f_carVersionColor').value = c.carVersionColor || '';
+      document.getElementById('f_vinNumber').value = c.vinNumber || '';
+      document.getElementById('f_engineNumber').value = c.engineNumber || '';
+      document.getElementById('f_contractNumber').value = c.contractNumber || '';
+      document.getElementById('f_vsoCode').value = c.vsoCode || '';
+      document.getElementById('f_notes').value = c.notes || '';
+      switchTab('extract');
+    }
+
+    function deleteCustomer(id) {
+      if (!confirm('Bạn có chắc chắn muốn xóa hồ sơ này?')) return;
+      customersDB = customersDB.filter(c => c.id !== id);
+      localStorage.setItem('vf_customers', JSON.stringify(customersDB));
+      renderCustomerList();
+      updateCount();
+    }
+
+    // Đọc Word (.docx) & Đối chiếu
+    async function handleWordFile(e) {
+      const file = e.target.files[0];
+      const errBox = document.getElementById('word-error');
+      errBox.classList.add('hidden');
+
+      if (!file || !file.name.endsWith('.docx')) {
+        errBox.innerText = 'Vui lòng chọn tệp .docx chuẩn (không chọn file .doc cũ).';
+        errBox.classList.remove('hidden');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const { value: text } = await mammoth.extractRawText({ arrayBuffer: ev.target.result });
+        if (!text.trim()) {
+          errBox.innerText = 'File Word không chứa chữ (có thể là bản scan ảnh).';
+          errBox.classList.remove('hidden');
+          return;
+        }
+
+        // Tách Bên Mua
+        const zone = text.match(/(?:BÊN MUA|BÊN B|KHÁCH HÀNG)([\s\S]*?)(?:BÊN BÁN|BÊN A|ĐIỀU 1|$)/i);
+        const buyerText = zone ? zone[1] : text;
+
+        const nameMatch = buyerText.match(/(?:Ông\/Bà|Khách hàng|Họ tên)[:\s]+([^\n,\r]+)/i);
+        const addrMatch = buyerText.match(/(?:Địa chỉ thường trú|Nơi cư trú|Địa chỉ)[:\s]+([^\n\r]+)/i);
+
+        const wordName = nameMatch ? nameMatch[1].trim() : '';
+        const wordAddr = addrMatch ? addrMatch[1].trim() : '';
+        const docName = document.getElementById('f_fullName').value;
+        const docAddr = document.getElementById('f_permanentAddress').value;
+
+        renderCompareRow(docName, wordName, docAddr, wordAddr);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function renderCompareRow(docName, wordName, docAddr, wordAddr) {
+      const matchName = docName && wordName && docName.trim().toUpperCase() === wordName.trim().toUpperCase();
+      const tbody = document.getElementById('compare-table-body');
+      tbody.innerHTML = `
+        <tr>
+          <td class="p-2.5 font-semibold">Họ và tên</td>
+          <td class="p-2.5">${docName || '<span class="text-slate-400">Trống</span>'}</td>
+          <td class="p-2.5">${wordName || '<span class="text-slate-400">Trống</span>'}</td>
+          <td class="p-2.5">
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${matchName ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+              ${matchName ? 'Khớp' : 'Khác nhau'}
+            </span>
+          </td>
+          <td class="p-2.5"><input type="text" class="border px-2 py-1 rounded w-full" value="${docName || wordName || ''}"></td>
+        </tr>
+        <tr>
+          <td class="p-2.5 font-semibold">Địa chỉ</td>
+          <td class="p-2.5">${docAddr || '<span class="text-slate-400">Trống</span>'}</td>
+          <td class="p-2.5">${wordAddr || '<span class="text-slate-400">Trống</span>'}</td>
+          <td class="p-2.5">
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-800">Cần kiểm tra</span>
+          </td>
+          <td class="p-2.5"><input type="text" class="border px-2 py-1 rounded w-full" value="${docAddr || wordAddr || ''}"></td>
+        </tr>
+      `;
+    }
+
+    // Xuất Excel chống rụng số 0 & chống Injection
+    async function exportAllToExcel() {
+      if (customersDB.length === 0) {
+        alert('Chưa có khách hàng nào để xuất!');
+        return;
+      }
+
+      const workbook = new ExcelJS.Workbook();
+      const ws = workbook.addWorksheet('Danh sách VinFast', { views: [{ state: 'frozen', ySplit: 1 }] });
+
+      ws.columns = [
+        { header: 'Họ và tên', key: 'fullName', width: 25 },
+        { header: 'Số CCCD', key: 'idCardNumber', width: 18 },
+        { header: 'Số điện thoại', key: 'phone', width: 16 },
+        { header: 'Địa chỉ thường trú', key: 'permanentAddress', width: 35 },
+        { header: 'Dòng xe', key: 'carModel', width: 14 },
+        { header: 'Phiên bản / Màu', key: 'carVersionColor', width: 18 },
+        { header: 'Số khung (VIN)', key: 'vinNumber', width: 22 },
+        { header: 'Số máy', key: 'engineNumber', width: 18 },
+        { header: 'Mã VSO', key: 'vsoCode', width: 16 },
+        { header: 'Số HĐMB', key: 'contractNumber', width: 16 },
+        { header: 'Ngân hàng', key: 'bankName', width: 18 },
+        { header: 'Số tài khoản', key: 'bankAccountNumber', width: 20 },
+      ];
+
+      // Định dạng tiêu đề màu xanh đậm VinFast
+      const headerRow = ws.getRow(1);
+      headerRow.font = { bold: true, color: { argb: 'FFFFFF' } };
+      headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '1E40AF' } };
+
+      customersDB.forEach(c => {
+        const row = ws.addRow({
+          fullName: c.fullName,
+          idCardNumber: c.idCardNumber,
+          phone: c.phone,
+          permanentAddress: c.permanentAddress,
+          carModel: c.carModel,
+          carVersionColor: c.carVersionColor,
+          vinNumber: c.vinNumber,
+          engineNumber: c.engineNumber,
+          vsoCode: c.vsoCode,
+          contractNumber: c.contractNumber,
+          bankName: c.bankName,
+          bankAccountNumber: c.bankAccountNumber,
+        });
+
+        // Định dạng text cho các trường số để không mất số 0 đầu
+        ['idCardNumber', 'phone', 'vinNumber', 'engineNumber', 'vsoCode', 'contractNumber', 'bankAccountNumber'].forEach(k => {
+          row.getCell(k).numFmt = '@';
+        });
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+      saveAs(new Blob([buffer]), 'Danh_Sach_Khach_Hang_VinFast.xlsx');
+    }
+
+    // Sao lưu và khôi phục
+    function downloadBackupFile() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customersDB, null, 2));
+      const a = document.createElement('a');
+      a.href = dataStr;
+      a.download = `Sao_Luu_VinFast_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    function handleRestoreFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const list = JSON.parse(ev.target.result);
+          if (Array.isArray(list)) {
+            if (confirm(`Tìm thấy ${list.length} hồ sơ trong file sao lưu. Bạn có muốn khôi phục không?`)) {
+              customersDB = list;
+              localStorage.setItem('vf_customers', JSON.stringify(customersDB));
+              updateCount();
+              alert('Đã khôi phục thành công!');
+            }
+          }
+        } catch {
+          alert('Tệp sao lưu không đúng định dạng JSON.');
+        }
+      };
+      reader.readAsText(file);
+    }
+  </script>
+</body>
+</html>
