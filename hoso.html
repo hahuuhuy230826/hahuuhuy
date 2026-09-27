@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VinFast Showroom Thuận An – Giáng Sinh & Hồ Sơ Khách Hàng</title>
+  <title>VinFast Showroom Thuận An – Quản Lý Hồ Sơ Khách Hàng</title>
   <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -14,46 +14,42 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
   <style>
-    /* Nền trắng tuyết Giáng Sinh */
     .bg-snow-white {
       background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
     }
 
-    /* Hiệu ứng Ông già Noel cưỡi tuần lộc bay lượn */
+    /* Hoạt ảnh cỗ xe tuần lộc bay trên trời */
     @keyframes santaFly {
-      0% { transform: translateX(-120px) translateY(15px) scale(0.9); }
-      50% { transform: translateX(50vw) translateY(-10px) scale(1.05); }
-      100% { transform: translateX(110vw) translateY(20px) scale(0.95); }
+      0% { transform: translateX(-120px) translateY(12px) scale(0.9); }
+      50% { transform: translateX(50vw) translateY(-8px) scale(1.02); }
+      100% { transform: translateX(110vw) translateY(15px) scale(0.95); }
     }
     .santa-sleigh {
       position: absolute;
-      top: 18px;
+      top: 16px;
       left: 0;
-      animation: santaFly 22s linear infinite;
+      animation: santaFly 24s linear infinite;
       z-index: 25;
       pointer-events: none;
     }
 
-    /* Đèn chuông Noel đung đưa */
     @keyframes ornamentSwing {
-      0%, 100% { transform: rotate(-6deg); }
-      50% { transform: rotate(6deg); }
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
     }
     .swing-bell {
       transform-origin: top center;
       animation: ornamentSwing 3.5s ease-in-out infinite;
     }
 
-    /* Thẻ đăng nhập kính trắng tuyết */
     .glass-snow-card {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(16px);
-      border: 2px solid rgba(220, 38, 38, 0.35);
-      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12), 0 0 25px rgba(239, 68, 68, 0.15);
+      border: 1.5px solid rgba(220, 38, 38, 0.35);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.1), 0 0 20px rgba(239, 68, 68, 0.12);
     }
-    .corner-decor { position: absolute; width: 10px; height: 10px; border-color: #dc2626; }
+    .corner-decor { position: absolute; width: 8px; height: 8px; border-color: #dc2626; }
 
-    /* Canvas tuyết rơi nhẹ */
     #snowCanvas {
       position: fixed;
       top: 0;
@@ -68,18 +64,18 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-red-600 selection:text-white overflow-x-hidden">
+<body class="bg-slate-100 text-slate-800 min-h-screen font-sans selection:bg-red-600 selection:text-white overflow-x-hidden">
 
   <!-- Canvas Tuyết rơi nhẹ nhàng phủ toàn màn hình -->
   <canvas id="snowCanvas"></canvas>
 
   <!-- ======================================================== -->
-  <!-- 1. GIAO DIỆN BÊN NGOÀI: NỀN TRẮNG TUYẾT & ÔNG GIÀ NOEL  -->
+  <!-- 1. GIAO DIỆN BÊN NGOÀI: ĐĂNG NHẬP THU GỌN KÉO THẢ       -->
   <!-- ======================================================== -->
   <div id="loginScreen" class="relative w-full min-h-screen bg-snow-white flex flex-col justify-between overflow-hidden select-none">
     
-    <!-- Ông già Noel cưỡi tuần lộc bay ngang -->
-    <div class="santa-sleigh flex items-center gap-1 opacity-90 drop-shadow-md">
+    <!-- Cỗ xe tuần lộc lướt trên bầu trời -->
+    <div class="santa-sleigh flex items-center gap-1 opacity-90 drop-shadow-sm">
       <span class="text-3xl">🛷🎅</span>
       <span class="text-2xl -ml-1">🦌🦌</span>
     </div>
@@ -98,16 +94,16 @@
 
       <div class="text-center mt-5 z-20 px-4">
         <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-red-100 border border-red-300 text-[11px] font-bold text-red-700 uppercase tracking-wider mb-1 shadow-sm">
-          ❄ MERRY CHRISTMAS & HAPPY NEW YEAR ❄
+          ❄ ORDER MANAGEMENT SYSTEM – VINFAST THUẬN AN ❄
         </div>
         <h1 class="text-2xl sm:text-3xl font-black tracking-wider text-slate-900 drop-shadow-sm">
-          SHOWROOM VINFAST THUẬN AN
+          SHOWROOM THUẬN AN
         </h1>
-        <p class="text-xs text-slate-600 font-medium mt-0.5">Hệ thống quản lý thông minh tối ưu hồ sơ xe & bảng tính hoa hồng</p>
+        <p class="text-xs text-slate-600 font-medium mt-0.5">Quản lý hồ sơ khách hàng, đối chiếu hợp đồng & tính hoa hồng</p>
       </div>
     </div>
 
-    <!-- Thẻ đăng nhập nền trắng thu gọn (Kéo thả di chuyển khắp nơi) -->
+    <!-- Thẻ đăng nhập kính trắng tuyết gọn gàng (Kéo di chuyển tự do) -->
     <div id="loginCard" class="glass-snow-card absolute z-40 w-[88%] sm:w-[350px] rounded-2xl p-5 text-slate-800 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl cursor-default">
       <div class="corner-decor top-2 left-2 border-t-2 border-l-2"></div>
       <div class="corner-decor top-2 right-2 border-t-2 border-r-2"></div>
@@ -121,10 +117,10 @@
 
       <div class="text-center my-3">
         <span class="inline-block px-2.5 py-0.5 rounded-full bg-red-600 text-white text-[11px] font-bold shadow-sm">
-          🎄 MÙA LỄ HỘI VINFAST
+          🎄 HÀ HỮU HUY – TVBH
         </span>
         <p class="text-[11px] text-slate-600 italic mt-1.5 font-serif leading-snug">
-          “Giáng sinh ấm áp an lành, Thuận An đồng hành rạng rỡ thành công.”
+          “Giáng sinh ấm áp an lành, Thuận An gắn kết rạng ngời niềm tin.”
         </p>
       </div>
 
@@ -144,17 +140,16 @@
         </div>
 
         <button type="submit" class="w-full py-2.5 rounded-lg font-bold text-white uppercase text-xs bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 shadow-md transition flex items-center justify-center gap-1.5">
-          <span>ĐĂNG NHẬP</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          <span>ĐĂNG NHẬP VÀO HỆ THỐNG</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </button>
       </form>
     </div>
 
-    <!-- Người tuyết đứng chào & Đồi tuyết trắng chân trang -->
+    <!-- Người tuyết đứng chào chân trang -->
     <div class="relative z-20 h-28 border-t border-slate-200 bg-gradient-to-t from-white to-transparent flex items-end justify-between px-6 pb-3">
-      <!-- Chú Người tuyết dễ thương -->
       <div class="flex items-center gap-2">
         <span class="text-4xl drop-shadow">⛄</span>
-        <span class="text-xs font-bold text-slate-600 bg-white/80 px-2 py-0.5 rounded-md shadow-sm border border-slate-200">Chào bạn Hữu Huy! ❄</span>
+        <span class="text-xs font-bold text-slate-700 bg-white/90 px-2.5 py-1 rounded-lg shadow-sm border border-slate-200">Showroom Thuận An hân hạnh phục vụ! ❄</span>
       </div>
       <div class="flex items-center gap-4 text-2xl">
         <span class="drop-shadow">🎄</span>
@@ -170,7 +165,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- 2. GIAO DIỆN BÊN TRONG: NỀN TRẮNG SÁNG & DMS KHÁCH HÀNG -->
+  <!-- 2. GIAO DIỆN BÊN TRONG: THIẾT KẾ QUẢN LÝ ĐƠN HÀNG (DMS)   -->
   <!-- ======================================================== -->
   <div id="internalApp" class="hidden min-h-screen bg-slate-100 flex flex-col text-slate-800">
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
@@ -182,15 +177,16 @@
           </div>
           <div>
             <div class="text-xs font-black tracking-widest text-slate-900 leading-tight">VINFAST</div>
-            <div class="text-[10px] font-bold text-red-600 leading-none">SHOWROOM THUẬN AN ❄</div>
+            <div class="text-[10px] font-bold text-red-600 leading-none">ORDER MANAGEMENT • THUẬN AN ❄</div>
           </div>
 
+          <!-- Navigation Pills -->
           <div class="hidden md:flex items-center gap-1.5 ml-4">
             <button class="bg-red-50 border border-red-200 text-red-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm">
               <i data-lucide="users" class="w-3.5 h-3.5 text-red-600"></i> Hồ sơ khách hàng
             </button>
             <button onclick="exportCustomerExcel()" class="text-slate-600 hover:text-slate-900 hover:bg-slate-100 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 transition">
-              <i data-lucide="sheet" class="w-3.5 h-3.5 text-emerald-600"></i> Xuất Excel
+              <i data-lucide="sheet" class="w-3.5 h-3.5 text-emerald-600"></i> Xuất Excel (.xlsx)
             </button>
             <button onclick="downloadJsonBackup()" class="text-slate-600 hover:text-slate-900 hover:bg-slate-100 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 transition">
               <i data-lucide="hard-drive-download" class="w-3.5 h-3.5 text-blue-600"></i> Sao lưu
@@ -212,22 +208,45 @@
         </div>
       </div>
 
-      <!-- Dải Pill Tabs Vòng đời khách hàng -->
+      <!-- Dải Pill Tabs lọc giai đoạn hồ sơ khách hàng -->
       <div class="border-t border-slate-100 bg-white">
         <div class="max-w-[1700px] mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar text-xs" id="stageFilterTabs"></div>
       </div>
 
-      <!-- Thanh tìm kiếm & Thêm khách -->
+      <!-- Thanh bộ lọc chọn lọc học từ phong cách Admin -->
       <div class="border-t border-slate-200/80 bg-slate-50 px-4 py-2">
         <div class="max-w-[1700px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+          
           <div class="flex items-center gap-2 flex-1 min-w-[280px] max-w-md">
             <div class="relative w-full">
-              <input type="text" id="customerSearch" oninput="filterCustomerGrid()" placeholder="Tìm theo tên, SĐT, CCCD, VIN, VSO..." class="w-full bg-white border border-slate-300 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-900 outline-none focus:border-red-500 shadow-sm" />
+              <input type="text" id="customerSearch" oninput="filterCustomerGrid()" placeholder="Tìm kiếm theo họ tên, SĐT, CCCD, số VIN, mã VSO..." class="w-full bg-white border border-slate-300 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-900 outline-none focus:border-red-500 shadow-sm" />
               <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
             </div>
           </div>
 
-          <div class="flex items-center gap-2">
+          <!-- Các bộ lọc chọn nhanh (Filter Selectors) -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <select id="filterModelSelect" onchange="filterCustomerGrid()" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 outline-none focus:border-red-500 shadow-sm">
+              <option value="">Tất cả dòng xe</option>
+              <option value="VF 3">VF 3</option>
+              <option value="VF 5">VF 5 Plus</option>
+              <option value="VF 6">VF 6</option>
+              <option value="VF 7">VF 7</option>
+              <option value="VF 8">VF 8</option>
+              <option value="VF 9">VF 9</option>
+              <option value="Limo Green">Limo Green</option>
+              <option value="EC Van">EC Van</option>
+            </select>
+
+            <select id="filterSourceSelect" onchange="filterCustomerGrid()" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 outline-none focus:border-red-500 shadow-sm">
+              <option value="">Tất cả nguồn khách</option>
+              <option value="TikTok">TikTok</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Showroom">Showroom</option>
+              <option value="Người quen">Người quen</option>
+              <option value="Zalo">Zalo</option>
+            </select>
+
             <button onclick="openNewCustomerDrawer()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm transition">
               <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Thêm khách & Báo giá xe
             </button>
@@ -236,7 +255,7 @@
       </div>
     </header>
 
-    <!-- Thân lưới hiển thị thẻ khách hàng (Nền thẻ trắng tuyết) -->
+    <!-- Thân lưới hiển thị thẻ khách hàng sạch sẽ (Đã bỏ hình xe mờ phía sau) -->
     <main class="flex-1 max-w-[1700px] w-full mx-auto p-4 md:p-6">
       <div id="customerGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
     </main>
@@ -244,7 +263,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- 3. NGĂN KÉO DRAWER: BÁO GIÁ & TÍNH HOA HỒNG CHI TIẾT      -->
+  <!-- 3. NGĂN KÉO DRAWER: BÁO GIÁ, CHỌN XE & TÍNH HOA HỒNG     -->
   <!-- ======================================================== -->
   <div id="customerDrawer" class="hidden fixed inset-0 z-50 overflow-hidden">
     <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeCustomerDrawer()"></div>
@@ -267,7 +286,7 @@
 
         <div class="flex-1 overflow-y-auto p-6 space-y-6 text-xs">
           
-          <!-- BẢNG BÁO GIÁ & HOA HỒNG (NỀN TRẮNG SÁNG) -->
+          <!-- BẢNG BÁO GIÁ & HOA HỒNG THỰC NHẬN -->
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-4 shadow-sm">
             <div class="flex items-center justify-between border-b pb-2">
               <span class="font-bold text-red-700 flex items-center gap-1.5 text-xs uppercase tracking-wider">
@@ -276,16 +295,17 @@
               <span class="text-[10px] text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">Chính sách T9/2026</span>
             </div>
 
+            <!-- Khung chọn thông minh dạng Selector -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block text-slate-600 mb-1 font-semibold">Chọn Dòng xe VinFast[cite: 6]</label>
-                <select id="calc_carSelect" onchange="onSelectCarModel()" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 font-bold text-slate-900 outline-none focus:border-red-500">
+                <select id="calc_carSelect" onchange="onSelectCarModel()" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 font-bold text-slate-900 outline-none focus:border-red-500 shadow-sm">
                 </select>
               </div>
 
               <div>
                 <label class="block text-slate-600 mb-1 font-semibold">Đối tượng hưởng Vì Tương Lai Xanh 2[cite: 7]</label>
-                <select id="calc_greenType" onchange="recalculatePriceAndCommission()" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-slate-800 outline-none focus:border-red-500">
+                <select id="calc_greenType" onchange="recalculatePriceAndCommission()" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-slate-800 outline-none focus:border-red-500 shadow-sm">
                   <option value="none">Không áp dụng (0%)</option>
                   <option value="standard" selected>Chủ xe VinFast / Cam kết chuyển đổi xanh[cite: 7]</option>
                   <option value="police">Công an / Quân đội / VNPost[cite: 7]</option>
@@ -293,7 +313,7 @@
               </div>
             </div>
 
-            <!-- Bảng tính toán các chỉ số tài chính -->
+            <!-- Các chỉ số tài chính -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
               <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm">
                 <span class="text-slate-500 block text-[10px]">Giá niêm yết (MSRP)[cite: 6]</span>
@@ -313,10 +333,10 @@
               </div>
             </div>
 
-            <!-- BẢNG TÍNH HOA HỒNG THỰC NHẬN -->
+            <!-- BẢNG TÍNH HOA HỒNG THỰC NHẬN CỦA HỮU HUY -->
             <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 space-y-1.5">
               <div class="flex justify-between items-center text-xs">
-                <span class="text-slate-600 font-medium">1. Hoa hồng KH Vì tương lai xanh 2:</span>
+                <span class="text-slate-600 font-medium">1. Hoa hồng KH Vì tương lai xanh 2:[cite: 5]</span>
                 <span id="dsp_commGreen" class="font-mono font-bold text-emerald-700">0 đ</span>
               </div>
               <div class="flex justify-between items-center text-xs">
@@ -407,6 +427,7 @@
                 </div>
               </div>
 
+              <!-- Lựa chọn trạng thái & nguồn khách dạng Selection -->
               <div>
                 <label class="block text-slate-600 mb-1 font-semibold">Trạng thái hồ sơ</label>
                 <select id="dr_stage" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 font-bold text-red-700">
@@ -421,8 +442,14 @@
               </div>
 
               <div>
-                <label class="block text-slate-600 mb-1 font-semibold">Nguồn khách</label>
-                <input type="text" id="dr_source" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900" placeholder="TikTok, Facebook, Showroom..." />
+                <label class="block text-slate-600 mb-1 font-semibold">Nguồn khách hàng</label>
+                <select id="dr_source" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900">
+                  <option value="TikTok">TikTok</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="Showroom">Showroom Thuận An</option>
+                  <option value="Người quen">Người quen giới thiệu</option>
+                  <option value="Zalo">Zalo / Hotline</option>
+                </select>
               </div>
             </div>
           </div>
@@ -456,7 +483,7 @@
 
               <div class="sm:col-span-2">
                 <label class="block text-slate-600 mb-1 font-semibold">Ghi chú nhu cầu khách</label>
-                <input type="text" id="dr_notes" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900" placeholder="Ưu đãi tặng phụ kiện, bảo hiểm..." />
+                <input type="text" id="dr_notes" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900" placeholder="Ưu đãi tặng phụ kiện, bảo hiểm, ngày lấy xe..." />
               </div>
             </div>
           </div>
@@ -492,27 +519,27 @@
   <script>
     lucide.createIcons();
 
-    // DỮ LIỆU ĐỐI CHIẾU GIÁ BÁN MSRP, HOA HỒNG & ẢNH XE VINFAST CHÌM (WATERMARK)
+    // DỮ LIỆU ĐỐI CHIẾU GIÁ BÁN MSRP VÀ HOA HỒNG
     const carPolicyDatabase = [
-      { id: 'ec_van', name: 'EC Van Tiêu chuẩn', msrp: 268000000, commGreen: 9000000, commXHD: 1000000, greenRateStd: 0.05, greenRatePol: 0.07, img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=400&q=80' },
-      { id: 'minio', name: 'Minio Green (Giá mới)', msrp: 188000000, commGreen: 4000000, commXHD: 0, greenRateStd: 0.03, greenRatePol: 0.06, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=400&q=80' },
-      { id: 'herio', name: 'Herio Green', msrp: 450000000, commGreen: 25000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'nerio', name: 'Nerio Green', msrp: 628000000, commGreen: 25000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'limo', name: 'Limo Green', msrp: 699000000, commGreen: 30000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf2', name: 'VF 2 Tiêu chuẩn', msrp: 188000000, commGreen: 5000000, commXHD: 0, greenRateStd: 0.03, greenRatePol: 0.06, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf3', name: 'VF 3 (Eco/Plus)', msrp: 285000000, commGreen: 10000000, commXHD: 3000000, greenRateStd: 0.03, greenRatePol: 0.06, img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf5', name: 'VF 5 Plus', msrp: 496000000, commGreen: 25000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf6_eco', name: 'VF 6 Eco', msrp: 646000000, commGreen: 26000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf6_plus', name: 'VF 6 Plus', msrp: 700000000, commGreen: 30000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf_mpv7', name: 'VF MPV 7', msrp: 740000000, commGreen: 30000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf7_eco', name: 'VF 7 Eco', msrp: 830000000, commGreen: 32000000, commXHD: 7000000, greenRateStd: 0.05, greenRatePol: 0.07, img: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf7_plus', name: 'VF 7 Plus', msrp: 889000000, commGreen: 33000000, commXHD: 9000000, greenRateStd: 0.05, greenRatePol: 0.07, img: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf8_eco', name: 'VF 8 Eco (CATL)', msrp: 898000000, commGreen: 50000000, commXHD: 10000000, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf8_plus', name: 'VF 8 Plus (CATL)', msrp: 1079000000, commGreen: 60000000, commXHD: 10000000, greenRateStd: 0.09, greenRatePol: 0.09, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf8_new', name: 'VF 8 Thế hệ mới', msrp: 899000000, commGreen: 45000000, commXHD: 5000000, greenRateStd: 0.05, greenRatePol: 0.07, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf9_eco', name: 'VF 9 Eco', msrp: 1348000000, commGreen: 85000000, commXHD: 0, greenRateStd: 0.05, greenRatePol: 0.07, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'vf9_plus', name: 'VF 9 Plus', msrp: 1529000000, commGreen: 95000000, commXHD: 0, greenRateStd: 0.05, greenRatePol: 0.07, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
-      { id: 'lac_hong', name: 'Lạc Hồng 900', msrp: 5000000000, commGreen: 500000000, commXHD: 0, greenRateStd: 0.05, greenRatePol: 0.07, img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80' },
+      { id: 'ec_van', name: 'EC Van Tiêu chuẩn', msrp: 268000000, commGreen: 9000000, commXHD: 1000000, greenRateStd: 0.05, greenRatePol: 0.07 },
+      { id: 'minio', name: 'Minio Green (Giá mới)', msrp: 188000000, commGreen: 4000000, commXHD: 0, greenRateStd: 0.03, greenRatePol: 0.06 },
+      { id: 'herio', name: 'Herio Green', msrp: 450000000, commGreen: 25000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'nerio', name: 'Nerio Green', msrp: 628000000, commGreen: 25000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'limo', name: 'Limo Green', msrp: 699000000, commGreen: 30000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'vf2', name: 'VF 2 Tiêu chuẩn', msrp: 188000000, commGreen: 5000000, commXHD: 0, greenRateStd: 0.03, greenRatePol: 0.06 },
+      { id: 'vf3', name: 'VF 3 (Eco/Plus)', msrp: 285000000, commGreen: 10000000, commXHD: 3000000, greenRateStd: 0.03, greenRatePol: 0.06 },
+      { id: 'vf5', name: 'VF 5 Plus', msrp: 496000000, commGreen: 25000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'vf6_eco', name: 'VF 6 Eco', msrp: 646000000, commGreen: 26000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'vf6_plus', name: 'VF 6 Plus', msrp: 700000000, commGreen: 30000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'vf_mpv7', name: 'VF MPV 7', msrp: 740000000, commGreen: 30000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'vf7_eco', name: 'VF 7 Eco', msrp: 830000000, commGreen: 32000000, commXHD: 7000000, greenRateStd: 0.05, greenRatePol: 0.07 },
+      { id: 'vf7_plus', name: 'VF 7 Plus', msrp: 889000000, commGreen: 33000000, commXHD: 9000000, greenRateStd: 0.05, greenRatePol: 0.07 },
+      { id: 'vf8_eco', name: 'VF 8 Eco (CATL)', msrp: 898000000, commGreen: 50000000, commXHD: 10000000, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'vf8_plus', name: 'VF 8 Plus (CATL)', msrp: 1079000000, commGreen: 60000000, commXHD: 10000000, greenRateStd: 0.09, greenRatePol: 0.09 },
+      { id: 'vf8_new', name: 'VF 8 Thế hệ mới', msrp: 899000000, commGreen: 45000000, commXHD: 5000000, greenRateStd: 0.05, greenRatePol: 0.07 },
+      { id: 'vf9_eco', name: 'VF 9 Eco', msrp: 1348000000, commGreen: 85000000, commXHD: 0, greenRateStd: 0.05, greenRatePol: 0.07 },
+      { id: 'vf9_plus', name: 'VF 9 Plus', msrp: 1529000000, commGreen: 95000000, commXHD: 0, greenRateStd: 0.05, greenRatePol: 0.07 },
+      { id: 'lac_hong', name: 'Lạc Hồng 900', msrp: 5000000000, commGreen: 500000000, commXHD: 0, greenRateStd: 0.05, greenRatePol: 0.07 },
     ];
 
     function formatVND(amount) {
@@ -562,9 +589,7 @@
       netElem.className = netCommission < 0 ? 'font-mono font-black text-red-600 text-base' : 'font-mono font-black text-emerald-600 text-base';
     }
 
-    // ==========================================
-    // TUYẾT RƠI CANVAS NHẸ NHÀNG TRÊN NỀN TRẮNG
-    // ==========================================
+    // Canvas Tuyết rơi nhẹ
     const canvas = document.getElementById('snowCanvas');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -586,7 +611,6 @@
       flakes.forEach(f => {
         ctx.beginPath();
         ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-        // Bông tuyết trắng viền xanh băng nhẹ để nổi bật trên nền trắng
         ctx.fillStyle = `rgba(203, 213, 225, ${f.opacity})`;
         ctx.fill();
         f.y += f.d;
@@ -597,9 +621,7 @@
     }
     drawSnow();
 
-    // ==========================================
-    // KÉO THẢ THẺ ĐĂNG NHẬP
-    // ==========================================
+    // Kéo thả thẻ đăng nhập
     const loginCard = document.getElementById('loginCard');
     const dragH = document.getElementById('dragHeader');
     let isDrag = false, sX, sY, initL, initT;
@@ -659,7 +681,7 @@
     }
 
     // ==========================================
-    // DANH SÁCH KHÁCH HÀNG & ẢNH XE CHÌM BÊN PHẢI
+    // DANH SÁCH KHÁCH HÀNG & THẺ THÔNG TIN SẠCH SẼ
     // ==========================================
     let customerList = JSON.parse(localStorage.getItem('vf_customers_huuhuy') || 'null') || [
       { id: '1', fullName: 'TRẦN ANH TUẤN', idCard: '079090001234', phone: '0908123456', stage: 'Tiềm năng', model: 'VF 3 (Eco/Plus)', carId: 'vf3', versionColor: 'Base / Vàng', vin: '', contract: '', vso: '', address: 'Thuận Giao, Thuận An', discountGiven: 2000000, finalPrice: 274450000, netCommission: 11000000, notes: 'Bớt 2tr phụ kiện', source: 'TikTok' },
@@ -704,11 +726,11 @@
       filterCustomerGrid();
     }
 
-    // RENDER THẺ KHÁCH HÀNG: CÓ ẢNH XE CHÌM NẰM DƯỚI TÊN BÊN PHẢI
+    // RENDER THẺ KHÁCH HÀNG: ĐÃ BỎ HÌNH XE MỜ PHÍA SAU, GIAO DIỆN SẠCH ĐẸP
     function renderCustomerCards(list) {
       const grid = document.getElementById('customerGrid');
       if (list.length === 0) {
-        grid.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400">Chưa có khách hàng nào.</div>';
+        grid.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400">Chưa có khách hàng nào trong nhóm này.</div>';
         return;
       }
 
@@ -719,20 +741,11 @@
         if (c.stage === 'Chờ duyệt vay') badgeColor = 'bg-amber-50 text-amber-700 border-amber-200';
         if (c.stage === 'Đã nhận xe') badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
 
-        // Lấy hình ảnh của xe đã chốt
-        const carData = carPolicyDatabase.find(item => item.id === c.carId) || carPolicyDatabase[0];
-        const carImg = carData ? carData.img : '';
-
         return `
-          <div class="relative bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-red-300 transition-all flex flex-col justify-between overflow-hidden">
+          <div class="bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-red-300 transition-all flex flex-col justify-between overflow-hidden">
             
-            <!-- HÌNH ẢNH XE CHÌM NẰM ẨN BÊN PHÍA GÓC PHẢI DƯỚI TÊN KHÁCH HÀNG -->
-            <div class="absolute right-0 top-0 w-36 h-28 pointer-events-none overflow-hidden flex items-start justify-end">
-              <img src="${carImg}" alt="${c.model}" class="w-full h-full object-contain opacity-20 filter grayscale contrast-125 transform translate-x-3 -translate-y-1" />
-            </div>
-
             <!-- Header Thẻ -->
-            <div class="relative z-10 p-3.5 border-b border-slate-100 flex items-start justify-between">
+            <div class="p-3.5 border-b border-slate-100 flex items-start justify-between bg-slate-50/50">
               <div>
                 <h4 class="font-extrabold text-slate-900 text-sm tracking-tight">${c.fullName}</h4>
                 <div class="text-[11px] text-slate-600 font-semibold mt-0.5">
@@ -745,7 +758,7 @@
             </div>
 
             <!-- Nội dung chi tiết thẻ -->
-            <div class="relative z-10 p-3.5 space-y-2 flex-1 text-[11px]">
+            <div class="p-3.5 space-y-2 flex-1 text-[11px]">
               <div class="flex justify-between items-center font-mono">
                 <span class="text-slate-400">SĐT:</span>
                 <a href="tel:${c.phone}" class="font-bold text-blue-600 hover:underline">${c.phone}</a>
@@ -753,6 +766,10 @@
               <div class="flex justify-between items-center font-mono">
                 <span class="text-slate-400">CCCD:</span>
                 <span class="font-bold text-slate-800 cursor-pointer select-all" onclick="navigator.clipboard.writeText('${c.idCard}');alert('Đã copy CCCD: ${c.idCard}')">${c.idCard}</span>
+              </div>
+              <div class="flex justify-between items-center font-mono">
+                <span class="text-slate-400">Nguồn khách:</span>
+                <span class="font-semibold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">${c.source || 'Showroom'}</span>
               </div>
               
               <!-- Bảng tóm tắt tài chính & hoa hồng -->
@@ -775,7 +792,7 @@
             </div>
 
             <!-- Chân thẻ thao tác -->
-            <div class="relative z-10 bg-slate-50 border-t border-slate-100 px-3 py-2 flex items-center justify-between">
+            <div class="bg-slate-50 border-t border-slate-100 px-3 py-2 flex items-center justify-between">
               <a href="tel:${c.phone}" class="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
                 <i data-lucide="phone" class="w-3 h-3"></i> Gọi ngay
               </a>
@@ -791,10 +808,15 @@
 
     function filterCustomerGrid() {
       const q = (document.getElementById('customerSearch').value || '').toLowerCase();
+      const model = document.getElementById('filterModelSelect').value;
+      const source = document.getElementById('filterSourceSelect').value;
+
       const filtered = customerList.filter(c => {
         const matchStage = currentSelectedStage === 'all' || c.stage === currentSelectedStage;
+        const matchModel = !model || c.model.includes(model);
+        const matchSource = !source || c.source === source;
         const matchSearch = c.fullName.toLowerCase().includes(q) || c.idCard.includes(q) || c.phone.includes(q) || (c.vin && c.vin.toLowerCase().includes(q));
-        return matchStage && matchSearch;
+        return matchStage && matchModel && matchSource && matchSearch;
       });
       renderCustomerCards(filtered);
     }
@@ -827,7 +849,7 @@
       document.getElementById('dr_dob').value = c.dob || '';
       document.getElementById('dr_address').value = c.address || '';
       document.getElementById('dr_stage').value = c.stage || 'Tiềm năng';
-      document.getElementById('dr_source').value = c.source || '';
+      document.getElementById('dr_source').value = c.source || 'Showroom';
       document.getElementById('dr_versionColor').value = c.versionColor || '';
       document.getElementById('dr_vinNumber').value = c.vin || '';
       document.getElementById('dr_contract').value = c.contract || '';
@@ -847,10 +869,11 @@
     }
 
     function clearDrawerForm() {
-      ['dr_fullName', 'dr_idCard', 'dr_phone', 'dr_dob', 'dr_address', 'dr_source', 'dr_versionColor', 'dr_vinNumber', 'dr_contract', 'dr_vso', 'dr_notes'].forEach(id => {
+      ['dr_fullName', 'dr_idCard', 'dr_phone', 'dr_dob', 'dr_address', 'dr_versionColor', 'dr_vinNumber', 'dr_contract', 'dr_vso', 'dr_notes'].forEach(id => {
         document.getElementById(id).value = '';
       });
       document.getElementById('dr_stage').value = 'Tiềm năng';
+      document.getElementById('dr_source').value = 'Showroom';
       drawerImgs = [];
       document.getElementById('drawerImgPreviews').innerHTML = '';
       document.getElementById('btnDrawerOcr').disabled = true;
@@ -863,7 +886,6 @@
       alert('Đã sao chép: ' + el.value);
     }
 
-    // OCR CCCD
     function handleDrawerImages(e) {
       const files = Array.from(e.target.files);
       files.forEach(f => {
@@ -930,7 +952,6 @@
       setTimeout(() => progressBox.classList.add('hidden'), 1500);
     }
 
-    // LƯU HỒ SƠ & BÁO GIÁ
     function saveDrawerCustomer() {
       const fullName = document.getElementById('dr_fullName').value.trim();
       const idCard = document.getElementById('dr_idCard').value.trim();
@@ -958,7 +979,7 @@
         dob: document.getElementById('dr_dob').value.trim(),
         address: document.getElementById('dr_address').value.trim(),
         stage: document.getElementById('dr_stage').value,
-        source: document.getElementById('dr_source').value.trim(),
+        source: document.getElementById('dr_source').value,
         model: car.name,
         carId: car.id,
         versionColor: document.getElementById('dr_versionColor').value.trim(),
@@ -1028,6 +1049,7 @@
         { header: 'Trạng thái', key: 'stage', width: 18 },
         { header: 'Dòng xe', key: 'model', width: 20 },
         { header: 'Phiên bản / Màu', key: 'versionColor', width: 18 },
+        { header: 'Nguồn khách', key: 'source', width: 16 },
         { header: 'Giá niêm yết MSRP', key: 'msrp', width: 18 },
         { header: 'Đã bớt cho khách', key: 'discountGiven', width: 18 },
         { header: 'Giá bán chốt', key: 'finalPrice', width: 18 },
