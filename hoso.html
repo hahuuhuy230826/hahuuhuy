@@ -3,740 +3,810 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hồ sơ khách hàng – Hữu Huy | VinFast</title>
+  <title>Quản Lý Hồ Sơ Khách Hàng – Hà Hữu Huy | VinFast Thuận An</title>
   <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Các thư viện xử lý tài liệu -->
+  <!-- Thư viện OCR, Word, Excel -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <style>
+    /* Nền trời đêm Đêm hội trăng rằm cho màn hình khóa */
+    .bg-hoi-an {
+      background: radial-gradient(circle at 50% 15%, #2a1f4d 0%, #110d26 45%, #080612 100%);
+    }
+    .river-reflection {
+      background: linear-gradient(180deg, rgba(16, 12, 38, 0.9) 0%, rgba(5, 3, 15, 0.98) 100%);
+    }
+    @keyframes swing {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+    .lantern-swing { transform-origin: top center; animation: swing 3s ease-in-out infinite; }
+    .glass-card {
+      background: rgba(22, 18, 38, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 197, 24, 0.35);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+    .corner-decor { position: absolute; width: 10px; height: 10px; border-color: #f59e0b; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+<body class="bg-slate-100 text-slate-800 min-h-screen font-sans selection:bg-blue-600 selection:text-white">
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-      <div>
-        <h1 class="text-lg md:text-xl font-bold tracking-wide">Hồ sơ khách hàng – Hữu Huy</h1>
-        <p class="text-xs text-blue-200">Hỗ trợ tư vấn bán xe VinFast & Chuẩn bị hợp đồng</p>
+  <!-- ======================================================== -->
+  <!-- 1. GIAO DIỆN BÊN NGOÀI: ĐÊM HỘI TRĂNG RẰM (KÉO THẢ THẺ)   -->
+  <!-- ======================================================== -->
+  <div id="loginScreen" class="relative w-full min-h-screen bg-hoi-an flex flex-col justify-between overflow-hidden select-none">
+    <div class="absolute top-4 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full bg-amber-100/20 blur-3xl pointer-events-none"></div>
+    <div class="absolute top-12 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-gradient-to-b from-amber-100 to-amber-300 shadow-[0_0_50px_rgba(251,191,36,0.8)] pointer-events-none"></div>
+
+    <div class="relative z-10 w-full pt-2">
+      <div class="w-full h-[2px] bg-gradient-to-r from-amber-900 via-amber-600 to-amber-900 opacity-60"></div>
+      <div class="flex justify-around items-start max-w-6xl mx-auto px-4 -mt-1">
+        <div class="lantern-swing flex flex-col items-center"><div class="w-[1px] h-6 bg-amber-400"></div><span class="text-2xl">🏮</span></div>
+        <div class="lantern-swing flex flex-col items-center"><div class="w-[1px] h-10 bg-amber-400"></div><span class="text-2xl">⭐</span></div>
+        <div class="lantern-swing flex flex-col items-center hidden sm:flex"><div class="w-[1px] h-8 bg-amber-400"></div><span class="text-2xl">🐟</span></div>
+        <div class="lantern-swing flex flex-col items-center"><div class="w-[1px] h-5 bg-amber-400"></div><span class="text-2xl">🐇</span></div>
+        <div class="lantern-swing flex flex-col items-center"><div class="w-[1px] h-7 bg-amber-400"></div><span class="text-2xl">🏮</span></div>
       </div>
-      <div class="text-xs bg-blue-800 px-3 py-1.5 rounded-full border border-blue-600 flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="hidden sm:inline">Lưu an toàn trên máy này</span>
+
+      <div class="text-center mt-6 z-10 px-4">
+        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-[11px] font-semibold text-amber-300 uppercase mb-1">
+          ✦ ĐÊM HỘI TRĂNG RẰM ✦
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-wider text-amber-100 drop-shadow-[0_2px_15px_rgba(245,158,11,0.6)]">
+          SHOWROOM THUẬN AN
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300 font-light mt-1">Hệ thống quản lý thông minh giúp tối ưu quy trình kinh doanh & hồ sơ xe</p>
       </div>
     </div>
 
-    <!-- Navigation Tabs -->
-    <div class="flex border-t border-blue-600/60 max-w-6xl mx-auto px-2 overflow-x-auto">
-      <button onclick="switchTab('extract')" id="tab-btn-extract" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-semibold border-b-2 border-white text-white bg-blue-800/40">
-        <i data-lucide="camera" class="w-4 h-4"></i> Trích xuất
-      </button>
-      <button onclick="switchTab('compare')" id="tab-btn-compare" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-medium border-b-2 border-transparent text-blue-100 hover:text-white">
-        <i data-lucide="file-check" class="w-4 h-4"></i> Đối chiếu Word
-      </button>
-      <button onclick="switchTab('customers')" id="tab-btn-customers" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-medium border-b-2 border-transparent text-blue-100 hover:text-white">
-        <i data-lucide="users" class="w-4 h-4"></i> Khách hàng (<span id="cust-count">0</span>)
-      </button>
-      <button onclick="switchTab('backup')" id="tab-btn-backup" class="tab-btn flex items-center gap-2 py-2.5 px-4 text-sm font-medium border-b-2 border-transparent text-blue-100 hover:text-white">
-        <i data-lucide="hard-drive-download" class="w-4 h-4"></i> Sao lưu
-      </button>
-    </div>
-  </header>
+    <!-- Thẻ kéo di chuyển -->
+    <div id="loginCard" class="glass-card absolute z-30 w-[90%] sm:w-[410px] rounded-xl p-6 text-slate-200 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl cursor-default">
+      <div class="corner-decor top-2 left-2 border-t-2 border-l-2"></div>
+      <div class="corner-decor top-2 right-2 border-t-2 border-r-2"></div>
+      <div class="corner-decor bottom-2 left-2 border-b-2 border-l-2"></div>
+      <div class="corner-decor bottom-2 right-2 border-b-2 border-r-2"></div>
 
-  <!-- Thông báo lưu trữ -->
-  <div class="bg-amber-50 border-b border-amber-200 text-amber-800 text-xs px-4 py-1.5 text-center flex items-center justify-center gap-1.5">
-    <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0 text-amber-600"></i>
-    <span>Dữ liệu lưu trực tiếp trong trình duyệt máy này. Trước khi xóa lịch sử web, vui lòng vào tab <strong>Sao lưu</strong> để tải file dự phòng.</span>
+      <div id="dragHeader" class="cursor-move flex items-center justify-center gap-2 pb-3 border-b border-amber-500/20 text-[11px] text-amber-300 font-medium uppercase">
+        <i data-lucide="grip-horizontal" class="w-4 h-4"></i> KÉO DI CHUYỂN THẺ KHẮP NƠI
+      </div>
+
+      <div class="text-center my-4">
+        <span class="inline-block px-3 py-1 rounded bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold">🏮 TẾT TRUNG THU</span>
+        <p class="text-xs text-amber-200/90 italic mt-2.5 font-serif">“Trăng rằm tỏa sáng muôn nơi, Thuận An gắn kết rạng ngời niềm tin.”</p>
+      </div>
+
+      <form onsubmit="handleLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold uppercase text-[10px]">Tài khoản Email</label>
+          <input type="email" id="loginEmail" required value="hshuy2509@gmail.com" class="w-full bg-slate-900/80 border border-slate-700 focus:border-amber-400 rounded-lg px-3.5 py-2.5 text-slate-100 outline-none" />
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1 font-semibold uppercase text-[10px]">Mật khẩu</label>
+          <input type="password" id="loginPassword" required value="123456" class="w-full bg-slate-900/80 border border-slate-700 focus:border-amber-400 rounded-lg px-3.5 py-2.5 text-slate-100 outline-none" />
+        </div>
+        <button type="submit" class="w-full py-3 rounded-lg font-bold text-slate-950 uppercase text-xs bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:brightness-110 shadow-[0_0_20px_rgba(245,158,11,0.5)] transition flex items-center justify-center gap-2">
+          <span>ĐĂNG NHẬP</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="relative z-0 h-40 river-reflection border-t border-amber-900/40 flex items-end justify-around pb-6">
+      <span class="text-2xl">🪷</span><span class="text-3xl">🛶</span><span class="text-2xl">🪷</span><span class="text-3xl">🛶</span>
+    </div>
+    <footer class="text-center py-2 text-[10px] text-slate-500 bg-black/60">© 2026 Showroom Thuận An • Đêm Hội Trăng Rằm</footer>
   </div>
 
-  <!-- Main Content -->
-  <main class="flex-1 max-w-6xl w-full mx-auto p-3 md:p-6">
 
-    <!-- TAB 1: TRÍCH XUẤT ẢNH -->
-    <section id="tab-extract" class="space-y-6">
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <h2 class="text-base font-bold text-blue-900 mb-2 flex items-center gap-2">
-          <i data-lucide="image" class="w-5 h-5 text-blue-600"></i> Tải ảnh giấy tờ (CCCD 2 mặt, Giấy tờ xe, Ngân hàng)
-        </h2>
-        <p class="text-xs text-slate-500 mb-4">Bạn có thể chọn chụp từ điện thoại hoặc tải nhiều ảnh một lúc. Ảnh được xử lý OCR trực tiếp trên máy, không gửi lên máy chủ.</p>
+  <!-- ======================================================== -->
+  <!-- 2. GIAO DIỆN BÊN TRONG: QUẢN LÝ HỒ SƠ KHÁCH HÀNG (DMS)    -->
+  <!-- ======================================================== -->
+  <div id="internalApp" class="hidden min-h-screen bg-slate-50 flex flex-col">
+    
+    <!-- Top Header chuẩn phong cách Thuận An -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+      <div class="max-w-[1700px] mx-auto px-4 py-2.5 flex items-center justify-between">
         
-        <div class="flex flex-wrap items-center gap-3">
-          <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm transition">
-            <i data-lucide="upload" class="w-4 h-4"></i> Chọn hoặc Chụp ảnh
-            <input type="file" id="imageInput" multiple accept="image/*" class="hidden" onchange="handleImageUpload(event)" />
-          </label>
-          <button id="btn-run-ocr" onclick="runOCR()" disabled class="bg-emerald-600 disabled:bg-slate-300 hover:bg-emerald-700 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm transition">
-            <i data-lucide="scan-text" class="w-4 h-4"></i> Đọc thông tin (OCR)
-          </button>
-        </div>
-
-        <!-- Thanh tiến trình -->
-        <div id="ocr-progress-container" class="hidden mt-4">
-          <div class="flex justify-between text-xs text-slate-600 mb-1">
-            <span id="ocr-status-text">Đang chuẩn bị OCR tiếng Việt...</span>
-            <span id="ocr-percentage">0%</span>
-          </div>
-          <div class="w-full bg-slate-200 rounded-full h-2">
-            <div id="ocr-progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-          </div>
-        </div>
-
-        <!-- Khung xem trước ảnh -->
-        <div id="image-previews" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4"></div>
-      </div>
-
-      <!-- Form nhập & kiểm tra thông tin khách hàng -->
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-5">
-        <div class="flex flex-wrap justify-between items-center border-b pb-3 gap-2">
-          <h2 class="text-base font-bold text-blue-900 flex items-center gap-2">
-            <i data-lucide="user-check" class="w-5 h-5 text-blue-600"></i> Thông tin khách hàng & Xe
-          </h2>
+        <!-- Logo VinFast Showroom Thuận An -->
+        <div class="flex items-center gap-4">
           <div class="flex items-center gap-2">
-            <button onclick="clearCurrentForm()" class="text-xs text-slate-500 hover:text-red-600 px-3 py-1.5 border border-slate-200 rounded-md">Làm mới</button>
-            <button onclick="saveCurrentCustomer()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-md shadow flex items-center gap-1.5">
-              <i data-lucide="save" class="w-4 h-4"></i> Lưu khách hàng
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-extrabold shadow">VF</div>
+            <div>
+              <div class="text-xs font-black tracking-widest text-slate-900 leading-tight">VINFAST</div>
+              <div class="text-[10px] font-bold text-amber-600 leading-none">SHOWROOM THUẬN AN</div>
+            </div>
+          </div>
+
+          <div class="hidden md:flex items-center gap-1.5 ml-4">
+            <button class="bg-blue-100/70 border border-blue-300 text-blue-900 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+              <i data-lucide="users" class="w-3.5 h-3.5 text-blue-700"></i> Hồ sơ khách hàng
+            </button>
+            <button onclick="exportCustomerExcel()" class="text-slate-600 hover:bg-slate-100 px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition">
+              <i data-lucide="sheet" class="w-3.5 h-3.5"></i> Xuất Excel (.xlsx)
+            </button>
+            <button onclick="downloadJsonBackup()" class="text-slate-600 hover:bg-slate-100 px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition">
+              <i data-lucide="hard-drive-download" class="w-3.5 h-3.5"></i> Sao lưu dữ liệu
             </button>
           </div>
         </div>
 
-        <!-- Nhóm: Thông tin cá nhân -->
-        <div>
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">1. Thông tin cá nhân & Giấy tờ</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Họ và tên *</label>
-              <div class="relative">
-                <input type="text" id="f_fullName" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 uppercase font-medium focus:ring-2 focus:ring-blue-500" placeholder="NGUYỄN VĂN A" />
-                <button onclick="copyField('f_fullName')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Số CCCD (12 số) *</label>
-              <div class="relative">
-                <input type="text" id="f_idCardNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono focus:ring-2 focus:ring-blue-500" placeholder="079..." />
-                <button onclick="copyField('f_idCardNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Số điện thoại *</label>
-              <div class="relative">
-                <input type="text" id="f_phone" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="090..." />
-                <button onclick="copyField('f_phone')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Ngày sinh (dd/mm/yyyy)</label>
-              <input type="text" id="f_dob" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="01/01/1990" />
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Email</label>
-              <input type="text" id="f_email" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="khachhang@gmail.com" />
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Nơi cấp CCCD</label>
-              <input type="text" id="f_idCardIssuePlace" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" value="Cục Cảnh sát QLHC về TTXH" />
-            </div>
-            <div class="sm:col-span-2">
-              <label class="block text-xs font-medium text-slate-600 mb-1">Địa chỉ thường trú (theo CCCD) *</label>
-              <div class="relative">
-                <input type="text" id="f_permanentAddress" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 pr-8" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/TP" />
-                <button onclick="copyField('f_permanentAddress')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Địa chỉ liên hệ</label>
-              <input type="text" id="f_contactAddress" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Nếu khác thường trú" />
+        <!-- Right Side: Order Badge & Profile HÀ HỮU HUY -->
+        <div class="flex items-center gap-3">
+          <div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-amber-700 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>HỆ THỐNG DMS</span>
+          </div>
+
+          <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-amber-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">HH</div>
+            <div class="text-left">
+              <div class="text-xs font-bold text-slate-800 leading-tight">HÀ HỮU HUY</div>
+              <div class="text-[10px] text-emerald-600 font-semibold">⭐ 54% TVBH</div>
             </div>
           </div>
-        </div>
 
-        <!-- Nhóm: Ngân hàng -->
-        <div>
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">2. Tài khoản Ngân hàng</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Tên ngân hàng</label>
-              <input type="text" id="f_bankName" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Vietcombank, MB, Techcombank..." />
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Số tài khoản</label>
-              <div class="relative">
-                <input type="text" id="f_bankAccountNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="Số TK ngân hàng" />
-                <button onclick="copyField('f_bankAccountNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Tên chủ tài khoản</label>
-              <input type="text" id="f_bankAccountHolder" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 uppercase" placeholder="Tên chủ tài khoản" />
+          <button onclick="handleLogout()" class="text-slate-400 hover:text-red-600 p-1.5 rounded-md hover:bg-slate-100 transition" title="Đăng xuất">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dải nút bấm lọc Vòng đời khách hàng (Pill Tabs) -->
+      <div class="border-t border-slate-100 bg-white">
+        <div class="max-w-[1700px] mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar text-xs" id="stageFilterTabs">
+          <!-- Render tự động bằng JavaScript -->
+        </div>
+      </div>
+
+      <!-- Thanh công cụ tìm kiếm và lọc nâng cao -->
+      <div class="border-t border-slate-200/60 bg-slate-50/70 px-4 py-2">
+        <div class="max-w-[1700px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2 flex-1 min-w-[280px] max-w-md">
+            <div class="relative w-full">
+              <input type="text" id="customerSearch" oninput="filterCustomerGrid()" placeholder="Tìm theo tên khách, SĐT, CCCD, số VIN, mã VSO..." class="w-full bg-white border border-slate-300 rounded-lg pl-8 pr-3 py-1.5 text-xs outline-none focus:border-blue-500 shadow-sm" />
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
             </div>
           </div>
-        </div>
 
-        <!-- Nhóm: Thông tin Xe VinFast -->
-        <div>
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">3. Thông tin xe & Hợp đồng</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Dòng xe VinFast</label>
-              <select id="f_carModel" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5">
-                <option value="VF 3">VF 3</option>
-                <option value="VF 5 Plus">VF 5 Plus</option>
-                <option value="VF 6">VF 6</option>
-                <option value="VF 7">VF 7</option>
-                <option value="VF 8">VF 8</option>
-                <option value="VF 9">VF 9</option>
-                <option value="VF MPV7">VF MPV7</option>
-                <option value="Limo Green">Limo Green</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Phiên bản / Màu sắc</label>
-              <input type="text" id="f_carVersionColor" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Plus / Trắng, Xanh..." />
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Số khung (VIN 17 ký tự)</label>
-              <div class="relative">
-                <input type="text" id="f_vinNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono uppercase" placeholder="RLY..." />
-                <button onclick="copyField('f_vinNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Số máy</label>
-              <div class="relative">
-                <input type="text" id="f_engineNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono uppercase" />
-                <button onclick="copyField('f_engineNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Số HĐMB</label>
-              <input type="text" id="f_contractNumber" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="Số hợp đồng" />
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">Mã đơn VSO</label>
-              <input type="text" id="f_vsoCode" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="Mã VSO" />
-            </div>
-            <div class="sm:col-span-2">
-              <label class="block text-xs font-medium text-slate-600 mb-1">Ghi chú thêm</label>
-              <input type="text" id="f_notes" class="w-full text-sm border border-slate-300 rounded-md px-3 py-1.5" placeholder="Ghi chú khuyến mãi, pin, thời gian giao..." />
-            </div>
+          <div class="flex items-center gap-2">
+            <select id="filterModelSelect" onchange="filterCustomerGrid()" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 outline-none">
+              <option value="">Tất cả dòng xe</option>
+              <option value="VF 3">VF 3</option>
+              <option value="VF 5">VF 5 Plus</option>
+              <option value="VF 6">VF 6</option>
+              <option value="VF 7">VF 7</option>
+              <option value="VF 8">VF 8</option>
+              <option value="VF 9">VF 9</option>
+              <option value="Limo Green">Limo Green</option>
+              <option value="EC Van">EC Van</option>
+            </select>
+
+            <button onclick="openNewCustomerDrawer()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm transition">
+              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Thêm khách hàng mới
+            </button>
           </div>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- TAB 2: ĐỐI CHIẾU FILE WORD -->
-    <section id="tab-compare" class="hidden space-y-6">
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <h2 class="text-base font-bold text-blue-900 mb-2 flex items-center gap-2">
-          <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i> Đọc và đối chiếu với Hợp đồng (.docx)
-        </h2>
-        <p class="text-xs text-slate-500 mb-4">Hệ thống sẽ tự động tìm mục <strong>Bên Mua</strong> trong file Word và so khớp với thông tin giấy tờ.</p>
+    <!-- Thân lưới hiển thị các Thẻ khách hàng (Customer Grid Cards) -->
+    <main class="flex-1 max-w-[1700px] w-full mx-auto p-4 md:p-6">
+      <div id="customerGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <!-- Render các thẻ khách hàng -->
+      </div>
+    </main>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- 3. NGĂN KÉO LẬP HỒ SƠ KHÁCH HÀNG & OCR (SLIDE-OVER DRAWER) -->
+  <!-- ======================================================== -->
+  <div id="customerDrawer" class="hidden fixed inset-0 z-50 overflow-hidden">
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeCustomerDrawer()"></div>
+
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-2xl bg-white shadow-2xl flex flex-col">
         
-        <input type="file" id="wordFileInput" accept=".docx" class="text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" onchange="handleWordFile(event)" />
-
-        <div id="word-error" class="hidden mt-3 text-xs text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200"></div>
-      </div>
-
-      <!-- Bảng đối chiếu -->
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
-        <h3 class="text-sm font-bold text-slate-700 mb-3">Kết quả đối chiếu thông tin</h3>
-        <table class="w-full text-left text-xs border-collapse">
-          <thead>
-            <tr class="bg-slate-100 text-slate-600 border-b">
-              <th class="p-2.5">Trường thông tin</th>
-              <th class="p-2.5">Từ giấy tờ (OCR/Nhập)</th>
-              <th class="p-2.5">Từ file Word</th>
-              <th class="p-2.5">Kết quả</th>
-              <th class="p-2.5">Thông tin được chọn chốt</th>
-            </tr>
-          </thead>
-          <tbody id="compare-table-body" class="divide-y divide-slate-100">
-            <tr>
-              <td colspan="5" class="p-4 text-center text-slate-400">Chưa tải file Word để đối chiếu</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- TAB 3: DANH SÁCH KHÁCH HÀNG & XUẤT EXCEL -->
-    <section id="tab-customers" class="hidden space-y-6">
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <div class="flex flex-wrap justify-between items-center gap-3">
-          <div class="flex-1 min-w-[240px]">
-            <input type="text" id="searchCustomerInput" oninput="renderCustomerList()" placeholder="Tìm theo tên, SĐT, CCCD, VIN, VSO..." class="w-full text-xs border border-slate-300 rounded-lg px-3 py-2" />
+        <div class="px-6 py-4 bg-blue-700 text-white flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i data-lucide="user-check" class="w-5 h-5 text-amber-300"></i>
+            <div>
+              <h2 class="text-sm font-bold tracking-wide" id="drawerTitle">CHI TIẾT HỒ SƠ KHÁCH HÀNG</h2>
+              <p class="text-[11px] text-blue-200">Tư vấn bán xe & Soạn thảo hợp đồng Showroom Thuận An</p>
+            </div>
           </div>
-          <button onclick="exportAllToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 shadow-sm transition">
-            <i data-lucide="sheet" class="w-4 h-4"></i> Xuất Excel (.xlsx)
+          <button onclick="closeCustomerDrawer()" class="text-blue-100 hover:text-white p-1 rounded-md">
+            <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr class="bg-slate-100 text-slate-600 border-b">
-                <th class="p-2.5">Họ tên</th>
-                <th class="p-2.5">CCCD</th>
-                <th class="p-2.5">SĐT</th>
-                <th class="p-2.5">Dòng xe</th>
-                <th class="p-2.5">Số khung (VIN)</th>
-                <th class="p-2.5">Mã VSO / HĐMB</th>
-                <th class="p-2.5 text-center">Thao tác</th>
-              </tr>
-            </thead>
-            <tbody id="customer-list-body" class="divide-y divide-slate-100"></tbody>
-          </table>
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 text-xs">
+          
+          <!-- Khu vực Quét OCR CCCD -->
+          <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-blue-900 flex items-center gap-1.5 text-xs">
+                <i data-lucide="camera" class="w-4 h-4 text-blue-600"></i> QUÉT CCCD / GIẤY TỜ BẰNG OCR
+              </span>
+              <span class="text-[10px] text-slate-500 font-medium">Bảo mật thiết bị 100%</span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <label class="cursor-pointer bg-white border border-blue-300 hover:bg-blue-50 text-blue-700 font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm transition">
+                <i data-lucide="upload" class="w-3.5 h-3.5"></i> Chọn / Chụp CCCD
+                <input type="file" id="drawerImgInput" multiple accept="image/*" class="hidden" onchange="handleDrawerImages(event)" />
+              </label>
+              <button id="btnDrawerOcr" onclick="runDrawerOCR()" disabled class="bg-blue-600 disabled:bg-slate-300 hover:bg-blue-700 text-white font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                <i data-lucide="scan-text" class="w-3.5 h-3.5"></i> Đọc thông tin
+              </button>
+            </div>
+
+            <!-- Thanh tiến trình OCR -->
+            <div id="drawerOcrProgress" class="hidden">
+              <div class="text-[11px] text-blue-800 font-medium mb-1" id="drawerOcrStatus">Đang xử lý...</div>
+              <div class="w-full bg-blue-200 h-1.5 rounded-full overflow-hidden">
+                <div id="drawerOcrBar" class="bg-blue-600 h-full w-0 transition-all duration-200"></div>
+              </div>
+            </div>
+
+            <div id="drawerImgPreviews" class="grid grid-cols-4 gap-2 pt-1"></div>
+          </div>
+
+          <!-- Thông tin cá nhân khách hàng -->
+          <div class="space-y-4">
+            <h3 class="font-bold uppercase tracking-wider text-slate-700 border-b pb-1">1. Thông tin cá nhân & Giấy tờ</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Họ và tên *</label>
+                <div class="relative">
+                  <input type="text" id="dr_fullName" class="w-full border border-slate-300 rounded-md px-3 py-1.5 uppercase font-semibold text-slate-900" placeholder="NGUYỄN VĂN A" />
+                  <button onclick="copyVal('dr_fullName')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Số CCCD (12 số) *</label>
+                <div class="relative">
+                  <input type="text" id="dr_idCard" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-mono text-slate-900 font-bold" placeholder="079..." />
+                  <button onclick="copyVal('dr_idCard')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Số điện thoại *</label>
+                <div class="relative">
+                  <input type="text" id="dr_phone" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-mono text-slate-900 font-bold" placeholder="090..." />
+                  <button onclick="copyVal('dr_phone')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Ngày sinh (dd/mm/yyyy)</label>
+                <input type="text" id="dr_dob" class="w-full border border-slate-300 rounded-md px-3 py-1.5" placeholder="01/01/1990" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-slate-600 mb-1 font-medium">Địa chỉ thường trú (theo CCCD) *</label>
+                <div class="relative">
+                  <input type="text" id="dr_address" class="w-full border border-slate-300 rounded-md px-3 py-1.5 text-slate-900 pr-8" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/TP" />
+                  <button onclick="copyVal('dr_address')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Trạng thái hồ sơ</label>
+                <select id="dr_stage" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-semibold text-blue-700 bg-blue-50/40">
+                  <option value="Tiềm năng">Tiềm năng nóng</option>
+                  <option value="Lái thử">Hẹn lái thử</option>
+                  <option value="Đặt cọc">Đã đặt cọc</option>
+                  <option value="Chờ duyệt vay">Chờ duyệt vay ngân hàng</option>
+                  <option value="Đã lên HĐMB">Đã lên HĐMB</option>
+                  <option value="Chờ giao xe">Chờ giao xe</option>
+                  <option value="Đã nhận xe">Đã nhận xe</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Nguồn khách hàng</label>
+                <input type="text" id="dr_source" class="w-full border border-slate-300 rounded-md px-3 py-1.5" placeholder="TikTok, Facebook, Showroom, Người quen..." />
+              </div>
+            </div>
+          </div>
+
+          <!-- Thông tin xe & Hợp đồng -->
+          <div class="space-y-4">
+            <h3 class="font-bold uppercase tracking-wider text-slate-700 border-b pb-1">2. Thông tin xe & Hợp đồng</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Dòng xe VinFast</label>
+                <select id="dr_carModel" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-bold text-slate-800">
+                  <option value="VF 3">VF 3</option>
+                  <option value="VF 5">VF 5 Plus</option>
+                  <option value="VF 6">VF 6</option>
+                  <option value="VF 7">VF 7</option>
+                  <option value="VF 8">VF 8</option>
+                  <option value="VF 9">VF 9</option>
+                  <option value="Limo Green">Limo Green</option>
+                  <option value="EC Van">EC Van</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Phiên bản / Màu sắc</label>
+                <input type="text" id="dr_versionColor" class="w-full border border-slate-300 rounded-md px-3 py-1.5" placeholder="Plus / Trắng, Xanh..." />
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Số khung (VIN 17 ký tự)</label>
+                <div class="relative">
+                  <input type="text" id="dr_vinNumber" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-mono uppercase text-blue-700 font-bold" placeholder="RLY..." />
+                  <button onclick="copyVal('dr_vinNumber')" class="absolute right-2 top-2 text-slate-400 hover:text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Số máy</label>
+                <input type="text" id="dr_engineNumber" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-mono uppercase" />
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Số HĐMB</label>
+                <input type="text" id="dr_contract" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="HĐMB-..." />
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-medium">Mã đơn VSO</label>
+                <input type="text" id="dr_vso" class="w-full border border-slate-300 rounded-md px-3 py-1.5 font-mono" placeholder="VSO-..." />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-slate-600 mb-1 font-medium">Ghi chú yêu cầu của khách</label>
+                <input type="text" id="dr_notes" class="w-full border border-slate-300 rounded-md px-3 py-1.5" placeholder="Khách thích biển số đẹp, cọc 50tr, giao trước ngày rằm..." />
+              </div>
+            </div>
+          </div>
+
+          <!-- Đối chiếu file Word -->
+          <div class="border-t pt-4 space-y-2">
+            <span class="font-bold text-slate-700 flex items-center gap-1.5">
+              <i data-lucide="file-check" class="w-4 h-4 text-emerald-600"></i> ĐỐI CHIẾU HỢP ĐỒNG WORD (.DOCX)
+            </span>
+            <input type="file" accept=".docx" class="text-xs text-slate-600" onchange="compareDrawerWord(event)" />
+            <div id="drawerWordResult" class="text-[11px] text-slate-500 italic">Chưa tải file đối chiếu.</div>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- TAB 4: SAO LƯU & KHÔI PHỤC -->
-    <section id="tab-backup" class="hidden space-y-6">
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <h2 class="text-base font-bold text-blue-900 flex items-center gap-2">
-          <i data-lucide="database" class="w-5 h-5 text-blue-600"></i> Sao lưu và Khôi phục dữ liệu
-        </h2>
-        <p class="text-xs text-slate-500">
-          Xuất toàn bộ danh sách khách hàng ra file JSON an toàn trên máy tính/điện thoại hoặc nạp lại từ bản sao lưu đã có.
-        </p>
-
-        <div class="flex flex-wrap gap-4 pt-2">
-          <button onclick="downloadBackupFile()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 shadow">
-            <i data-lucide="download" class="w-4 h-4"></i> Tải bản sao lưu về máy
-          </button>
-
-          <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 border border-slate-300">
-            <i data-lucide="upload" class="w-4 h-4"></i> Khôi phục từ file JSON
-            <input type="file" id="restoreFileInput" accept=".json" class="hidden" onchange="handleRestoreFile(event)" />
-          </label>
+        <div class="px-6 py-3 bg-slate-100 border-t flex items-center justify-between">
+          <button onclick="deleteCurrentCustomer()" id="btnDeleteCust" class="hidden px-4 py-2 border border-red-300 rounded-lg text-red-600 hover:bg-red-50 transition">Xóa hồ sơ</button>
+          <div class="flex items-center gap-2 ml-auto">
+            <button onclick="closeCustomerDrawer()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-white transition">Đóng</button>
+            <button onclick="saveDrawerCustomer()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-sm flex items-center gap-1.5 transition">
+              <i data-lucide="save" class="w-4 h-4"></i> Lưu hồ sơ
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <!-- Script xử lý ứng dụng -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- 4. LOGIC TOÀN BỘ ỨNG DỤNG                               -->
+  <!-- ======================================================== -->
   <script>
-    // Khởi tạo Lucide Icons
     lucide.createIcons();
 
-    let uploadedImages = [];
-    let customersDB = JSON.parse(localStorage.getItem('vf_customers') || '[]');
+    // Dữ liệu khách hàng ban đầu (Mẫu thực tế phục vụ showroom Thuận An)
+    let customerList = JSON.parse(localStorage.getItem('vf_customers_huuhuy') || 'null') || [
+      { id: '1', fullName: 'TRẦN ANH TUẤN', idCard: '079090001234', phone: '0908123456', stage: 'Tiềm năng', model: 'VF 3', versionColor: 'Base / Vàng nóc trắng', vin: '', contract: '', vso: '', address: 'Thuận Giao, TP. Thuận An, Bình Dương', notes: 'Khách thích màu vàng, đang phân vân thuê pin', source: 'TikTok' },
+      { id: '2', fullName: 'LÊ THỊ BÍCH NGỌC', idCard: '074195005678', phone: '0912345678', stage: 'Chờ duyệt vay', model: 'VF 5', versionColor: 'Plus / Trắng', vin: 'RNXVGR4K2TT17690', contract: 'HĐMB-2026/089', vso: 'VSO-7741', address: 'An Phú, TP. Thuận An, Bình Dương', notes: 'Vay 80% qua Techcombank, hồ sơ tốt', source: 'Showroom' },
+      { id: '3', fullName: 'NGUYỄN HOÀNG LONG', idCard: '080088009988', phone: '0987654321', stage: 'Đặt cọc', model: 'VF 6', versionColor: 'Plus / Xám', vin: 'RLLVAG8C6TH831671', contract: 'HĐMB-2026/092', vso: 'VSO-8812', address: 'Lái Thiêu, TP. Thuận An, Bình Dương', notes: 'Đã cọc 50 triệu, đợi bấm biển', source: 'Facebook' },
+      { id: '4', fullName: 'PHẠM VĂN ĐỨC', idCard: '079085002233', phone: '0933445566', stage: 'Đã nhận xe', model: 'Limo Green', versionColor: 'Standard / Xanh Limo', vin: 'RLLVFPN16TH807117', contract: 'HĐMB-2026/045', vso: 'VSO-5521', address: 'Dĩ An, Bình Dương', notes: 'Đã bàn giao xe ngày 15/09/2026, chạy dịch vụ', source: 'Người quen' },
+      { id: '5', fullName: 'VŨ THỊ HƯƠNG', idCard: '072198004455', phone: '0977889900', stage: 'Lái thử', model: 'VF 7', versionColor: 'Plus / Đỏ', vin: '', contract: '', vso: '', address: 'Bình Chuẩn, Thuận An', notes: 'Hẹn lái thử cuối tuần tại showroom', source: 'Zalo' }
+    ];
+
+    const stageTabsData = [
+      { name: 'Tất cả', key: 'all' },
+      { name: 'Tiềm năng nóng', key: 'Tiềm năng' },
+      { name: 'Hẹn lái thử', key: 'Lái thử' },
+      { name: 'Đã đặt cọc', key: 'Đặt cọc' },
+      { name: 'Chờ duyệt vay', key: 'Chờ duyệt vay' },
+      { name: 'Đã lên HĐMB', key: 'Đã lên HĐMB' },
+      { name: 'Chờ giao xe', key: 'Chờ giao xe' },
+      { name: 'Đã nhận xe', key: 'Đã nhận xe' },
+    ];
+
+    let currentSelectedStage = 'all';
     let currentEditingId = null;
+    let drawerImgs = [];
 
-    // Chuyển Tab
-    function switchTab(tabName) {
-      ['extract', 'compare', 'customers', 'backup'].forEach(t => {
-        document.getElementById(`tab-${t}`).classList.add('hidden');
-        const btn = document.getElementById(`tab-btn-${t}`);
-        btn.classList.remove('border-white', 'text-white', 'bg-blue-800/40', 'font-semibold');
-        btn.classList.add('border-transparent', 'text-blue-100');
-      });
+    // Render danh sách Tabs Vòng đời khách hàng
+    function renderStageTabs() {
+      const c = document.getElementById('stageFilterTabs');
+      c.innerHTML = stageTabsData.map(t => {
+        const count = t.key === 'all' ? customerList.length : customerList.filter(item => item.stage === t.key).length;
+        const isActive = currentSelectedStage === t.key;
+        return `
+          <button onclick="selectStageTab('${t.key}')" class="whitespace-nowrap px-3 py-1.5 rounded-md font-semibold text-xs transition flex items-center gap-1.5 ${
+            isActive ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          }">
+            <span>${t.name}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-blue-800 text-white' : 'bg-slate-200 text-slate-700'}">${count}</span>
+          </button>
+        `;
+      }).join('');
+    }
 
-      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`tab-btn-${tabName}`);
-      activeBtn.classList.remove('border-transparent', 'text-blue-100');
-      activeBtn.classList.add('border-white', 'text-white', 'bg-blue-800/40', 'font-semibold');
+    function selectStageTab(key) {
+      currentSelectedStage = key;
+      renderStageTabs();
+      filterCustomerGrid();
+    }
 
-      if (tabName === 'customers') renderCustomerList();
+    // Render Thẻ Khách Hàng (Customer Grid Cards)
+    function renderCustomerCards(list) {
+      const grid = document.getElementById('customerGrid');
+      if (list.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400">Không tìm thấy khách hàng nào trong nhóm này.</div>';
+        return;
+      }
+
+      grid.innerHTML = list.map(c => {
+        let badgeColor = 'bg-slate-100 text-slate-700 border-slate-200';
+        if (c.stage === 'Tiềm năng') badgeColor = 'bg-rose-100 text-rose-800 border-rose-300 font-bold';
+        if (c.stage === 'Lái thử') badgeColor = 'bg-purple-100 text-purple-800 border-purple-300';
+        if (c.stage === 'Đặt cọc') badgeColor = 'bg-blue-100 text-blue-800 border-blue-300';
+        if (c.stage === 'Chờ duyệt vay') badgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
+        if (c.stage === 'Đã nhận xe') badgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+
+        return `
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden">
+            <!-- Header thẻ -->
+            <div class="p-3.5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm tracking-tight">${c.fullName}</h4>
+                <div class="text-[11px] text-slate-500 font-medium">${c.model} • <span class="text-blue-600">${c.versionColor || 'Đang chọn'}</span></div>
+              </div>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded border ${badgeColor}">
+                ${c.stage}
+              </span>
+            </div>
+
+            <!-- Nội dung chi tiết thẻ -->
+            <div class="p-3.5 space-y-2 flex-1 text-[11px]">
+              <div class="flex justify-between items-center font-mono">
+                <span class="text-slate-400">SĐT:</span>
+                <a href="tel:${c.phone}" class="font-bold text-blue-600 hover:underline">${c.phone}</a>
+              </div>
+              <div class="flex justify-between items-center font-mono">
+                <span class="text-slate-400">CCCD:</span>
+                <span class="font-semibold text-slate-800 cursor-pointer select-all" onclick="navigator.clipboard.writeText('${c.idCard}');alert('Đã copy CCCD: ${c.idCard}')">${c.idCard}</span>
+              </div>
+              <div class="flex justify-between items-center font-mono">
+                <span class="text-slate-400">Số VIN:</span>
+                <span class="font-bold text-amber-700 truncate max-w-[130px]">${c.vin || '<span class="text-slate-400 italic">Chưa ghép</span>'}</span>
+              </div>
+              <div class="pt-1 text-slate-600 truncate" title="${c.address}">
+                📍 ${c.address || 'Chưa có địa chỉ'}
+              </div>
+              ${c.notes ? `<div class="text-[10px] bg-amber-50 text-amber-900 p-1.5 rounded border border-amber-200/60 truncate" title="${c.notes}">💬 ${c.notes}</div>` : ''}
+            </div>
+
+            <!-- Hàng nút thao tác chân thẻ -->
+            <div class="bg-slate-50 border-t border-slate-100 px-3 py-2 flex items-center justify-between">
+              <a href="tel:${c.phone}" class="text-[11px] font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
+                <i data-lucide="phone" class="w-3 h-3"></i> Gọi ngay
+              </a>
+              <button onclick="editCustomer('${c.id}')" class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                <i data-lucide="edit-3" class="w-3 h-3"></i> Xem & Sửa
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
       lucide.createIcons();
     }
 
-    // Xử lý upload và xoay ảnh
-    function handleImageUpload(e) {
-      const files = Array.from(e.target.files);
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          uploadedImages.push({ src: event.target.result, rotation: 0 });
-          renderImagePreviews();
-        };
-        reader.readAsDataURL(file);
+    function filterCustomerGrid() {
+      const q = (document.getElementById('customerSearch').value || '').toLowerCase();
+      const model = document.getElementById('filterModelSelect').value;
+
+      const filtered = customerList.filter(c => {
+        const matchStage = currentSelectedStage === 'all' || c.stage === currentSelectedStage;
+        const matchModel = !model || c.model.includes(model);
+        const matchSearch = c.fullName.toLowerCase().includes(q) || c.idCard.includes(q) || c.phone.includes(q) || (c.vin && c.vin.toLowerCase().includes(q));
+        return matchStage && matchModel && matchSearch;
       });
-      document.getElementById('btn-run-ocr').disabled = false;
+
+      renderCustomerCards(filtered);
     }
 
-    function rotateImage(idx) {
-      uploadedImages[idx].rotation = (uploadedImages[idx].rotation + 90) % 360;
-      renderImagePreviews();
+    // ==========================================
+    // MỞ / ĐÓNG NGĂN KÉO DRAWER HỒ SƠ
+    // ==========================================
+    function openNewCustomerDrawer() {
+      currentEditingId = null;
+      document.getElementById('drawerTitle').innerText = 'THÊM KHÁCH HÀNG MỚI';
+      document.getElementById('btnDeleteCust').classList.add('hidden');
+      clearDrawerForm();
+      document.getElementById('customerDrawer').classList.remove('hidden');
+      lucide.createIcons();
     }
 
-    function removeImage(idx) {
-      uploadedImages.splice(idx, 1);
-      renderImagePreviews();
-      if (uploadedImages.length === 0) document.getElementById('btn-run-ocr').disabled = true;
+    function editCustomer(id) {
+      const c = customerList.find(item => item.id === id);
+      if (!c) return;
+      currentEditingId = c.id;
+      document.getElementById('drawerTitle').innerText = 'CẬP NHẬT HỒ SƠ: ' + c.fullName;
+      document.getElementById('btnDeleteCust').classList.remove('hidden');
+
+      document.getElementById('dr_fullName').value = c.fullName || '';
+      document.getElementById('dr_idCard').value = c.idCard || '';
+      document.getElementById('dr_phone').value = c.phone || '';
+      document.getElementById('dr_dob').value = c.dob || '';
+      document.getElementById('dr_address').value = c.address || '';
+      document.getElementById('dr_stage').value = c.stage || 'Tiềm năng';
+      document.getElementById('dr_source').value = c.source || '';
+      document.getElementById('dr_carModel').value = c.model || 'VF 3';
+      document.getElementById('dr_versionColor').value = c.versionColor || '';
+      document.getElementById('dr_vinNumber').value = c.vin || '';
+      document.getElementById('dr_engineNumber').value = c.engine || '';
+      document.getElementById('dr_contract').value = c.contract || '';
+      document.getElementById('dr_vso').value = c.vso || '';
+      document.getElementById('dr_notes').value = c.notes || '';
+
+      document.getElementById('customerDrawer').classList.remove('hidden');
+      lucide.createIcons();
     }
 
-    function renderImagePreviews() {
-      const container = document.getElementById('image-previews');
-      container.innerHTML = uploadedImages.map((img, idx) => `
-        <div class="relative border rounded-lg p-1 bg-slate-50 flex flex-col items-center">
-          <img src="${img.src}" style="transform: rotate(${img.rotation}deg)" class="w-full h-24 object-cover rounded mb-2 transition-transform" />
-          <div class="flex gap-2">
-            <button onclick="rotateImage(${idx})" class="p-1 bg-slate-200 hover:bg-slate-300 rounded text-slate-700" title="Xoay 90°"><i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i></button>
-            <button onclick="removeImage(${idx})" class="p-1 bg-red-100 hover:bg-red-200 rounded text-red-600" title="Xóa"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-          </div>
+    function closeCustomerDrawer() {
+      document.getElementById('customerDrawer').classList.add('hidden');
+    }
+
+    function clearDrawerForm() {
+      ['dr_fullName', 'dr_idCard', 'dr_phone', 'dr_dob', 'dr_address', 'dr_source', 'dr_versionColor', 'dr_vinNumber', 'dr_engineNumber', 'dr_contract', 'dr_vso', 'dr_notes'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('dr_stage').value = 'Tiềm năng';
+      document.getElementById('dr_carModel').value = 'VF 3';
+      drawerImgs = [];
+      document.getElementById('drawerImgPreviews').innerHTML = '';
+      document.getElementById('btnDrawerOcr').disabled = true;
+    }
+
+    function copyVal(id) {
+      const el = document.getElementById(id);
+      if (!el.value) return;
+      navigator.clipboard.writeText(el.value);
+      alert('Đã sao chép: ' + el.value);
+    }
+
+    // ==========================================
+    // OCR CCCD TRỰC TIẾP TRONG DRAWER
+    // ==========================================
+    function handleDrawerImages(e) {
+      const files = Array.from(e.target.files);
+      files.forEach(f => {
+        const r = new FileReader();
+        r.onload = ev => {
+          drawerImgs.push(ev.target.result);
+          renderDrawerImgPreviews();
+        };
+        r.readAsDataURL(f);
+      });
+      document.getElementById('btnDrawerOcr').disabled = false;
+    }
+
+    function renderDrawerImgPreviews() {
+      const c = document.getElementById('drawerImgPreviews');
+      c.innerHTML = drawerImgs.map((src, i) => `
+        <div class="relative border rounded p-1 bg-white">
+          <img src="${src}" class="w-full h-14 object-cover rounded" />
+          <button onclick="drawerImgs.splice(${i},1);renderDrawerImgPreviews();" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]">✕</button>
         </div>
       `).join('');
-      lucide.createIcons();
     }
 
-    // OCR Tesseract.js tiếng Việt chạy trên thiết bị
-    async function runOCR() {
-      if (uploadedImages.length === 0) return;
-      const progressBox = document.getElementById('ocr-progress-container');
-      const progressBar = document.getElementById('ocr-progress-bar');
-      const progressText = document.getElementById('ocr-status-text');
-      const progressPercent = document.getElementById('ocr-percentage');
-
+    async function runDrawerOCR() {
+      if (drawerImgs.length === 0) return;
+      const progressBox = document.getElementById('drawerOcrProgress');
+      const progressBar = document.getElementById('drawerOcrBar');
+      const progressStatus = document.getElementById('drawerOcrStatus');
       progressBox.classList.remove('hidden');
-      let combinedText = '';
 
-      for (let i = 0; i < uploadedImages.length; i++) {
-        progressText.innerText = `Đang đọc ảnh ${i + 1}/${uploadedImages.length}...`;
-        const { data: { text } } = await Tesseract.recognize(uploadedImages[i].src, 'vie+eng', {
+      let textTotal = '';
+      for (let i = 0; i < drawerImgs.length; i++) {
+        progressStatus.innerText = `Đang quét ảnh ${i+1}/${drawerImgs.length}...`;
+        const { data: { text } } = await Tesseract.recognize(drawerImgs[i], 'vie+eng', {
           logger: m => {
             if (m.status === 'recognizing text') {
               const p = Math.round(m.progress * 100);
               progressBar.style.width = `${p}%`;
-              progressPercent.innerText = `${p}%`;
             }
           }
         });
-        combinedText += '\n' + text;
+        textTotal += '\n' + text;
       }
 
-      progressText.innerText = 'Hoàn thành trích xuất!';
-      parseAndFillData(combinedText);
-      setTimeout(() => progressBox.classList.add('hidden'), 2000);
-    }
+      // Trích xuất tự động vào form
+      const lines = textTotal.split('\n').map(l => l.trim()).filter(Boolean);
+      lines.forEach((l, i) => {
+        const cccd = l.match(/\b\d{12}\b/);
+        if (cccd && !document.getElementById('dr_idCard').value) document.getElementById('dr_idCard').value = cccd[0];
 
-    // Bóc tách thông tin chính xác, không đoán mò ký tự mờ
-    function parseAndFillData(raw) {
-      const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
-      
-      lines.forEach((line, i) => {
-        // Số CCCD
-        const cccd = line.match(/\b\d{12}\b/);
-        if (cccd && !document.getElementById('f_idCardNumber').value) {
-          document.getElementById('f_idCardNumber').value = cccd[0];
+        if (/Họ và tên|Full name/i.test(l)) {
+          let n = l.split(/Họ và tên|Full name/i).pop().replace(/[:]/g,'').trim();
+          if (!n && lines[i+1]) n = lines[i+1].trim();
+          if (n && n.length > 2) document.getElementById('dr_fullName').value = n.toUpperCase();
         }
 
-        // Họ tên
-        if (/Họ và tên|Full name/i.test(line)) {
-          const parts = line.split(/Họ và tên|Full name/i);
-          let name = parts[parts.length - 1].replace(/[:]/g, '').trim();
-          if (!name && lines[i + 1]) name = lines[i + 1].trim();
-          if (name && name.length > 2) document.getElementById('f_fullName').value = name.toUpperCase();
-        }
-
-        // Nơi thường trú
-        if (/Nơi thường trú|Place of residence/i.test(line)) {
-          let addr = line.replace(/.*?(Nơi thường trú|Place of residence)[:\s]*/i, '').trim();
-          if (lines[i + 1] && !/Có giá trị|Date/i.test(lines[i + 1])) addr += ' ' + lines[i + 1].trim();
-          document.getElementById('f_permanentAddress').value = addr;
-        }
-
-        // Số khung (VIN 17 ký tự)
-        const vin = line.match(/\b([A-HJ-NPR-Z0-9]{17})\b/i);
-        if (vin && !document.getElementById('f_vinNumber').value) {
-          document.getElementById('f_vinNumber').value = vin[1].toUpperCase();
+        if (/Nơi thường trú|Place of residence/i.test(l)) {
+          let a = l.replace(/.*?(Nơi thường trú|Place of residence)[:\s]*/i, '').trim();
+          if (lines[i+1] && !/Có giá trị|Date/i.test(lines[i+1])) a += ' ' + lines[i+1].trim();
+          document.getElementById('dr_address').value = a;
         }
       });
+
+      progressStatus.innerText = 'Trích xuất hoàn tất!';
+      setTimeout(() => progressBox.classList.add('hidden'), 1500);
     }
 
-    // Copy nhanh từng trường
-    function copyField(elementId) {
-      const val = document.getElementById(elementId).value;
-      if (!val) return;
-      navigator.clipboard.writeText(val);
-      alert('Đã sao chép: ' + val);
-    }
-
-    // Lưu hồ sơ vào cơ sở dữ liệu
-    function saveCurrentCustomer() {
-      const fullName = document.getElementById('f_fullName').value.trim();
-      const idCard = document.getElementById('f_idCardNumber').value.trim();
-      const phone = document.getElementById('f_phone').value.trim();
-      const vin = document.getElementById('f_vinNumber').value.trim();
+    // ==========================================
+    // LƯU HỒ SƠ VÀ CẬP NHẬT GIAO DIỆN
+    // ==========================================
+    function saveDrawerCustomer() {
+      const fullName = document.getElementById('dr_fullName').value.trim();
+      const idCard = document.getElementById('dr_idCard').value.trim();
+      const phone = document.getElementById('dr_phone').value.trim();
 
       if (!fullName || !idCard) {
         alert('Vui lòng điền tối thiểu Họ tên và Số CCCD!');
         return;
       }
 
-      // Kiểm tra trùng
-      const dup = customersDB.find(c => c.id !== currentEditingId && (c.idCardNumber === idCard || (vin && c.vinNumber === vin)));
-      if (dup) {
-        if (!confirm(`Phát hiện trùng số CCCD hoặc Số khung với khách hàng "${dup.fullName}". Bạn có chắc chắn muốn tiếp tục lưu không?`)) {
-          return;
-        }
-      }
-
       const record = {
-        id: currentEditingId || 'vf_' + Date.now(),
-        updatedAt: new Date().toLocaleString('vi-VN'),
+        id: currentEditingId || 'CUST_' + Date.now(),
         fullName,
-        idCardNumber: idCard,
+        idCard,
         phone,
-        dob: document.getElementById('f_dob').value.trim(),
-        email: document.getElementById('f_email').value.trim(),
-        idCardIssuePlace: document.getElementById('f_idCardIssuePlace').value.trim(),
-        permanentAddress: document.getElementById('f_permanentAddress').value.trim(),
-        contactAddress: document.getElementById('f_contactAddress').value.trim(),
-        bankName: document.getElementById('f_bankName').value.trim(),
-        bankAccountNumber: document.getElementById('f_bankAccountNumber').value.trim(),
-        bankAccountHolder: document.getElementById('f_bankAccountHolder').value.trim(),
-        carModel: document.getElementById('f_carModel').value,
-        carVersionColor: document.getElementById('f_carVersionColor').value.trim(),
-        vinNumber: vin,
-        engineNumber: document.getElementById('f_engineNumber').value.trim(),
-        contractNumber: document.getElementById('f_contractNumber').value.trim(),
-        vsoCode: document.getElementById('f_vsoCode').value.trim(),
-        notes: document.getElementById('f_notes').value.trim(),
+        dob: document.getElementById('dr_dob').value.trim(),
+        address: document.getElementById('dr_address').value.trim(),
+        stage: document.getElementById('dr_stage').value,
+        source: document.getElementById('dr_source').value.trim(),
+        model: document.getElementById('dr_carModel').value,
+        versionColor: document.getElementById('dr_versionColor').value.trim(),
+        vin: document.getElementById('dr_vinNumber').value.trim(),
+        engine: document.getElementById('dr_engineNumber').value.trim(),
+        contract: document.getElementById('dr_contract').value.trim(),
+        vso: document.getElementById('dr_vso').value.trim(),
+        notes: document.getElementById('dr_notes').value.trim(),
       };
 
       if (currentEditingId) {
-        const idx = customersDB.findIndex(c => c.id === currentEditingId);
-        customersDB[idx] = record;
+        const idx = customerList.findIndex(c => c.id === currentEditingId);
+        customerList[idx] = record;
       } else {
-        customersDB.unshift(record);
+        customerList.unshift(record);
       }
 
-      localStorage.setItem('vf_customers', JSON.stringify(customersDB));
+      localStorage.setItem('vf_customers_huuhuy', JSON.stringify(customerList));
       alert('Đã lưu hồ sơ khách hàng thành công!');
-      clearCurrentForm();
-      updateCount();
+      closeCustomerDrawer();
+      renderStageTabs();
+      filterCustomerGrid();
     }
 
-    function clearCurrentForm() {
-      currentEditingId = null;
-      document.querySelectorAll('#tab-extract input').forEach(i => i.value = '');
-      document.getElementById('f_idCardIssuePlace').value = 'Cục Cảnh sát QLHC về TTXH';
+    function deleteCurrentCustomer() {
+      if (!confirm('Bạn có chắc chắn muốn xóa hồ sơ khách hàng này?')) return;
+      customerList = customerList.filter(c => c.id !== currentEditingId);
+      localStorage.setItem('vf_customers_huuhuy', JSON.stringify(customerList));
+      closeCustomerDrawer();
+      renderStageTabs();
+      filterCustomerGrid();
     }
 
-    function updateCount() {
-      document.getElementById('cust-count').innerText = customersDB.length;
-    }
-    updateCount();
-
-    // Hiển thị danh sách khách hàng
-    function renderCustomerList() {
-      const q = (document.getElementById('searchCustomerInput').value || '').toLowerCase();
-      const filtered = customersDB.filter(c => 
-        (c.fullName && c.fullName.toLowerCase().includes(q)) ||
-        (c.idCardNumber && c.idCardNumber.includes(q)) ||
-        (c.phone && c.phone.includes(q)) ||
-        (c.vinNumber && c.vinNumber.toLowerCase().includes(q)) ||
-        (c.vsoCode && c.vsoCode.toLowerCase().includes(q))
-      );
-
-      const tbody = document.getElementById('customer-list-body');
-      if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-400">Không tìm thấy hồ sơ nào</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(c => `
-        <tr class="hover:bg-slate-50">
-          <td class="p-2.5 font-bold text-blue-900">${c.fullName}</td>
-          <td class="p-2.5 font-mono">${c.idCardNumber}</td>
-          <td class="p-2.5 font-mono">${c.phone || '-'}</td>
-          <td class="p-2.5">${c.carModel} (${c.carVersionColor || '-'})</td>
-          <td class="p-2.5 font-mono">${c.vinNumber || '-'}</td>
-          <td class="p-2.5 font-mono">${c.vsoCode || c.contractNumber || '-'}</td>
-          <td class="p-2.5 text-center">
-            <button onclick="editCustomer('${c.id}')" class="text-blue-600 hover:underline mr-2">Sửa</button>
-            <button onclick="deleteCustomer('${c.id}')" class="text-red-600 hover:underline">Xóa</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function editCustomer(id) {
-      const c = customersDB.find(item => item.id === id);
-      if (!c) return;
-      currentEditingId = c.id;
-      document.getElementById('f_fullName').value = c.fullName || '';
-      document.getElementById('f_idCardNumber').value = c.idCardNumber || '';
-      document.getElementById('f_phone').value = c.phone || '';
-      document.getElementById('f_dob').value = c.dob || '';
-      document.getElementById('f_email').value = c.email || '';
-      document.getElementById('f_idCardIssuePlace').value = c.idCardIssuePlace || '';
-      document.getElementById('f_permanentAddress').value = c.permanentAddress || '';
-      document.getElementById('f_contactAddress').value = c.contactAddress || '';
-      document.getElementById('f_bankName').value = c.bankName || '';
-      document.getElementById('f_bankAccountNumber').value = c.bankAccountNumber || '';
-      document.getElementById('f_bankAccountHolder').value = c.bankAccountHolder || '';
-      document.getElementById('f_carModel').value = c.carModel || 'VF 5 Plus';
-      document.getElementById('f_carVersionColor').value = c.carVersionColor || '';
-      document.getElementById('f_vinNumber').value = c.vinNumber || '';
-      document.getElementById('f_engineNumber').value = c.engineNumber || '';
-      document.getElementById('f_contractNumber').value = c.contractNumber || '';
-      document.getElementById('f_vsoCode').value = c.vsoCode || '';
-      document.getElementById('f_notes').value = c.notes || '';
-      switchTab('extract');
-    }
-
-    function deleteCustomer(id) {
-      if (!confirm('Bạn có chắc chắn muốn xóa hồ sơ này?')) return;
-      customersDB = customersDB.filter(c => c.id !== id);
-      localStorage.setItem('vf_customers', JSON.stringify(customersDB));
-      renderCustomerList();
-      updateCount();
-    }
-
-    // Đọc Word (.docx) & Đối chiếu
-    async function handleWordFile(e) {
+    // Đối chiếu Word
+    async function compareDrawerWord(e) {
       const file = e.target.files[0];
-      const errBox = document.getElementById('word-error');
-      errBox.classList.add('hidden');
+      if (!file) return;
+      const ab = await file.arrayBuffer();
+      const { value: text } = await mammoth.extractRawText({ arrayBuffer: ab });
+      
+      const zone = text.match(/(?:BÊN MUA|BÊN B|KHÁCH HÀNG)([\s\S]*?)(?:BÊN BÁN|BÊN A|ĐIỀU 1|$)/i);
+      const buyerText = zone ? zone[1] : text;
 
-      if (!file || !file.name.endsWith('.docx')) {
-        errBox.innerText = 'Vui lòng chọn tệp .docx chuẩn (không chọn file .doc cũ).';
-        errBox.classList.remove('hidden');
-        return;
-      }
+      const nameMatch = buyerText.match(/(?:Ông\/Bà|Khách hàng|Họ tên)[:\s]+([^\n,\r]+)/i);
+      const wordName = nameMatch ? nameMatch[1].trim() : 'Không rõ';
+      const docName = document.getElementById('dr_fullName').value;
 
-      const reader = new FileReader();
-      reader.onload = async (ev) => {
-        const { value: text } = await mammoth.extractRawText({ arrayBuffer: ev.target.result });
-        if (!text.trim()) {
-          errBox.innerText = 'File Word không chứa chữ (có thể là bản scan ảnh).';
-          errBox.classList.remove('hidden');
-          return;
-        }
-
-        // Tách Bên Mua
-        const zone = text.match(/(?:BÊN MUA|BÊN B|KHÁCH HÀNG)([\s\S]*?)(?:BÊN BÁN|BÊN A|ĐIỀU 1|$)/i);
-        const buyerText = zone ? zone[1] : text;
-
-        const nameMatch = buyerText.match(/(?:Ông\/Bà|Khách hàng|Họ tên)[:\s]+([^\n,\r]+)/i);
-        const addrMatch = buyerText.match(/(?:Địa chỉ thường trú|Nơi cư trú|Địa chỉ)[:\s]+([^\n\r]+)/i);
-
-        const wordName = nameMatch ? nameMatch[1].trim() : '';
-        const wordAddr = addrMatch ? addrMatch[1].trim() : '';
-        const docName = document.getElementById('f_fullName').value;
-        const docAddr = document.getElementById('f_permanentAddress').value;
-
-        renderCompareRow(docName, wordName, docAddr, wordAddr);
-      };
-      reader.readAsArrayBuffer(file);
-    }
-
-    function renderCompareRow(docName, wordName, docAddr, wordAddr) {
-      const matchName = docName && wordName && docName.trim().toUpperCase() === wordName.trim().toUpperCase();
-      const tbody = document.getElementById('compare-table-body');
-      tbody.innerHTML = `
-        <tr>
-          <td class="p-2.5 font-semibold">Họ và tên</td>
-          <td class="p-2.5">${docName || '<span class="text-slate-400">Trống</span>'}</td>
-          <td class="p-2.5">${wordName || '<span class="text-slate-400">Trống</span>'}</td>
-          <td class="p-2.5">
-            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${matchName ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
-              ${matchName ? 'Khớp' : 'Khác nhau'}
-            </span>
-          </td>
-          <td class="p-2.5"><input type="text" class="border px-2 py-1 rounded w-full" value="${docName || wordName || ''}"></td>
-        </tr>
-        <tr>
-          <td class="p-2.5 font-semibold">Địa chỉ</td>
-          <td class="p-2.5">${docAddr || '<span class="text-slate-400">Trống</span>'}</td>
-          <td class="p-2.5">${wordAddr || '<span class="text-slate-400">Trống</span>'}</td>
-          <td class="p-2.5">
-            <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-800">Cần kiểm tra</span>
-          </td>
-          <td class="p-2.5"><input type="text" class="border px-2 py-1 rounded w-full" value="${docAddr || wordAddr || ''}"></td>
-        </tr>
+      document.getElementById('drawerWordResult').innerHTML = `
+        Tên trong file Word: <strong>${wordName}</strong> | 
+        Kết quả: <span class="font-bold ${docName && wordName.toUpperCase() === docName.toUpperCase() ? 'text-emerald-600' : 'text-amber-600'}">
+          ${docName && wordName.toUpperCase() === docName.toUpperCase() ? 'Khớp hoàn toàn' : 'Cần kiểm tra lại'}
+        </span>
       `;
     }
 
-    // Xuất Excel chống rụng số 0 & chống Injection
-    async function exportAllToExcel() {
-      if (customersDB.length === 0) {
-        alert('Chưa có khách hàng nào để xuất!');
-        return;
-      }
-
-      const workbook = new ExcelJS.Workbook();
-      const ws = workbook.addWorksheet('Danh sách VinFast', { views: [{ state: 'frozen', ySplit: 1 }] });
-
+    // Xuất Excel chuẩn không rụng số 0
+    async function exportCustomerExcel() {
+      if (customerList.length === 0) return alert('Chưa có khách hàng nào để xuất!');
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('Hồ sơ khách hàng VinFast');
+      
       ws.columns = [
         { header: 'Họ và tên', key: 'fullName', width: 25 },
-        { header: 'Số CCCD', key: 'idCardNumber', width: 18 },
+        { header: 'Số CCCD', key: 'idCard', width: 18 },
         { header: 'Số điện thoại', key: 'phone', width: 16 },
-        { header: 'Địa chỉ thường trú', key: 'permanentAddress', width: 35 },
-        { header: 'Dòng xe', key: 'carModel', width: 14 },
-        { header: 'Phiên bản / Màu', key: 'carVersionColor', width: 18 },
-        { header: 'Số khung (VIN)', key: 'vinNumber', width: 22 },
-        { header: 'Số máy', key: 'engineNumber', width: 18 },
-        { header: 'Mã VSO', key: 'vsoCode', width: 16 },
-        { header: 'Số HĐMB', key: 'contractNumber', width: 16 },
-        { header: 'Ngân hàng', key: 'bankName', width: 18 },
-        { header: 'Số tài khoản', key: 'bankAccountNumber', width: 20 },
+        { header: 'Trạng thái', key: 'stage', width: 18 },
+        { header: 'Dòng xe', key: 'model', width: 15 },
+        { header: 'Phiên bản / Màu', key: 'versionColor', width: 20 },
+        { header: 'Số khung (VIN)', key: 'vin', width: 22 },
+        { header: 'Số HĐMB', key: 'contract', width: 18 },
+        { header: 'Mã VSO', key: 'vso', width: 18 },
+        { header: 'Địa chỉ thường trú', key: 'address', width: 35 },
+        { header: 'Nguồn khách', key: 'source', width: 16 },
+        { header: 'Ghi chú', key: 'notes', width: 30 },
       ];
 
-      // Định dạng tiêu đề màu xanh đậm VinFast
       const headerRow = ws.getRow(1);
       headerRow.font = { bold: true, color: { argb: 'FFFFFF' } };
       headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '1E40AF' } };
 
-      customersDB.forEach(c => {
-        const row = ws.addRow({
-          fullName: c.fullName,
-          idCardNumber: c.idCardNumber,
-          phone: c.phone,
-          permanentAddress: c.permanentAddress,
-          carModel: c.carModel,
-          carVersionColor: c.carVersionColor,
-          vinNumber: c.vinNumber,
-          engineNumber: c.engineNumber,
-          vsoCode: c.vsoCode,
-          contractNumber: c.contractNumber,
-          bankName: c.bankName,
-          bankAccountNumber: c.bankAccountNumber,
-        });
-
-        // Định dạng text cho các trường số để không mất số 0 đầu
-        ['idCardNumber', 'phone', 'vinNumber', 'engineNumber', 'vsoCode', 'contractNumber', 'bankAccountNumber'].forEach(k => {
-          row.getCell(k).numFmt = '@';
-        });
+      customerList.forEach(c => {
+        const row = ws.addRow(c);
+        ['idCard', 'phone', 'vin', 'contract', 'vso'].forEach(k => row.getCell(k).numFmt = '@');
       });
 
-      const buffer = await workbook.xlsx.writeBuffer();
-      saveAs(new Blob([buffer]), 'Danh_Sach_Khach_Hang_VinFast.xlsx');
+      const buf = await wb.xlsx.writeBuffer();
+      saveAs(new Blob([buf]), 'Ho_So_Khach_Hang_VinFast_Thuan_An.xlsx');
     }
 
-    // Sao lưu và khôi phục
-    function downloadBackupFile() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customersDB, null, 2));
-      const a = document.createElement('a');
-      a.href = dataStr;
-      a.download = `Sao_Luu_VinFast_${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
+    function downloadJsonBackup() {
+      const blob = new Blob([JSON.stringify(customerList, null, 2)], { type: 'application/json' });
+      saveAs(blob, `Sao_Luu_Khach_Hang_${new Date().toISOString().slice(0,10)}.json`);
     }
 
-    function handleRestoreFile(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        try {
-          const list = JSON.parse(ev.target.result);
-          if (Array.isArray(list)) {
-            if (confirm(`Tìm thấy ${list.length} hồ sơ trong file sao lưu. Bạn có muốn khôi phục không?`)) {
-              customersDB = list;
-              localStorage.setItem('vf_customers', JSON.stringify(customersDB));
-              updateCount();
-              alert('Đã khôi phục thành công!');
-            }
-          }
-        } catch {
-          alert('Tệp sao lưu không đúng định dạng JSON.');
-        }
-      };
-      reader.readAsText(file);
+    // ==========================================
+    // KÉO THẢ THẺ ĐĂNG NHẬP & CHUYỂN MÀN HÌNH
+    // ==========================================
+    const loginCard = document.getElementById('loginCard');
+    const dragH = document.getElementById('dragHeader');
+    let isDrag = false, sX, sY, initL, initT;
+
+    dragH.addEventListener('mousedown', (e) => {
+      isDrag = true; sX = e.clientX; sY = e.clientY;
+      const r = loginCard.getBoundingClientRect();
+      initL = r.left; initT = r.top;
+      loginCard.style.transform = 'none';
+      loginCard.style.left = `${initL}px`; loginCard.style.top = `${initT}px`;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDrag) return;
+      loginCard.style.left = `${initL + (e.clientX - sX)}px`;
+      loginCard.style.top = `${initT + (e.clientY - sY)}px`;
+    });
+    window.addEventListener('mouseup', () => { isDrag = false; });
+
+    function handleLogin(e) {
+      e.preventDefault();
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('internalApp').classList.remove('hidden');
+      renderStageTabs();
+      renderCustomerCards(customerList);
+    }
+
+    function handleLogout() {
+      document.getElementById('internalApp').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
     }
   </script>
 </body>
