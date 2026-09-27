@@ -65,11 +65,11 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen font-sans selection:bg-red-600 selection:text-white overflow-x-hidden">
 
-  <!-- Canvas Tuyết rơi nhẹ nhàng phủ toàn màn hình -->
+  <!-- Canvas Tuyết rơi nhẹ phủ màn hình -->
   <canvas id="snowCanvas"></canvas>
 
   <!-- ======================================================== -->
-  <!-- 1. GIAO DIỆN BÊN NGOÀI: ĐĂNG NHẬP THU GỌN KÉO THẢ       -->
+  <!-- 1. GIAO DIỆN ĐĂNG NHẬP THU GỌN KÉO THẢ                  -->
   <!-- ======================================================== -->
   <div id="loginScreen" class="relative w-full min-h-screen bg-snow-white flex flex-col justify-between overflow-hidden select-none">
     
@@ -233,7 +233,8 @@
           <div class="flex items-center gap-2 flex-wrap">
             <select id="filterModelSelect" onchange="filterCustomerGrid()" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 outline-none focus:border-red-500 shadow-sm">
               <option value="">Tất cả dòng xe</option>
-              <option value="VF 3">VF 3</option>
+              <option value="VF 3 Eco">VF 3 Eco</option>
+              <option value="VF 3 Plus">VF 3 Plus</option>
               <option value="VF 5">VF 5 Plus</option>
               <option value="VF 6">VF 6</option>
               <option value="VF 7">VF 7</option>
@@ -260,7 +261,7 @@
       </div>
     </header>
 
-    <!-- Thân chính: Bảng Dashboard KPI Doanh số + Lưới hồ sơ khách hàng -->
+    <!-- Thân chính: Dashboard KPI Doanh số + Lưới hồ sơ khách hàng -->
     <main class="flex-1 max-w-[1700px] w-full mx-auto p-4 md:p-6 space-y-4">
       
       <!-- BẢNG DASHBOARD THEO DÕI KPI 9 XE / THÁNG (100%) -->
@@ -340,17 +341,17 @@
             <!-- Khung chọn thông minh dạng Selector -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-slate-600 mb-1 font-semibold">Chọn Dòng xe VinFast[cite: 6]</label>
+                <label class="block text-slate-600 mb-1 font-semibold">Chọn Dòng xe VinFast</label>
                 <select id="calc_carSelect" onchange="onSelectCarModel()" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 font-bold text-slate-900 outline-none focus:border-red-500 shadow-sm">
                 </select>
               </div>
 
               <div>
-                <label class="block text-slate-600 mb-1 font-semibold">Đối tượng hưởng Vì Tương Lai Xanh 2[cite: 7]</label>
+                <label class="block text-slate-600 mb-1 font-semibold">Đối tượng hưởng Vì Tương Lai Xanh 2</label>
                 <select id="calc_greenType" onchange="recalculatePriceAndCommission()" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-slate-800 outline-none focus:border-red-500 shadow-sm">
                   <option value="none">Không áp dụng (0%)</option>
-                  <option value="standard" selected>Chủ xe VinFast / Cam kết chuyển đổi xanh[cite: 7]</option>
-                  <option value="police">Công an / Quân đội / VNPost[cite: 7]</option>
+                  <option value="standard" selected>Chủ xe VinFast / Cam kết chuyển đổi xanh</option>
+                  <option value="police">Công an / Quân đội / VNPost</option>
                 </select>
               </div>
             </div>
@@ -358,11 +359,11 @@
             <!-- Các chỉ số tài chính -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
               <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm">
-                <span class="text-slate-500 block text-[10px]">Giá niêm yết (MSRP)[cite: 6]</span>
+                <span class="text-slate-500 block text-[10px]">Giá niêm yết (MSRP)</span>
                 <span id="dsp_msrp" class="font-bold text-slate-900 font-mono text-xs">0 đ</span>
               </div>
               <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm">
-                <span class="text-slate-500 block text-[10px]">Ưu đãi Vì tương lai xanh 2[cite: 7]</span>
+                <span class="text-slate-500 block text-[10px]">Ưu đãi Vì tương lai xanh 2</span>
                 <span id="dsp_greenDiscount" class="font-bold text-emerald-600 font-mono text-xs">-0 đ</span>
               </div>
               <div class="bg-white p-2.5 rounded-lg border border-red-300 shadow-sm">
@@ -378,15 +379,15 @@
             <!-- BẢNG TÍNH HOA HỒNG THỰC NHẬN CỦA HỮU HUY -->
             <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 space-y-1.5">
               <div class="flex justify-between items-center text-xs">
-                <span class="text-slate-600 font-medium">1. Hoa hồng KH Vì tương lai xanh 2:[cite: 5]</span>
+                <span class="text-slate-600 font-medium">1. Hoa hồng KH Vì tương lai xanh 2:</span>
                 <span id="dsp_commGreen" class="font-mono font-bold text-emerald-700">0 đ</span>
               </div>
               <div class="flex justify-between items-center text-xs">
-                <span class="text-slate-600 font-medium">2. Thưởng xuất hóa đơn (XHĐ):[cite: 5]</span>
+                <span class="text-slate-600 font-medium">2. Thưởng xuất hóa đơn (XHĐ):</span>
                 <span id="dsp_commXHD" class="font-mono font-bold text-emerald-700">0 đ</span>
               </div>
               <div class="flex justify-between items-center text-xs">
-                <span class="text-slate-600 font-medium">3. Tổng quỹ hoa hồng ban đầu:[cite: 5]</span>
+                <span class="text-slate-600 font-medium">3. Tổng quỹ hoa hồng ban đầu:</span>
                 <span id="dsp_commTotal" class="font-mono font-bold text-slate-800">0 đ</span>
               </div>
               <div class="flex justify-between items-center text-xs text-red-600 font-semibold">
@@ -400,7 +401,7 @@
             </div>
           </div>
 
-          <!-- Quét CCCD OCR (Phiên bản tăng tương phản Canvas & Phân tách mẫu mới) -->
+          <!-- Quét CCCD OCR -->
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
             <div class="flex items-center justify-between">
               <span class="font-bold text-slate-800 flex items-center gap-1.5 text-xs">
@@ -428,10 +429,10 @@
             <div id="drawerImgPreviews" class="grid grid-cols-4 gap-2 pt-1"></div>
           </div>
 
-          <!-- Thông tin cá nhân khách hàng -->
+          <!-- 1. Thông tin cá nhân khách hàng (ĐÃ THÊM Ô NGÀY CẤP CCCD) -->
           <div class="space-y-4">
             <h3 class="font-bold uppercase tracking-wider text-red-700 border-b pb-1">1. Thông tin cá nhân & Giấy tờ</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               <div>
                 <label class="block text-slate-600 mb-1 font-semibold">Họ và tên *</label>
                 <div class="relative">
@@ -461,6 +462,23 @@
                 <input type="text" id="dr_dob" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900" placeholder="01/01/1990" />
               </div>
 
+              <!-- Ô NGÀY CẤP CCCD MỚI BỔ SUNG -->
+              <div>
+                <label class="block text-slate-600 mb-1 font-semibold">Ngày cấp CCCD (dd/mm/yyyy)</label>
+                <input type="text" id="dr_idCardIssueDate" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900 font-mono" placeholder="21/01/2026" />
+              </div>
+
+              <div>
+                <label class="block text-slate-600 mb-1 font-semibold">Nguồn khách hàng</label>
+                <select id="dr_source" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900">
+                  <option value="TikTok">TikTok</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="Showroom">Showroom Thuận An</option>
+                  <option value="Người quen">Người quen giới thiệu</option>
+                  <option value="Zalo">Zalo / Hotline</option>
+                </select>
+              </div>
+
               <div class="sm:col-span-2">
                 <label class="block text-slate-600 mb-1 font-semibold">Địa chỉ thường trú (theo CCCD) *</label>
                 <div class="relative">
@@ -481,27 +499,16 @@
                   <option value="Đã nhận xe">Đã nhận xe (Tính KPI)</option>
                 </select>
               </div>
-
-              <div>
-                <label class="block text-slate-600 mb-1 font-semibold">Nguồn khách hàng</label>
-                <select id="dr_source" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900">
-                  <option value="TikTok">TikTok</option>
-                  <option value="Facebook">Facebook</option>
-                  <option value="Showroom">Showroom Thuận An</option>
-                  <option value="Người quen">Người quen giới thiệu</option>
-                  <option value="Zalo">Zalo / Hotline</option>
-                </select>
-              </div>
             </div>
           </div>
 
-          <!-- Thông tin xe & Hợp đồng -->
+          <!-- 2. Thông tin xe & Hợp đồng (ĐÃ BỎ PHIÊN BẢN, CHỈ ĐỂ MÀU SẮC XE) -->
           <div class="space-y-4">
             <h3 class="font-bold uppercase tracking-wider text-red-700 border-b pb-1">2. Thông tin xe & Hợp đồng</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-slate-600 mb-1 font-semibold">Phiên bản / Màu sắc</label>
-                <input type="text" id="dr_versionColor" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900" placeholder="Plus / Trắng, Xám..." />
+                <label class="block text-slate-600 mb-1 font-semibold">Màu sắc xe</label>
+                <input type="text" id="dr_color" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-slate-900" placeholder="Trắng, Vàng nóc trắng, Xám, Đỏ..." />
               </div>
 
               <div>
@@ -560,7 +567,7 @@
   <script>
     lucide.createIcons();
 
-    // DỮ LIỆU ĐỐI CHIẾU GIÁ BÁN MSRP VÀ HOA HỒNG
+    // DỮ LIỆU ĐỐI CHIẾU GIÁ BÁN MSRP VÀ HOA HỒNG (ĐÃ TÁCH VF 3 ECO VÀ VF 3 PLUS)
     const carPolicyDatabase = [
       { id: 'ec_van', name: 'EC Van Tiêu chuẩn', msrp: 268000000, commGreen: 9000000, commXHD: 1000000, greenRateStd: 0.05, greenRatePol: 0.07 },
       { id: 'minio', name: 'Minio Green (Giá mới)', msrp: 188000000, commGreen: 4000000, commXHD: 0, greenRateStd: 0.03, greenRatePol: 0.06 },
@@ -568,7 +575,8 @@
       { id: 'nerio', name: 'Nerio Green', msrp: 628000000, commGreen: 25000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09 },
       { id: 'limo', name: 'Limo Green', msrp: 699000000, commGreen: 30000000, commXHD: 0, greenRateStd: 0.09, greenRatePol: 0.09 },
       { id: 'vf2', name: 'VF 2 Tiêu chuẩn', msrp: 188000000, commGreen: 5000000, commXHD: 0, greenRateStd: 0.03, greenRatePol: 0.06 },
-      { id: 'vf3', name: 'VF 3 (Eco/Plus)', msrp: 285000000, commGreen: 10000000, commXHD: 3000000, greenRateStd: 0.03, greenRatePol: 0.06 },
+      { id: 'vf3_eco', name: 'VF 3 Eco', msrp: 285000000, commGreen: 10000000, commXHD: 3000000, greenRateStd: 0.03, greenRatePol: 0.06 },
+      { id: 'vf3_plus', name: 'VF 3 Plus', msrp: 296000000, commGreen: 10000000, commXHD: 3000000, greenRateStd: 0.03, greenRatePol: 0.06 },
       { id: 'vf5', name: 'VF 5 Plus', msrp: 496000000, commGreen: 25000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09 },
       { id: 'vf6_eco', name: 'VF 6 Eco', msrp: 646000000, commGreen: 26000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09 },
       { id: 'vf6_plus', name: 'VF 6 Plus', msrp: 700000000, commGreen: 30000000, commXHD: 5000000, greenRateStd: 0.09, greenRatePol: 0.09 },
@@ -760,10 +768,10 @@
     // DANH SÁCH KHÁCH HÀNG & THẺ THÔNG TIN
     // ==========================================
     let customerList = JSON.parse(localStorage.getItem('vf_customers_huuhuy') || 'null') || [
-      { id: '1', fullName: 'DƯƠNG VĂN TRẮNG', idCard: '074088007656', phone: '0908123456', stage: 'Tiềm năng', model: 'VF 3 (Eco/Plus)', carId: 'vf3', versionColor: 'Base / Vàng', vin: '', contract: '', vso: '', address: '141/1a Khu Phố Tân An, Tân Đông Hiệp, TP. Hồ Chí Minh', discountGiven: 2000000, finalPrice: 274450000, netCommission: 11000000, notes: 'Bớt 2tr phụ kiện', source: 'Showroom' },
-      { id: '2', fullName: 'LÊ THỊ BÍCH NGỌC', idCard: '074195005678', phone: '0912345678', stage: 'Đã lên HĐMB', model: 'VF 5 Plus', carId: 'vf5', versionColor: 'Plus / Trắng', vin: 'RNXVGR4K2TT17690', contract: 'HĐMB-2026/089', vso: 'VSO-7741', address: 'An Phú, Thuận An', discountGiven: 5000000, finalPrice: 446360000, netCommission: 25000000, notes: 'Vay 80% Techcombank, đã ký HĐMB', source: 'Showroom' },
-      { id: '3', fullName: 'NGUYỄN HOÀNG LONG', idCard: '080088009988', phone: '0987654321', stage: 'Chờ giao xe', model: 'VF 6 Plus', carId: 'vf6_plus', versionColor: 'Plus / Xám', vin: 'RLLVAG8C6TH831671', contract: 'HĐMB-2026/092', vso: 'VSO-8812', address: 'Lái Thiêu, Thuận An', discountGiven: 3000000, finalPrice: 634000000, netCommission: 32000000, notes: 'Đã cọc 50 triệu, đang vận tải', source: 'Facebook' },
-      { id: '4', fullName: 'VÕ QUỐC VIỆT', idCard: '079095007788', phone: '0909887766', stage: 'Đã nhận xe', model: 'VF 7 Plus', carId: 'vf7_plus', versionColor: 'Plus / Đỏ', vin: 'RLLVAG8C3TH843146', contract: 'HĐMB-2026/099', vso: 'VSO-9901', address: 'Bình Chuẩn, Thuận An', discountGiven: 5000000, finalPrice: 821770000, netCommission: 37000000, notes: 'Đã giao xe thành công', source: 'Showroom' },
+      { id: '1', fullName: 'DƯƠNG VĂN TRẮNG', idCard: '074088007656', idCardIssueDate: '21/01/2026', phone: '0908123456', stage: 'Tiềm năng', model: 'VF 3 Plus', carId: 'vf3_plus', color: 'Vàng nóc trắng', vin: '', contract: '', vso: '', address: '141/1a Khu Phố Tân An, Tân Đông Hiệp, TP. Hồ Chí Minh', discountGiven: 2000000, finalPrice: 285120000, netCommission: 11000000, notes: 'Bớt 2tr phụ kiện', source: 'Showroom' },
+      { id: '2', fullName: 'LÊ THỊ BÍCH NGỌC', idCard: '074195005678', idCardIssueDate: '10/05/2022', phone: '0912345678', stage: 'Đã lên HĐMB', model: 'VF 5 Plus', carId: 'vf5', color: 'Trắng', vin: 'RNXVGR4K2TT17690', contract: 'HĐMB-2026/089', vso: 'VSO-7741', address: 'An Phú, Thuận An', discountGiven: 5000000, finalPrice: 446360000, netCommission: 25000000, notes: 'Vay 80% Techcombank, đã ký HĐMB', source: 'Showroom' },
+      { id: '3', fullName: 'NGUYỄN HOÀNG LONG', idCard: '080088009988', idCardIssueDate: '15/08/2023', phone: '0987654321', stage: 'Chờ giao xe', model: 'VF 6 Plus', carId: 'vf6_plus', color: 'Xám', vin: 'RLLVAG8C6TH831671', contract: 'HĐMB-2026/092', vso: 'VSO-8812', address: 'Lái Thiêu, Thuận An', discountGiven: 3000000, finalPrice: 634000000, netCommission: 32000000, notes: 'Đã cọc 50 triệu, đang vận tải', source: 'Facebook' },
+      { id: '4', fullName: 'VÕ QUỐC VIỆT', idCard: '079095007788', idCardIssueDate: '01/03/2024', phone: '0909887766', stage: 'Đã nhận xe', model: 'VF 7 Plus', carId: 'vf7_plus', color: 'Đỏ', vin: 'RLLVAG8C3TH843146', contract: 'HĐMB-2026/099', vso: 'VSO-9901', address: 'Bình Chuẩn, Thuận An', discountGiven: 5000000, finalPrice: 821770000, netCommission: 37000000, notes: 'Đã giao xe thành công', source: 'Showroom' },
     ];
 
     const stageTabsData = [
@@ -831,7 +839,7 @@
                   ${isCountedKPI ? '<span class="text-[9px] bg-red-600 text-white font-bold px-1.5 py-0.2 rounded" title="Đã tính vào KPI 9 xe">KPI ✓</span>' : ''}
                 </h4>
                 <div class="text-[11px] text-slate-600 font-semibold mt-0.5">
-                  🚗 ${c.model} • <span class="text-red-600">${c.versionColor || 'Đang chọn'}</span>
+                  🚗 ${c.model} • <span class="text-red-600">${c.color || 'Đang chọn màu'}</span>
                 </div>
               </div>
               <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${badgeColor}">
@@ -848,6 +856,11 @@
                 <span class="text-slate-400">CCCD:</span>
                 <span class="font-bold text-slate-800 cursor-pointer select-all" onclick="navigator.clipboard.writeText('${c.idCard}');alert('Đã copy CCCD: ${c.idCard}')">${c.idCard}</span>
               </div>
+              ${c.idCardIssueDate ? `
+              <div class="flex justify-between items-center font-mono text-[10px]">
+                <span class="text-slate-400">Ngày cấp:</span>
+                <span class="text-slate-600 font-semibold">${c.idCardIssueDate}</span>
+              </div>` : ''}
               <div class="flex justify-between items-center font-mono">
                 <span class="text-slate-400">Nguồn khách:</span>
                 <span class="font-semibold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">${c.source || 'Showroom'}</span>
@@ -908,7 +921,7 @@
       document.getElementById('drawerTitle').innerText = 'THÊM KHÁCH HÀNG & BÁO GIÁ';
       document.getElementById('btnDeleteCust').classList.add('hidden');
       clearDrawerForm();
-      document.getElementById('calc_carSelect').value = 'vf3';
+      document.getElementById('calc_carSelect').value = 'vf3_plus';
       document.getElementById('in_customerDiscount').value = 0;
       recalculatePriceAndCommission();
       document.getElementById('customerDrawer').classList.remove('hidden');
@@ -924,12 +937,13 @@
 
       document.getElementById('dr_fullName').value = c.fullName || '';
       document.getElementById('dr_idCard').value = c.idCard || '';
+      document.getElementById('dr_idCardIssueDate').value = c.idCardIssueDate || '';
       document.getElementById('dr_phone').value = c.phone || '';
       document.getElementById('dr_dob').value = c.dob || '';
       document.getElementById('dr_address').value = c.address || '';
       document.getElementById('dr_stage').value = c.stage || 'Tiềm năng';
       document.getElementById('dr_source').value = c.source || 'Showroom';
-      document.getElementById('dr_versionColor').value = c.versionColor || '';
+      document.getElementById('dr_color').value = c.color || '';
       document.getElementById('dr_vinNumber').value = c.vin || '';
       document.getElementById('dr_contract').value = c.contract || '';
       document.getElementById('dr_vso').value = c.vso || '';
@@ -948,7 +962,7 @@
     }
 
     function clearDrawerForm() {
-      ['dr_fullName', 'dr_idCard', 'dr_phone', 'dr_dob', 'dr_address', 'dr_versionColor', 'dr_vinNumber', 'dr_contract', 'dr_vso', 'dr_notes'].forEach(id => {
+      ['dr_fullName', 'dr_idCard', 'dr_idCardIssueDate', 'dr_phone', 'dr_dob', 'dr_address', 'dr_color', 'dr_vinNumber', 'dr_contract', 'dr_vso', 'dr_notes'].forEach(id => {
         document.getElementById(id).value = '';
       });
       document.getElementById('dr_stage').value = 'Tiềm năng';
@@ -1029,7 +1043,7 @@
     }
 
     function parseVietnameseIdentityCard(rawText) {
-      const extracted = { fullName: '', idCardNumber: '', dob: '', address: '' };
+      const extracted = { fullName: '', idCardNumber: '', idCardIssueDate: '', dob: '', address: '' };
       const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
 
       // 1. Quét tìm Số CCCD / Số định danh cá nhân (12 chữ số)
@@ -1068,7 +1082,18 @@
         }
       }
 
-      // 4. Quét tìm Nơi cư trú / Nơi thường trú
+      // 4. Quét tìm Ngày cấp CCCD (Mặt sau: Ngày, tháng, năm cấp / Date of issue)
+      for (let line of lines) {
+        if (/Ngày,?\s*tháng,?\s*năm cấp|Date of issue|Ngày cấp/i.test(line)) {
+          const issueMatch = line.match(/(\b\d{2}\/\d{2}\/\d{4}\b)/);
+          if (issueMatch && !extracted.idCardIssueDate) {
+            extracted.idCardIssueDate = issueMatch[1];
+            break;
+          }
+        }
+      }
+
+      // 5. Quét tìm Nơi cư trú / Nơi thường trú
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         if (/Nơi cư trú|Place of residence|Nơi thường trú/i.test(line)) {
@@ -1087,7 +1112,7 @@
         }
       }
 
-      // 5. Cứu cánh từ dòng mã MRZ ở mặt sau thẻ
+      // 6. Cứu cánh từ dòng mã MRZ ở mặt sau thẻ
       for (let line of lines) {
         if (/IDVNM/i.test(line)) {
           const mrzCccd = line.match(/\b\d{12}\b/);
@@ -1140,6 +1165,7 @@
 
       if (parsedData.fullName) document.getElementById('dr_fullName').value = parsedData.fullName;
       if (parsedData.idCardNumber) document.getElementById('dr_idCard').value = parsedData.idCardNumber;
+      if (parsedData.idCardIssueDate) document.getElementById('dr_idCardIssueDate').value = parsedData.idCardIssueDate;
       if (parsedData.dob) document.getElementById('dr_dob').value = parsedData.dob;
       if (parsedData.address) document.getElementById('dr_address').value = parsedData.address;
 
@@ -1149,7 +1175,7 @@
         if (!parsedData.fullName && !parsedData.idCardNumber) {
           alert('Không thể nhận diện tự động do ảnh có thể bị mờ hoặc tối. Vui lòng kiểm tra lại ảnh chụp.');
         } else {
-          alert(`Đã trích xuất thành công:\n- Tên: ${parsedData.fullName || 'Chưa nhận diện'}\n- Số Căn cước: ${parsedData.idCardNumber || 'Chưa nhận diện'}\n- Nơi cư trú: ${parsedData.address || 'Chưa nhận diện'}`);
+          alert(`Đã trích xuất thành công:\n- Tên: ${parsedData.fullName || 'Chưa nhận diện'}\n- Số Căn cước: ${parsedData.idCardNumber || 'Chưa nhận diện'}\n- Ngày cấp: ${parsedData.idCardIssueDate || 'Chưa nhận diện'}\n- Nơi cư trú: ${parsedData.address || 'Chưa nhận diện'}`);
         }
       }, 700);
     }
@@ -1177,6 +1203,7 @@
         id: currentEditingId || 'CUST_' + Date.now(),
         fullName,
         idCard,
+        idCardIssueDate: document.getElementById('dr_idCardIssueDate').value.trim(),
         phone,
         dob: document.getElementById('dr_dob').value.trim(),
         address: document.getElementById('dr_address').value.trim(),
@@ -1184,7 +1211,7 @@
         source: document.getElementById('dr_source').value,
         model: car.name,
         carId: car.id,
-        versionColor: document.getElementById('dr_versionColor').value.trim(),
+        color: document.getElementById('dr_color').value.trim(),
         vin: document.getElementById('dr_vinNumber').value.trim(),
         contract: document.getElementById('dr_contract').value.trim(),
         vso: document.getElementById('dr_vso').value.trim(),
@@ -1249,10 +1276,11 @@
       ws.columns = [
         { header: 'Họ và tên', key: 'fullName', width: 25 },
         { header: 'Số CCCD', key: 'idCard', width: 18 },
+        { header: 'Ngày cấp CCCD', key: 'idCardIssueDate', width: 16 },
         { header: 'Số điện thoại', key: 'phone', width: 16 },
         { header: 'Trạng thái', key: 'stage', width: 18 },
         { header: 'Dòng xe', key: 'model', width: 20 },
-        { header: 'Phiên bản / Màu', key: 'versionColor', width: 18 },
+        { header: 'Màu sắc xe', key: 'color', width: 18 },
         { header: 'Nguồn khách', key: 'source', width: 16 },
         { header: 'Giá niêm yết MSRP', key: 'msrp', width: 18 },
         { header: 'Đã bớt cho khách', key: 'discountGiven', width: 18 },
